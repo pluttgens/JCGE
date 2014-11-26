@@ -1,7 +1,7 @@
 package pjs4.gamefactory.game;
 
 import java.awt.Canvas;
-import pjs4.gamefactory.scene.Scene;
+import pjs4.gamefactory.displayable.Scene;
 
 /**
  *
@@ -37,7 +37,7 @@ public class Game extends Canvas implements Runnable {
     /**
      * Ensemble des scene du jeu.
      * 
-     * @see pjs4.gamefactory.scene.Scene
+     * @see pjs4.gamefactory.displayable.Scene
      * @see Displayable
      */
     private Displayable scene;
