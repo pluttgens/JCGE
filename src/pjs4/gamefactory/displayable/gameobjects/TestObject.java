@@ -14,7 +14,7 @@ import pjs4.gamefactory.displayable.GameObject;
 public class TestObject extends GameObject {
     
     @Override
-    public void innit() {
+    public void init() {
         String[] components = {"Position", "RigidBody"};
         componentManager.innit(components);
     }

@@ -146,7 +146,7 @@ public class Game extends Canvas implements Runnable {
     
     public static void main(String[] args) {
         TestObject testObject = new TestObject();
-        testObject.innit();
+        testObject.init();
         new Game(800, 600, "test", testObject);
     }
 }

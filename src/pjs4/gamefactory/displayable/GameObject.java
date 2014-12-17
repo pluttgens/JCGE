@@ -18,7 +18,7 @@ public abstract class GameObject implements Displayable {
         this.isActive = false;
     }
 
-    public abstract void innit();
+    public abstract void init();
 
     @Override
     public void update() {
