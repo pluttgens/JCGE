@@ -6,6 +6,6 @@ import pjs4.gamefactory.displayable.Component;
  *
  * @author scalpa
  */
-public class Collider implements Component {
+public class Collider extends Component {
     
 }

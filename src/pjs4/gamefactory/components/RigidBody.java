@@ -6,12 +6,12 @@ import pjs4.gamefactory.displayable.Component;
  *
  * @author scalpa
  */
-public class RigidBody implements Component {
+public class RigidBody extends Component {
     
     private float gravity;
     
-    public RigidBody(float gravity) {
-        this.gravity = gravity;
+    public RigidBody() {
+        this.gravity = 0;
     }
     
     public float getGravity() {

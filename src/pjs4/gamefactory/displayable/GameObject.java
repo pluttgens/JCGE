@@ -1,24 +1,30 @@
 package pjs4.gamefactory.displayable;
 
 import java.util.LinkedList;
+import pjs4.gamefactory.components.Position;
 import pjs4.gamefactory.game.Displayable;
 
 /**
  *
  * @author scalpa
  */
-public class GameObject implements Displayable {
-    
+public abstract class GameObject implements Displayable {
 
-    private LinkedList<Component> components;
+    protected final ComponentManager componentManager;
+    private boolean isActive;
+
+    public GameObject() {
+        this.componentManager = new ComponentManager();
+        this.isActive = false;
+    }
+
+    public abstract void innit();
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void render() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

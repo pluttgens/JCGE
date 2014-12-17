@@ -6,7 +6,7 @@ import pjs4.gamefactory.displayable.Component;
  *
  * @author scalpa
  */
-public class Position implements Component {
+public class Position extends Component {
     
     private float x;
     private float y;
@@ -14,9 +14,9 @@ public class Position implements Component {
     private float xVelocity;
     private float yVelocity;
     
-    public Position(float x, float y) {
-        this.x = x;
-        this.y = y;
+    public Position() {
+        this.x = 0;
+        this.y = 0;
         this.xVelocity = 0;
         this.yVelocity = 0;
     }

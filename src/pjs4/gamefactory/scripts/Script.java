@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pjs4.gamefactory.displayable;
+package pjs4.gamefactory.scripts;
 
 /**
  *
  * @author scalpa
  */
-public abstract class Component {
+public class Script {
     
 }

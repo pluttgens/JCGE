@@ -6,6 +6,6 @@ import pjs4.gamefactory.displayable.Component;
  *
  * @author scalpa
  */
-public class Sound implements Component {
+public class Sound extends Component {
     
 }
