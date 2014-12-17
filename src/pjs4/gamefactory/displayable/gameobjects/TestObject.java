@@ -16,7 +16,7 @@ public class TestObject extends GameObject {
     @Override
     public void init() {
         String[] components = {"Position", "RigidBody"};
-        componentManager.innit(components);
+        componentManager.init(components);
     }
     
     @Override

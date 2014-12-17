@@ -33,7 +33,7 @@ public class ComponentManager {
      *
      * @since 1.0
      */
-    public void innit(String[] componentNames) {
+    public void init(String[] componentNames) {
         for (String componentName : componentNames) {
             try {
                 components.add((Component) Class.forName("pjs4.gamefactory.components." + componentName).newInstance());
