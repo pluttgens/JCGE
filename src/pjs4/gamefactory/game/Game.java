@@ -1,9 +1,7 @@
 package pjs4.gamefactory.game;
 
 import java.awt.Canvas;
-import pjs4.gamefactory.displayable.GameObject;
 import pjs4.gamefactory.displayable.Scene;
-import pjs4.gamefactory.displayable.gameobjects.TestObject;
 
 /**
  *
@@ -145,8 +143,6 @@ public class Game extends Canvas implements Runnable {
     }
     
     public static void main(String[] args) {
-        TestObject testObject = new TestObject();
-        testObject.init();
-        new Game(800, 600, "test", testObject);
+        new Game(800, 600, "test", new Scene());
     }
 }

@@ -5,8 +5,13 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 /**
- *
+ * Fenetre du jeu.
+ * 
  * @author Pascal Luttgens
+ * 
+ * @version 1.0
+ * 
+ * @since 1.0
  */
 public class Window extends Canvas {
     

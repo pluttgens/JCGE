@@ -7,5 +7,5 @@ import pjs4.gamefactory.displayable.Component;
  * @author scalpa
  */
 public class Sound extends Component {
-    
+
 }

@@ -5,10 +5,52 @@
  */
 package pjs4.gamefactory.displayable;
 
+import java.util.Comparator;
+
 /**
  *
  * @author scalpa
  */
 public abstract class Component {
-    
+
+    // private final int updatePriority; je reflechis encore à comment l'implémenter - Pascal Luttgens.
+    /**
+     * Retourne l'indice de priorité permettant de determiner à quel moment la
+     * méthode update du component va etre appelée par rapport aux autres
+     * components faisant parti d'une même liste.
+     * 
+     * - Pascal Luttgens.
+     *
+     * @return L'indice de priorité.
+     */
+    protected int getUpdatePriority() {
+        return 0;
+    }
+
+    /**
+     * Comparateur de component. Permet de déterminer l'ordre dans lequel les
+     * components sont triés dans une liste afin d'être cohérent dans l'ordre
+     * d'update.
+     *
+     *
+     * @author Pascal Luttgens
+     *
+     * @version 1.0
+     *
+     * @since 1.0
+     */
+    public static class UpdatePriorityComparator implements Comparator<Component> {
+
+        @Override
+        public int compare(Component c1, Component c2) {
+            if (c1.getUpdatePriority() == c2.getUpdatePriority()) {
+                return 0;
+            } else if (c1.getUpdatePriority() < c2.getUpdatePriority()) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+    }
+
 }

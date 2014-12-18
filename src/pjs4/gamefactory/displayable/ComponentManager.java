@@ -5,8 +5,7 @@
  */
 package pjs4.gamefactory.displayable;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,8 +19,10 @@ public class ComponentManager {
     List<Component> components;
 
     public ComponentManager() {
-        this.components = new ArrayList<>();
+        this.components = new LinkedList<>();
     }
+    
+
 
     /**
      * Initialise une liste de component à partir de leur noms. Les components à
@@ -40,13 +41,14 @@ public class ComponentManager {
             } catch (ClassNotFoundException ex) {
                 throw new IllegalArgumentException("Le component " + componentName + " n'existe pas.");
             } catch (InstantiationException | IllegalAccessException ex) {
-                throw new RuntimeException("Le component existe mais celui-ci n'a pu être instancié.", ex);
+                throw new RuntimeException("Le component " + componentName + " existe mais celui-ci n'a pu être instancié.", ex);
             }
         }
+        components.sort(new Component.UpdatePriorityComparator());
     }
 
     // A modifier.
-    public float getPosition() {
+    /**public Method invoke() {
         for (Component component : components) {
             try {
                 return (float) component.getClass().getMethod("getX").invoke(component);
@@ -54,8 +56,10 @@ public class ComponentManager {
             }
         }
         throw new NoSuchComponentException("Le Game Object ne contient pas de component position.");
-    }
+    }**/
 
+    
+    
     /**
      * Vérifie si un component est initialisé dans la liste à partir de son nom.
      *
