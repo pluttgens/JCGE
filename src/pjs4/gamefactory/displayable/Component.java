@@ -18,7 +18,7 @@ public abstract class Component {
      * Retourne l'indice de priorité permettant de determiner à quel moment la
      * méthode update du component va etre appelée par rapport aux autres
      * components faisant parti d'une même liste.
-     * 
+     *
      * - Pascal Luttgens.
      *
      * @return L'indice de priorité.

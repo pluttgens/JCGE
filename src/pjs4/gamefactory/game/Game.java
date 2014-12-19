@@ -1,6 +1,12 @@
 package pjs4.gamefactory.game;
 
 import java.awt.Canvas;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import pjs4.gamefactory.audioengine.AudioEngine;
 import pjs4.gamefactory.displayable.Scene;
 
 /**
@@ -13,12 +19,12 @@ public class Game extends Canvas implements Runnable {
      * Longueur de la fenetre.
      */
     private int WIDTH;
-    
+
     /**
      * Hauteur de la fenetre.
      */
     private int HEIGHT;
-    
+
     /**
      * Nom du jeu.
      */
@@ -28,15 +34,15 @@ public class Game extends Canvas implements Runnable {
      * Thread du jeu.
      */
     private Thread thread;
-    
+
     /**
      * Flag indiquant si le thread est utlisé, apparament inutile, à supprimer.
      */
     private boolean running;
-    
+
     /**
      * Ensemble des scene du jeu.
-     * 
+     *
      * @see pjs4.gamefactory.displayable.Scene
      * @see Displayable
      */
@@ -44,12 +50,12 @@ public class Game extends Canvas implements Runnable {
 
     /**
      * Construit un jeu à partir des dimensions de sa fenetre et de son nom.
-     * 
-     * @param WIDTH     La longueur de la fenetre
-     * @param HEIGHT    La hauteur de la fenetre
-     * @param NAME      Le nom du jeu
-     * 
-     * @see #window() 
+     *
+     * @param WIDTH  La longueur de la fenetre
+     * @param HEIGHT La hauteur de la fenetre
+     * @param NAME   Le nom du jeu
+     *
+     * @see #window()
      */
     public Game(int WIDTH, int HEIGHT, String NAME, Displayable scene) {
         this.WIDTH = WIDTH;
@@ -61,7 +67,7 @@ public class Game extends Canvas implements Runnable {
 
     /**
      * Crée une fenetre pour le jeu en fonction de ses dimension et de son nom.
-     * 
+     *
      * @see Window
      */
     private void window() {
@@ -92,9 +98,9 @@ public class Game extends Canvas implements Runnable {
     }
 
     /**
-     * Boucle du jeu, mets à jour les éléments de façon constante et les affiches
-     * correctement à l'écran.
-     * 
+     * Boucle du jeu, mets à jour les éléments de façon constante et les
+     * affiches correctement à l'écran.
+     *
      */
     @Override
     public void run() {
@@ -127,21 +133,21 @@ public class Game extends Canvas implements Runnable {
         }
         stop();
     }
-    
+
     /**
      * Met à jour tous les élément de la scene
      */
     public void update() {
         scene.update();
     }
-    
+
     /**
      * Met à jour l'affichage de tous les élément de la scene
      */
     public void render() {
         scene.render();
     }
-    
+
     public static void main(String[] args) {
         new Game(800, 600, "test", new Scene());
     }
