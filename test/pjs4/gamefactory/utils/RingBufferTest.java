@@ -5,6 +5,7 @@
  */
 package pjs4.gamefactory.utils;
 
+import pjs4.gamefactory.utils.collections.RingBuffer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

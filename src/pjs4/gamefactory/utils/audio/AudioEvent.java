@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pjs4.gamefactory.audioengine;
+package pjs4.gamefactory.utils.audio;
 
 import pjs4.gamefactory.events.Event;
 
 /**
- *
- * @author scalpa
+ * AudioEvent permet d'identifier une requête effectuée au Moteur Audio/
+ * 
+ * @author Pascal Luttgens
  */
 public class AudioEvent implements Event {
     
@@ -46,4 +47,7 @@ public class AudioEvent implements Event {
         return this.resource;
     }
     
+    public float getVolume() {
+        return this.volume;
+    }
 }

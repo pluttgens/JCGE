@@ -7,7 +7,7 @@ package pjs4.gamefactory.services;
 
 /**
  *
- * @author scalpa
+ * @author Pascal Luttgens
  */
 public interface Resource {
     

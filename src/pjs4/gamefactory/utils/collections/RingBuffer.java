@@ -1,4 +1,4 @@
-package pjs4.gamefactory.utils;
+package pjs4.gamefactory.utils.collections;
 
 /**
  * Implémentation d'une FIFO en RingBuffer. C'est un simple tableau circulaire

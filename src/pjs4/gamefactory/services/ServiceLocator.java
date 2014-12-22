@@ -7,9 +7,16 @@ package pjs4.gamefactory.services;
 
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
+
 /**
+ * Le locateur de service sert d'interface entre le code et les services afin de
+ * les découpler et de contrôler l'instance des services.
  *
- * @author scalpa
+ * @author Pascal Luttgens.
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public class ServiceLocator {
 

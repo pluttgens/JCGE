@@ -6,10 +6,14 @@
 package pjs4.gamefactory.displayable;
 
 import java.util.Comparator;
-
 /**
+ * Un component encapsule une fonctionalité d'un game object.
+ * 
+ * @author Pascal Luttgens
  *
- * @author scalpa
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public abstract class Component {
 

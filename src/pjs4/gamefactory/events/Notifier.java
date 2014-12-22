@@ -9,8 +9,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Un notifier est un objet que les classe subject doivent contenir afin de
+ * pouvoir passer des events à leurs observers.
  *
- * @author scalpa
+ * Ce système permet de découple les senders et les receivers.
+ *
+ * @author Pascal Luttgens.
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public class Notifier<T> {
 
@@ -32,19 +40,19 @@ public class Notifier<T> {
             }
         }
     }
-    
+
     public void unregisterObserver(Observer o) {
         synchronized (lock) {
             observers.remove(o);
         }
     }
-    
+
     public boolean isRegistered(Observer o) {
         synchronized (lock) {
             return observers.contains(o);
         }
     }
-    
+
     public void notifyObservers(Event e) {
         synchronized (lock) {
             for (Observer o : observers) {
@@ -62,7 +70,5 @@ public class Notifier<T> {
             }
         }
     }
-    
-    
-    
+
 }

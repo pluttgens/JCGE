@@ -1,5 +1,5 @@
 
-package pjs4.gamefactory.utils;
+package pjs4.gamefactory.utils.collections;
 
 /**
  *

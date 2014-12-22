@@ -6,10 +6,11 @@
 package pjs4.gamefactory.events;
 
 /**
+ * Interface représentant tout type d'event. Un event doit implémenter cette
+ * interface pour être utilisé par un observer.
  *
- * @author scalpa
+ * @author Pascal Luttgens
  */
 public interface Event {
-    
-    
+
 }

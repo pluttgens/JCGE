@@ -4,8 +4,8 @@ import java.awt.Canvas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pjs4.gamefactory.audioengine.AudioEngine;
-import pjs4.gamefactory.audioengine.AudioEvent;
-import pjs4.gamefactory.audioengine.AudioResource;
+import pjs4.gamefactory.utils.audio.AudioEvent;
+import pjs4.gamefactory.utils.audio.AudioResource;
 import pjs4.gamefactory.displayable.Scene;
 import pjs4.gamefactory.events.Notifier;
 

@@ -5,6 +5,7 @@
  */
 package pjs4.gamefactory.audioengine;
 
+import pjs4.gamefactory.utils.audio.AudioEvent;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
@@ -17,69 +18,111 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import pjs4.gamefactory.events.Event;
 import pjs4.gamefactory.services.AudioService;
-import pjs4.gamefactory.services.Resource;
-import pjs4.gamefactory.utils.RingBuffer;
+import pjs4.gamefactory.utils.collections.RingBuffer;
 
 /**
+ * AudioEngine est le moteur audio par défaut de la librairie, il permet de
+ * jouer un son répertioré dans l'énum AudioRessource.
  *
- * @author scalpa
+ * Il recoit un AudioEvent contenant les informations sur le fichier audio et
+ * l'action a effectuer avec (le jouer ou le stopper) ainsi que le volume auquel
+ * celui-ci doit être joué.
+ *
+ * Il y'a un thread qui s'occupe de récupérer les events a partir de la liste et
+ * un autre qui s'occupe de les jouer.
+ *
+ * @author Pascal Luttgens
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public class AudioEngine implements AudioService {
 
     private final RingBuffer<AudioEvent> soundEvents;
-    private final Map<AudioResource, Clip> playingSounds;
+    private final Map<AudioEvent, Clip> playingSounds;
 
     Thread handler;
     Thread player;
 
+    /**
+     * Construit un AudioEngine et initialise les collections ainsi que les
+     * threads.
+     *
+     * - Pascal Luttgens.
+     */
     public AudioEngine() {
 
         this.soundEvents = new RingBuffer<>();
 
         this.playingSounds = new ConcurrentHashMap<>();
 
-        this.handler = new Thread(() -> {
-            while (true) {
-                synchronized (soundEvents) {
-                    AudioEvent event = soundEvents.get();
-                    System.out.println("handler" + event.getResource().getAudioFile().getPath());
-                    Clip clip = loadClipFromEvent(event);
-                    if (clip != null) {
-                        clip.addLineListener((LineEvent le) -> {
-                            if (le.getType().equals(LineEvent.Type.STOP)) {
-                                le.getLine().close();
+        this.handler = new Thread(
+                /**
+                 * Récupère l'event le plus ancien de la collection d'event pour
+                 * le passer à la collection des sons en cours de lecture.
+                 *
+                 * - Pascal Luttgens.
+                 */
+                () -> {
+                    while (true) {
+                        synchronized (soundEvents) {
+                            AudioEvent event = soundEvents.get();
+                            System.out.println("handler" + event.getResource().getAudioFile().getPath());
+                            Clip clip = loadClipFromEvent(event);
+                            if (clip != null) {
+                                /**
+                                 * Ajoute un listener sur le clip pour le fermer
+                                 * lorsque sa lecture est finie.
+                                 */
+                                clip.addLineListener((LineEvent le) -> {
+                                    if (le.getType().equals(LineEvent.Type.STOP)) {
+                                        le.getLine().close();
+                                    }
+                                });
+                                synchronized (playingSounds) {
+                                    playingSounds.put(event, clip);
+                                }
                             }
-                        });
+                        }
+                    }
+                });
+
+        this.player = new Thread(
+                /**
+                 * Lance la lecture des sons qui ne sont pas déjà lancés et
+                 * supprime ceux qui ont fini de jouer.
+                 */
+                () -> {
+                    while (true) {
                         synchronized (playingSounds) {
-                            playingSounds.put(event.getResource(), clip);
+                            Iterator<Map.Entry<AudioEvent, Clip>> iter = playingSounds.entrySet().iterator();
+                            while (iter.hasNext()) {
+                                Map.Entry<AudioEvent, Clip> entry = iter.next();
+                                AudioEvent event = entry.getKey();
+                                Clip clip = entry.getValue();
+                                if (!clip.isOpen()) {
+                                    iter.remove();
+                                } else if (!clip.isRunning()) {
+                                    clip.start();
+                                }
+
+                            }
                         }
                     }
-                }
-            }
-        });
-
-        this.player = new Thread(() -> {
-            while (true) {
-                synchronized (playingSounds) {
-                    Iterator<Map.Entry<AudioResource, Clip>> iter = playingSounds.entrySet().iterator();
-                    while (iter.hasNext()) {
-                        Map.Entry<AudioResource, Clip> entry = iter.next();
-                        AudioResource resource = entry.getKey();
-                        Clip clip = entry.getValue();
-                        System.out.println("player" + resource.getAudioFile().getPath());
-                        if (!clip.isOpen()) {
-                            iter.remove();
-                        } else if (!clip.isRunning()) {
-                            clip.start();
-                        }
-
-                    }
-                }
-            }
-        });
+                });
 
     }
 
+    /**
+     * Retourne un clip du système à partir d'un event.
+     *
+     * - Pascal Luttgens.
+     *
+     * @param ae L'event contenant la ressource
+     *
+     * @return Le clip du système initialisé avec la ressource
+     */
     private Clip loadClipFromEvent(AudioEvent ae) {
         synchronized (soundEvents) {
             try {
@@ -94,21 +137,13 @@ public class AudioEngine implements AudioService {
         }
     }
 
-    @Override
-    public void playSound(Resource sound) {
-
-    }
-
-    @Override
-    public void stopSound(Resource sound) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void stopAllSound() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    /**
+     * Réçoit un event et effectue l'action adéquate.
+     *
+     * - Pascal Luttgens.
+     *
+     * @param event L'event audio
+     */
     @Override
     public void onNotify(Event event) {
 
@@ -125,6 +160,9 @@ public class AudioEngine implements AudioService {
 
     }
 
+    /**
+     * Lance les processus de l'AudioEngine.
+     */
     public void start() {
         handler.start();
         player.start();

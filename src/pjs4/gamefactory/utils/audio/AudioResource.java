@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pjs4.gamefactory.audioengine;
+package pjs4.gamefactory.utils.audio;
 
 import java.io.File;
 import pjs4.gamefactory.services.Resource;
 
 /**
- *
- * @author scalpa
+ * Enumération asociant toutes les ressources audio du jeu à leur path.
+ * 
+ * @author Pascal Luttgens.
  */
 public enum AudioResource implements Resource {
     TEST("test1.wav"),
