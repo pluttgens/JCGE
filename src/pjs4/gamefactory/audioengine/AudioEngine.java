@@ -37,11 +37,12 @@ public class AudioEngine implements AudioService {
         this.soundEvents = new RingBuffer<>();
 
         this.playingSounds = new ConcurrentHashMap<>();
-        
+
         this.handler = new Thread(() -> {
             while (true) {
                 synchronized (soundEvents) {
                     AudioEvent event = soundEvents.get();
+                    System.out.println("handler" + event.getResource().getAudioFile().getPath());
                     Clip clip = loadClipFromEvent(event);
                     if (clip != null) {
                         clip.addLineListener((LineEvent le) -> {
@@ -65,13 +66,13 @@ public class AudioEngine implements AudioService {
                         Map.Entry<AudioResource, Clip> entry = iter.next();
                         AudioResource resource = entry.getKey();
                         Clip clip = entry.getValue();
-                        
+                        System.out.println("player" + resource.getAudioFile().getPath());
                         if (!clip.isOpen()) {
                             iter.remove();
                         } else if (!clip.isRunning()) {
                             clip.start();
                         }
-                        
+
                     }
                 }
             }
@@ -80,15 +81,17 @@ public class AudioEngine implements AudioService {
     }
 
     private Clip loadClipFromEvent(AudioEvent ae) {
-        try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundEvents.get().getResource().getAudioFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(inputStream);
-            return clip;
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-            ex.printStackTrace();
+        synchronized (soundEvents) {
+            try {
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(ae.getResource().getAudioFile());
+                Clip clip = AudioSystem.getClip();
+                clip.open(inputStream);
+                return clip;
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                ex.printStackTrace();
+            }
+            return null;
         }
-        return null;
     }
 
     @Override
@@ -108,10 +111,16 @@ public class AudioEngine implements AudioService {
 
     @Override
     public void onNotify(Event event) {
-        AudioEvent audioEvent = (AudioEvent) event;
-        AudioEvent.Type type = audioEvent.getType();
-        if (type.equals(AudioEvent.Type.PLAY)) {
-            soundEvents.add(audioEvent);
+
+        try {
+            AudioEvent audioEvent;
+            audioEvent = (AudioEvent) event;
+            AudioEvent.Type type = audioEvent.getType();
+            if (type.equals(AudioEvent.Type.PLAY)) {
+                soundEvents.add(audioEvent);
+            }
+        } catch (ClassCastException ex) {
+            ex.printStackTrace();
         }
 
     }
@@ -120,5 +129,5 @@ public class AudioEngine implements AudioService {
         handler.start();
         player.start();
     }
-    
+
 }
