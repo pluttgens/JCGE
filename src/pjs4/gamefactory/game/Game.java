@@ -1,13 +1,13 @@
 package pjs4.gamefactory.game;
 
 import java.awt.Canvas;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pjs4.gamefactory.audioengine.AudioRequestHandler;
+import pjs4.gamefactory.audioengine.AudioEngine;
+import pjs4.gamefactory.audioengine.AudioEvent;
+import pjs4.gamefactory.audioengine.AudioResource;
 import pjs4.gamefactory.displayable.Scene;
+import pjs4.gamefactory.events.Notifier;
 
 /**
  *
@@ -123,7 +123,7 @@ public class Game extends Canvas implements Runnable {
             }
             render();
             frames++;
-
+            
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
                 System.out.println("FPS: " + frames + " TICKS: " + updates);
@@ -147,8 +147,23 @@ public class Game extends Canvas implements Runnable {
     public void render() {
         scene.render();
     }
-
+    
     public static void main(String[] args) {
-        new Game(800, 600, "test", new Scene());
+        try {
+            //new Game(800, 600, "test", new Scene());
+            AudioEngine ae = new AudioEngine();
+            ae.start();
+            Thread.sleep(1000);
+            AudioEvent event = new AudioEvent(AudioEvent.Type.PLAY, AudioResource.TEST);
+            Notifier n = new Notifier(new Object());
+            n.registerObserver(ae);
+            n.notifyObservers(event);
+            Thread.sleep(10000);
+            AudioEvent event2 = new AudioEvent(AudioEvent.Type.PLAY, AudioResource.TEST2);
+            n.notifyObservers(event2);
+            Thread.sleep(5000000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

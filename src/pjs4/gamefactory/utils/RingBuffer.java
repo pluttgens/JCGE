@@ -12,7 +12,9 @@ package pjs4.gamefactory.utils;
 public class RingBuffer<E> extends AbstractFifo<E> {
 
     protected final Object lock;
-    
+
+    protected final static int DEFAULT_SIZE = 15;
+
     protected Object[] collection_;
     protected int head_;
     protected int tail_;
@@ -38,7 +40,7 @@ public class RingBuffer<E> extends AbstractFifo<E> {
      * - Pascal Luttgens.
      */
     public RingBuffer() {
-        this(15);
+        this(DEFAULT_SIZE);
     }
 
     /**
@@ -91,7 +93,7 @@ public class RingBuffer<E> extends AbstractFifo<E> {
      */
     protected void ensureCapacity() {
         synchronized (this.lock) {
-            if ((!isEmpty()) && (this.head_ - (this.tail_ % this.SIZE_ ) == 0)) {
+            if ((!isEmpty()) && (this.head_ - (this.tail_ % this.SIZE_) == 0)) {
                 Object[] temp = new Object[this.SIZE_ * 2];
                 int indTemp = 0;
                 for (int i = this.head_; i < this.SIZE_; ++i) {
@@ -117,7 +119,13 @@ public class RingBuffer<E> extends AbstractFifo<E> {
      */
     public boolean isEmpty() {
         synchronized (this.lock) {
-            return (this.count_ == 0);
+            if (this.count_ == 0) {
+                if (SIZE_ > DEFAULT_SIZE) {
+                    this.collection_ = new Object[DEFAULT_SIZE];
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

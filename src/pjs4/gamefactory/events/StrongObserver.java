@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pjs4.gamefactory.services;
-
-import pjs4.gamefactory.events.Observer;
+package pjs4.gamefactory.events;
 
 /**
  *
  * @author scalpa
  */
-public interface Service extends Observer {
+public interface StrongObserver extends Observer {
+    
+    void onNotify(Object subject, Event event);
     
 }

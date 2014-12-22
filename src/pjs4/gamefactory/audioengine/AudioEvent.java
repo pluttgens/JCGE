@@ -5,20 +5,45 @@
  */
 package pjs4.gamefactory.audioengine;
 
-import java.io.File;
+import pjs4.gamefactory.events.Event;
 
 /**
  *
  * @author scalpa
  */
-public class AudioEvent {
+public class AudioEvent implements Event {
     
-    private AudioResource resource;
+    public static class Type {
+        public static final Type PLAY = new Type("PLAY");
+        public static final Type STOP = new Type("STOP");
+        
+        private Type(String name) {
+            this.name = name;
+        }
+        
+        private final String name;
+    }
+    
+    private Type type;
+    private final AudioResource resource;
     private float volume;
-    private float delay;
     
-    public File getAudioFile() {
-        return resource.getAudioFile();
+    public AudioEvent(Type type, AudioResource resource) {
+        this.type = type;
+        this.resource = resource;
+    }
+    
+        public AudioEvent(Type type, AudioResource resource, float volume) {
+        this.type = type;
+        this.resource = resource;
+        this.volume = volume;
+    }
+    
+    public Type getType() {
+        return this.type;
+    }
+    public AudioResource getResource() {
+        return this.resource;
     }
     
 }

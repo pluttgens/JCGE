@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pjs4.gamefactory.audioengine;
+package pjs4.gamefactory.events;
 
 /**
  *
  * @author scalpa
  */
-public class AudioPlayer {
+public interface WeakObserver extends Observer {
+    
+    void onNotify(Event event);
     
 }
