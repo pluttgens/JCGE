@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pjs4.gamefactory.audioengine.AudioEngine;
+import pjs4.gamefactory.audioengine.AudioRequestHandler;
 import pjs4.gamefactory.displayable.Scene;
 
 /**

@@ -5,20 +5,10 @@
  */
 package pjs4.gamefactory.audioengine;
 
-import java.io.File;
-
 /**
  *
  * @author scalpa
  */
-public class AudioEvent {
-    
-    private AudioResource resource;
-    private float volume;
-    private float delay;
-    
-    public File getAudioFile() {
-        return resource.getAudioFile();
-    }
+public class AudioPlayer {
     
 }

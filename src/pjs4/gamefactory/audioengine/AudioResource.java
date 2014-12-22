@@ -12,13 +12,13 @@ import pjs4.gamefactory.services.Resource;
  *
  * @author scalpa
  */
-public enum AudioResources implements Resource {
+public enum AudioResource implements Resource {
     TEST("test.wav"),
     TEST2("test2.wav");
     
     private final String path;
     
-    private AudioResources(String soundPath) {
+    private AudioResource(String soundPath) {
         path = soundPath;
     }
     

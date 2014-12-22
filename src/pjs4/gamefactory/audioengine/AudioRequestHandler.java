@@ -8,29 +8,30 @@ package pjs4.gamefactory.audioengine;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import pjs4.gamefactory.services.AudioService;
+import pjs4.gamefactory.services.Resource;
 import pjs4.gamefactory.utils.RingBuffer;
 
 /**
  *
  * @author scalpa
  */
-public class AudioEngine implements Runnable, AudioService {
+public class AudioRequestHandler implements Runnable, AudioService {
 
-    private final RingBuffer<AudioResources> soundEvents;
+    private final RingBuffer<AudioEvent> soundEvents;
+    private final List<Clip> loadedSounds;
     Thread thread;
     long l;
 
-    public AudioEngine() {
+    public AudioRequestHandler() {
         thread = new Thread(this);
         soundEvents = new RingBuffer<>();
+        loadedSounds = new LinkedList<>();
     }
 
     public void start() {
@@ -39,7 +40,10 @@ public class AudioEngine implements Runnable, AudioService {
 
     @Override
     public void run() {
-        AudioResources.TEST.getAudioFile();
+        while (true) {
+            loadedSounds.add(loadClipFromEvent(soundEvents.get()));
+        }
+
         /**
          * try { AudioInputStream sound = AudioSystem.getAudioInputStream(new
          * File("test.wav")); AudioInputStream sound2 =
@@ -56,36 +60,34 @@ public class AudioEngine implements Runnable, AudioService {
          * LineUnavailableException ex) { System.err.println(ex.getMessage());
          * }*
          */
-        List<AudioResources> playingSounds = new LinkedList<>();
-        List<Clip> playingClips = new LinkedList<>();
-        while (!soundEvents.isEmpty()) {
-            try {
-                AudioResources soundToPlay = soundEvents.get();
-                playingSounds.add(soundToPlay);
-                AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundToPlay.getAudioFile());
-                Clip clipToStart = AudioSystem.getClip();
-                clipToStart.open(inputStream);
-                clipToStart.start();
-            } catch (LineUnavailableException | UnsupportedAudioFileException | IOException ex) {
-                Logger.getLogger(AudioEngine.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     @Override
-    public void playSound(AudioResource resource) {
-        soundEvents.add();
+    public void playSound(Resource sound) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void stopSound(int soundID) {
-
+    public void stopSound(Resource sound) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void stopAllSound() {
         thread.interrupt();
         stop();
+    }
+
+    private Clip loadClipFromEvent(AudioEvent ae) {
+        try {
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundEvents.get().getAudioFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(inputStream);
+            return clip;
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     public void stop() {

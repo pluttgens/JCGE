@@ -7,9 +7,6 @@ package pjs4.gamefactory.services;
 
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author scalpa

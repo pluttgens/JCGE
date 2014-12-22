@@ -5,14 +5,14 @@ package pjs4.gamefactory.utils;
  * qui permet d'éviter de décaler tous les éléments de la FIFO à chaque call sur
  * get.
  *
- * 
+ *
  * @author Pascal Luttgens
  * @param <E>
  */
 public class RingBuffer<E> extends AbstractFifo<E> {
 
-    protected final Object lock = new Object();
-
+    protected final Object lock;
+    
     protected Object[] collection_;
     protected int head_;
     protected int tail_;
@@ -29,6 +29,7 @@ public class RingBuffer<E> extends AbstractFifo<E> {
         this.SIZE_ = size;
         this.collection_ = new Object[size];
         this.count_ = 0;
+        this.lock = new Object();
     }
 
     /**
@@ -54,6 +55,7 @@ public class RingBuffer<E> extends AbstractFifo<E> {
             this.collection_[this.tail_] = e;
             this.tail_ = (this.tail_ + 1) % this.SIZE_;
             ++this.count_;
+            lock.notifyAll();
         }
     }
 
@@ -67,6 +69,13 @@ public class RingBuffer<E> extends AbstractFifo<E> {
     @Override
     public E get() {
         synchronized (this.lock) {
+            while (isEmpty()) {
+                try {
+                    this.lock.wait();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
             E ret = (E) this.collection_[this.head_];
             this.head_ = (this.head_ + 1) % this.SIZE_;
             --this.count_;
@@ -82,8 +91,8 @@ public class RingBuffer<E> extends AbstractFifo<E> {
      */
     protected void ensureCapacity() {
         synchronized (this.lock) {
-            if (((this.tail_ % this.head_) == 0) && (!isEmpty())) {
-                Object[] temp = new Object[SIZE_ * 2];
+            if ((!isEmpty()) && (this.head_ - (this.tail_ % this.SIZE_ ) == 0)) {
+                Object[] temp = new Object[this.SIZE_ * 2];
                 int indTemp = 0;
                 for (int i = this.head_; i < this.SIZE_; ++i) {
                     temp[indTemp++] = this.collection_[i];
@@ -92,6 +101,8 @@ public class RingBuffer<E> extends AbstractFifo<E> {
                     temp[indTemp++] = this.collection_[i];
                 }
                 this.collection_ = temp;
+                this.head_ = 0;
+                this.tail_ = SIZE_;
                 this.SIZE_ = SIZE_ * 2;
             }
         }
