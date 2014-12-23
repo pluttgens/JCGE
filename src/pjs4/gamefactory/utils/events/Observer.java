@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pjs4.gamefactory.events;
+package pjs4.gamefactory.utils.events;
+
+import java.util.EventObject;
 
 /**
  * L'interface observer représente tous les observers, c'est a dire les classes
@@ -16,5 +18,12 @@ package pjs4.gamefactory.events;
  * @since 1.0
  */
 public interface Observer {
-
+    /**
+     * Passe l'event à l'observer
+     *
+     * -Pascal Luttgens.
+     *
+     * @param event L'event
+     */
+    void onNotify(EventObject event);
 }

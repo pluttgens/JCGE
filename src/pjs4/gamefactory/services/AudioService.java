@@ -5,12 +5,13 @@
  */
 package pjs4.gamefactory.services;
 
-import pjs4.gamefactory.events.WeakObserver;
+
+import pjs4.gamefactory.utils.events.Observer;
 
 /**
  *
  * @author scalpa
  */
-public interface AudioService extends WeakObserver {
+public interface AudioService extends Observer {
 
 }

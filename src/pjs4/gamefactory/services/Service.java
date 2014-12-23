@@ -5,7 +5,7 @@
  */
 package pjs4.gamefactory.services;
 
-import pjs4.gamefactory.events.Observer;
+import pjs4.gamefactory.utils.events.Observer;
 
 /**
  * Interface représentant tous les services. Chaque service est logiquement un

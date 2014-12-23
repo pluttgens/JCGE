@@ -7,17 +7,20 @@ package pjs4.gamefactory.audioengine;
 
 import pjs4.gamefactory.utils.audio.AudioEvent;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.EventObject;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import javafx.util.Pair;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import pjs4.gamefactory.events.Event;
 import pjs4.gamefactory.services.AudioService;
+import pjs4.gamefactory.utils.audio.AudioResource;
 import pjs4.gamefactory.utils.collections.RingBuffer;
 
 /**
@@ -40,7 +43,7 @@ import pjs4.gamefactory.utils.collections.RingBuffer;
 public class AudioEngine implements AudioService {
 
     private final RingBuffer<AudioEvent> soundEvents;
-    private final Map<AudioEvent, Clip> playingSounds;
+    private final List<Pair<AudioResource, Clip>> playingSounds;
 
     Thread handler;
     Thread player;
@@ -55,7 +58,7 @@ public class AudioEngine implements AudioService {
 
         this.soundEvents = new RingBuffer<>();
 
-        this.playingSounds = new ConcurrentHashMap<>();
+        this.playingSounds = Collections.synchronizedList(new LinkedList<>());
 
         this.handler = new Thread(
                 /**
@@ -68,20 +71,33 @@ public class AudioEngine implements AudioService {
                     while (true) {
                         synchronized (soundEvents) {
                             AudioEvent event = soundEvents.get();
-                            System.out.println("handler" + event.getResource().getAudioFile().getPath());
-                            Clip clip = loadClipFromEvent(event);
-                            if (clip != null) {
-                                /**
-                                 * Ajoute un listener sur le clip pour le fermer
-                                 * lorsque sa lecture est finie.
-                                 */
-                                clip.addLineListener((LineEvent le) -> {
-                                    if (le.getType().equals(LineEvent.Type.STOP)) {
-                                        le.getLine().close();
+                            AudioEvent.Type eventType = event.getType();
+                            if (eventType.equals(AudioEvent.Type.PLAY)) {
+                                Clip clip = loadClipFromEvent(event);
+                                if (clip != null) {
+                                    /**
+                                     * Ajoute un listener sur le clip pour le
+                                     * fermer lorsque sa lecture est finie.
+                                     */
+                                    clip.addLineListener((LineEvent le) -> {
+                                        if (le.getType().equals(LineEvent.Type.STOP)) {
+                                            le.getLine().close();
+                                        }
+                                    });
+                                    synchronized (playingSounds) {
+                                        playingSounds.add(new Pair<>(event.getResource(), clip));
                                     }
-                                });
+                                }
+                            } else if (eventType.equals(AudioEvent.Type.STOP)) {
                                 synchronized (playingSounds) {
-                                    playingSounds.put(event, clip);
+                                    for (Pair<AudioResource, Clip> playingSound : playingSounds) {
+                                        if (playingSound.getKey().equals(event.getResource())) {
+                                            Clip clip = playingSound.getValue();
+                                            clip.stop();
+                                            clip.close();
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -96,11 +112,11 @@ public class AudioEngine implements AudioService {
                 () -> {
                     while (true) {
                         synchronized (playingSounds) {
-                            Iterator<Map.Entry<AudioEvent, Clip>> iter = playingSounds.entrySet().iterator();
+                            Iterator iter = playingSounds.iterator();
                             while (iter.hasNext()) {
-                                Map.Entry<AudioEvent, Clip> entry = iter.next();
-                                AudioEvent event = entry.getKey();
-                                Clip clip = entry.getValue();
+                                Pair<AudioResource, Clip> pair = (Pair<AudioResource, Clip>)iter.next();
+                                AudioResource resource = pair.getKey();
+                                Clip clip = pair.getValue();
                                 if (!clip.isOpen()) {
                                     iter.remove();
                                 } else if (!clip.isRunning()) {
@@ -145,7 +161,7 @@ public class AudioEngine implements AudioService {
      * @param event L'event audio
      */
     @Override
-    public void onNotify(Event event) {
+    public void onNotify(EventObject event) {
 
         try {
             AudioEvent audioEvent;
