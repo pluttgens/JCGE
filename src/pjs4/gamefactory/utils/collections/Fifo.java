@@ -3,7 +3,7 @@ package pjs4.gamefactory.utils.collections;
 
 /**
  *
- * @author scalpa
+ * @author Pascal Luttgens
  * @param <E>
  */
 public interface Fifo<E> {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pjs4.gamefactory.utils;
+package pjs4.gamefactory.utils.collections;
 
 import pjs4.gamefactory.utils.collections.RingBuffer;
 import org.junit.Test;

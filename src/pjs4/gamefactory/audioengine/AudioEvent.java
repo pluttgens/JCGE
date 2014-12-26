@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pjs4.gamefactory.utils.audio;
+package pjs4.gamefactory.audioengine;
 
 import java.util.EventObject;
 
@@ -26,34 +26,39 @@ public class AudioEvent extends EventObject {
         private final String name;
 
     }
-
+    
+    private String id;
     private final Type type;
-    private final AudioResource resource;
-    private float volume;
+    private final String audioAsset;
+    private float volume = 0;
 
-    public AudioEvent(Object source, Type type, AudioResource resource) {
+    public AudioEvent(Object source, Type type, String audioAsset) {
         super(source);
         this.type = type;
-        this.resource = resource;
+        this.audioAsset = audioAsset;
     }
 
-    public AudioEvent(Object source, Type type, AudioResource resource, float volume) {
+    public AudioEvent(Object source, Type type, String audioAsset, String id) {
         super(source);
         this.type = type;
-        this.resource = resource;
-        this.volume = volume;
+        this.audioAsset = audioAsset;
+        this.id = id;
     }
 
     public Type getType() {
         return this.type;
     }
 
-    public AudioResource getResource() {
-        return this.resource;
+    public String getAsset() {
+        return this.audioAsset;
     }
 
     public float getVolume() {
         return this.volume;
+    }
+    
+    public String getId() {
+        return audioAsset +(id == null ? "" :  "_" + id);
     }
 
 }

@@ -5,13 +5,14 @@
  */
 package pjs4.gamefactory.audioengine;
 
-import pjs4.gamefactory.utils.audio.AudioEvent;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.EventObject;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javafx.util.Pair;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -20,7 +21,11 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import pjs4.gamefactory.services.AudioService;
-import pjs4.gamefactory.utils.audio.AudioResource;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.DataLine;
+import pjs4.gamefactory.services.ServiceLocator;
 import pjs4.gamefactory.utils.collections.RingBuffer;
 
 /**
@@ -42,11 +47,14 @@ import pjs4.gamefactory.utils.collections.RingBuffer;
  */
 public class AudioEngine implements AudioService {
 
-    private final RingBuffer<AudioEvent> soundEvents;
-    private final List<Pair<AudioResource, Clip>> playingSounds;
+    private final Object lock = new Object();
 
-    Thread handler;
-    Thread player;
+    private final static String assetType = "audio";
+
+    private final RingBuffer<AudioEvent> soundEvents;
+    private final HashMap<String, Clip> playingSounds;
+
+    private final Thread handler;
 
     /**
      * Construit un AudioEngine et initialise les collections ainsi que les
@@ -58,7 +66,7 @@ public class AudioEngine implements AudioService {
 
         this.soundEvents = new RingBuffer<>();
 
-        this.playingSounds = Collections.synchronizedList(new LinkedList<>());
+        this.playingSounds = new HashMap<>();
 
         this.handler = new Thread(
                 /**
@@ -69,62 +77,52 @@ public class AudioEngine implements AudioService {
                  */
                 () -> {
                     while (true) {
-                        synchronized (soundEvents) {
-                            AudioEvent event = soundEvents.get();
-                            AudioEvent.Type eventType = event.getType();
-                            if (eventType.equals(AudioEvent.Type.PLAY)) {
-                                Clip clip = loadClipFromEvent(event);
-                                if (clip != null) {
-                                    /**
-                                     * Ajoute un listener sur le clip pour le
-                                     * fermer lorsque sa lecture est finie.
-                                     */
-                                    clip.addLineListener((LineEvent le) -> {
-                                        if (le.getType().equals(LineEvent.Type.STOP)) {
+                         AudioEvent event;
+                        synchronized (lock) {
+                            event = soundEvents.get();
+                        }
+                        AudioEvent.Type eventType = event.getType();
+                        if (eventType.equals(AudioEvent.Type.PLAY)) {
+                            System.out.println("before loading");
+                            Clip clip = loadClipFromEvent(event);
+                            System.out.println("loaded");
+                            if (clip != null) {
+                                System.out.println("clip not null");
+                                clip.addLineListener((LineEvent le) -> {
+                                    if (le.getType().equals(LineEvent.Type.STOP)) {
+                                        long eventPos = le.getFramePosition();
+                                        Clip eventClip = (Clip) le.getLine();
+                                        if (eventPos - eventClip.getFrameLength() > -0.1
+                                        && eventPos - eventClip.getFrameLength() < 0.1) {
                                             le.getLine().close();
                                         }
-                                    });
-                                    synchronized (playingSounds) {
-                                        playingSounds.add(new Pair<>(event.getResource(), clip));
                                     }
+                                });
+                                /**
+                                 * Ajoute un listener sur le clip pour le fermer
+                                 * lorsque sa lecture est finie.
+                                 */
+                                clip.addLineListener((LineEvent le) -> {
+                                    if (le.getType().equals(LineEvent.Type.CLOSE)) {
+                                        String id = event.getId();
+                                        le.getLine().close();
+                                        playingSounds.remove(id);
+                                    }
+                                });
+
+                                synchronized (playingSounds) {
+                                    playingSounds.put(event.getId(), clip);
                                 }
+
+                                clip.start();
+
                             } else if (eventType.equals(AudioEvent.Type.STOP)) {
                                 synchronized (playingSounds) {
-                                    for (Pair<AudioResource, Clip> playingSound : playingSounds) {
-                                        if (playingSound.getKey().equals(event.getResource())) {
-                                            Clip clip = playingSound.getValue();
-                                            clip.stop();
-                                            clip.close();
-                                            break;
-                                        }
-                                    }
+                                    playingSounds.get(event.getId()).stop();
                                 }
                             }
                         }
-                    }
-                });
 
-        this.player = new Thread(
-                /**
-                 * Lance la lecture des sons qui ne sont pas déjà lancés et
-                 * supprime ceux qui ont fini de jouer.
-                 */
-                () -> {
-                    while (true) {
-                        synchronized (playingSounds) {
-                            Iterator iter = playingSounds.iterator();
-                            while (iter.hasNext()) {
-                                Pair<AudioResource, Clip> pair = (Pair<AudioResource, Clip>)iter.next();
-                                AudioResource resource = pair.getKey();
-                                Clip clip = pair.getValue();
-                                if (!clip.isOpen()) {
-                                    iter.remove();
-                                } else if (!clip.isRunning()) {
-                                    clip.start();
-                                }
-
-                            }
-                        }
                     }
                 });
 
@@ -140,14 +138,20 @@ public class AudioEngine implements AudioService {
      * @return Le clip du système initialisé avec la ressource
      */
     private Clip loadClipFromEvent(AudioEvent ae) {
-        synchronized (soundEvents) {
+        synchronized (lock) {
             try {
-                AudioInputStream inputStream = AudioSystem.getAudioInputStream(ae.getResource().getAudioFile());
-                Clip clip = AudioSystem.getClip();
-                clip.open(inputStream);
+                AudioInputStream inputStream = (AudioInputStream) ServiceLocator.getAssetManager().getAsset(assetType, ae.getAsset());
+                AudioFormat af = inputStream.getFormat();
+                int size = (int) (af.getFrameSize() * inputStream.getFrameLength());
+                byte[] audio = new byte[size];
+                DataLine.Info info = new DataLine.Info(Clip.class, af, size);
+                inputStream.read(audio, 0, size);
+
+                Clip clip = (Clip) AudioSystem.getLine(info);
+                clip.open(af, audio, 0, size);
                 return clip;
-            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-                ex.printStackTrace();
+            } catch (LineUnavailableException | IOException ex) {
+                Logger.getLogger(AudioEngine.class.getName()).log(Level.SEVERE, null, ex);
             }
             return null;
         }
@@ -162,18 +166,11 @@ public class AudioEngine implements AudioService {
      */
     @Override
     public void onNotify(EventObject event) {
-
         try {
-            AudioEvent audioEvent;
-            audioEvent = (AudioEvent) event;
-            AudioEvent.Type type = audioEvent.getType();
-            if (type.equals(AudioEvent.Type.PLAY)) {
-                soundEvents.add(audioEvent);
-            }
+            soundEvents.add((AudioEvent) event);
         } catch (ClassCastException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(AudioEngine.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**
@@ -181,7 +178,6 @@ public class AudioEngine implements AudioService {
      */
     public void start() {
         handler.start();
-        player.start();
     }
 
 }

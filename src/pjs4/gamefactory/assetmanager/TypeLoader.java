@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pjs4.gamefactory.utils.events;
+package pjs4.gamefactory.assetmanager;
 
-import java.util.EventObject;
+import java.io.InputStream;
 
 /**
  *
  * @author scalpa
  */
-public interface Subject {
-
-    Notifier getNotifier();
+public interface TypeLoader {
+    
+    Object LoadFromStream (InputStream asseInputStream);
     
 }

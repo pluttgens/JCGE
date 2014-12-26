@@ -2,9 +2,17 @@ package pjs4.gamefactory.game;
 
 import java.awt.Canvas;
 import java.util.EventObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import pjs4.gamefactory.assetmanager.AssetManager;
+import pjs4.gamefactory.assetmanager.AudioAssetLoader;
+import pjs4.gamefactory.assetmanager.FileProvider;
+import pjs4.gamefactory.audioengine.AudioEngine;
+import pjs4.gamefactory.audioengine.AudioEvent;
 import pjs4.gamefactory.displayable.Scene;
-import pjs4.gamefactory.utils.events.Observer;
 import pjs4.gamefactory.inputhandler.InputHandler;
+import pjs4.gamefactory.services.ServiceLocator;
+import pjs4.gamefactory.utils.events.Notifier;
 
 /**
  *
@@ -61,12 +69,8 @@ public class Game extends Canvas implements Runnable {
         this.scene = scene;
         window();
         InputHandler ih = new InputHandler();
-        ih.notifier.registerObserver(new Observer() {
-
-            @Override
-            public void onNotify(EventObject event) {
-                System.out.println("ca marche");
-            }
+        ih.getNotifier().registerObserver((EventObject event) -> {
+            System.out.println("ca marche");
         });
         addKeyListener(ih);
     }
@@ -155,18 +159,36 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void main(String[] args) {
-        /*
-         * try { AudioEngine ae = new AudioEngine(); ae.start();
-         * Thread.sleep(1000); AudioEvent event = new
-         * AudioEvent(AudioEvent.Type.PLAY, AudioResource.TEST); Notifier n =
-         * new Notifier(new Object()); n.registerObserver(ae);
-         * n.notifyObservers(event); Thread.sleep(10000); AudioEvent event2 =
-         * new AudioEvent(AudioEvent.Type.PLAY, AudioResource.TEST2);
-         * n.notifyObservers(event2); Thread.sleep(5000000); } catch
-         * (InterruptedException ex) {
-         * Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex); }
-         */
-        new Game(800, 600, "test", new Scene());
+        try {
+            /*
+             * try { AudioEngine ae = new AudioEngine(); ae.start();
+             * Thread.sleep(1000); AudioEvent event = new
+             * AudioEvent(AudioEvent.Type.PLAY, AudioResource.TEST); Notifier n
+             * = new Notifier(new Object()); n.registerObserver(ae);
+             * n.notifyObservers(event); Thread.sleep(10000); AudioEvent event2
+             * = new AudioEvent(AudioEvent.Type.PLAY, AudioResource.TEST2);
+             * n.notifyObservers(event2); Thread.sleep(5000000); } catch
+             * (InterruptedException ex) {
+             * Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null,
+             * ex); }
+             */
+            new Game(800, 600, "test", new Scene());
 
+            AssetManager am = new AssetManager(new FileProvider());
+            am.registerType("audio", new AudioAssetLoader());
+            ServiceLocator.provideAssetManager(am);
+            AudioEngine ae = new AudioEngine();
+            ae.start();
+            Notifier n = new Notifier();
+            n.registerObserver(ae);
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1"));
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2"));
+            Thread.sleep(10000);
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2"));
+
+ 
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

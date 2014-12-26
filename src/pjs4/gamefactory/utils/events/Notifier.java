@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @since 1.0
  */
-public class Notifier implements Subject {
+public class Notifier {
     
     private final Object lock;
     
@@ -32,7 +32,6 @@ public class Notifier implements Subject {
         this.lock = new Object();
     }
     
-    @Override
     public void registerObserver(Observer o) {
         synchronized (lock) {
             if (!observers.contains(o)) {
@@ -41,21 +40,18 @@ public class Notifier implements Subject {
         }
     }
     
-    @Override
     public void unregisterObserver(Observer o) {
         synchronized (lock) {
             observers.remove(o);
         }
     }
     
-    @Override
     public boolean isRegistered(Observer o) {
         synchronized (lock) {
             return observers.contains(o);
         }
     }
     
-    @Override
     public void notifyObservers(EventObject e) {
         synchronized (lock) {
             for (Observer o : observers) {
