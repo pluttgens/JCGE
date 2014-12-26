@@ -5,21 +5,15 @@
  */
 package pjs4.gamefactory.audioengine;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import javafx.util.Pair;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import pjs4.gamefactory.services.AudioService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,17 +71,21 @@ public class AudioEngine implements AudioService {
                  */
                 () -> {
                     while (true) {
-                         AudioEvent event;
+                        AudioEvent event;
                         synchronized (lock) {
                             event = soundEvents.get();
                         }
                         AudioEvent.Type eventType = event.getType();
                         if (eventType.equals(AudioEvent.Type.PLAY)) {
-                            System.out.println("before loading");
+                            if (playingSounds.containsKey(event.getId())) {
+                                Clip c = playingSounds.get(event.getId());
+                                if (!c.isRunning()) {
+                                    c.start();
+                                    continue;
+                                }
+                            }
                             Clip clip = loadClipFromEvent(event);
-                            System.out.println("loaded");
                             if (clip != null) {
-                                System.out.println("clip not null");
                                 clip.addLineListener((LineEvent le) -> {
                                     if (le.getType().equals(LineEvent.Type.STOP)) {
                                         long eventPos = le.getFramePosition();
@@ -116,13 +114,13 @@ public class AudioEngine implements AudioService {
 
                                 clip.start();
 
-                            } else if (eventType.equals(AudioEvent.Type.STOP)) {
-                                synchronized (playingSounds) {
-                                    playingSounds.get(event.getId()).stop();
-                                }
+                            }
+
+                        } else if (eventType.equals(AudioEvent.Type.STOP)) {
+                            synchronized (playingSounds) {
+                                playingSounds.get(event.getId()).stop();
                             }
                         }
-
                     }
                 });
 
@@ -145,7 +143,10 @@ public class AudioEngine implements AudioService {
                 int size = (int) (af.getFrameSize() * inputStream.getFrameLength());
                 byte[] audio = new byte[size];
                 DataLine.Info info = new DataLine.Info(Clip.class, af, size);
+                inputStream.mark(size);
                 inputStream.read(audio, 0, size);
+                inputStream.reset();
+                System.out.println(inputStream.available());
 
                 Clip clip = (Clip) AudioSystem.getLine(info);
                 clip.open(af, audio, 0, size);

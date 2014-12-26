@@ -183,10 +183,14 @@ public class Game extends Canvas implements Runnable {
             n.registerObserver(ae);
             n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1"));
             n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2"));
+            Thread.sleep(500);
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1"));
+            Thread.sleep(10000);
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2", "2"));
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1"));
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.STOP, "test2"));
             Thread.sleep(10000);
             n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2"));
-
- 
         } catch (InterruptedException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
