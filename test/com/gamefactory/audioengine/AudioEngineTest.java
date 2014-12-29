@@ -5,6 +5,8 @@
  */
 package com.gamefactory.audioengine;
 
+import com.gamefactory.assets.assetmanager.AssetManager;
+import com.gamefactory.services.ServiceLocator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
@@ -18,17 +20,13 @@ public class AudioEngineTest {
 
     @Test
     public void test() {
-        try {
-            AudioEngine ae = new AudioEngine();
-            ae.start();
-            
-            Notifier n = new Notifier();
-            n.registerObserver(ae);
-            n.notifyObservers(new AudioEvent(ae, AudioEvent.Type.PLAY, "test1"));
-            Thread.sleep(100000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(AudioEngineTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ServiceLocator.provideAssetManager(new AssetManager());
+        AudioEngine ae = new AudioEngine();
+        ae.start();
+
+        Notifier n = new Notifier();
+        n.registerObserver(ae);
+        n.notifyObservers(new AudioEvent(ae, AudioEvent.Type.PLAY, "test1.wav"));
     }
 
 }

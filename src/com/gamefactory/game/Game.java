@@ -1,22 +1,27 @@
 package com.gamefactory.game;
 
-import java.awt.Canvas;
-import java.util.EventObject;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import com.gamefactory.assetmanager.AssetManager;
-import com.gamefactory.assetmanager.AudioAssetLoader;
-import com.gamefactory.assetmanager.FileProvider;
+import com.gamefactory.assets.assetmanager.AssetManager;
 import com.gamefactory.audioengine.AudioEngine;
 import com.gamefactory.audioengine.AudioEvent;
 import com.gamefactory.displayable.Scene;
+import com.gamefactory.graphicengine.TileSheet;
 import com.gamefactory.inputhandler.InputHandler;
 import com.gamefactory.services.ServiceLocator;
 import com.gamefactory.utils.events.Notifier;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.EventObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
- * @author Pascal Luttgens
+ * @autimport java.io.InputStream; hor Pascal Luttgens
  */
 public class Game extends Canvas implements Runnable {
 
@@ -151,48 +156,55 @@ public class Game extends Canvas implements Runnable {
         scene.update();
     }
 
+    private BufferedImage image = new TileSheet("tileset.png").loadTile();
+
     /**
      * Met à jour l'affichage de tous les élément de la scene
      */
     public void render() {
-        scene.render();
+        BufferStrategy bs = this.getBufferStrategy();
+        if (bs == null) {
+            this.createBufferStrategy(3);
+            return;
+        }
+
+        Graphics g = bs.getDrawGraphics();
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, WIDTH, HEIGHT);
+        scene.render(g);
+
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+        bs.show();
     }
 
-    public static void main(String[] args) {
-        try {
-            /*
-             * try { AudioEngine ae = new AudioEngine(); ae.start();
-             * Thread.sleep(1000); AudioEvent event = new
-             * AudioEvent(AudioEvent.Type.PLAY, AudioResource.TEST); Notifier n
-             * = new Notifier(new Object()); n.registerObserver(ae);
-             * n.notifyObservers(event); Thread.sleep(10000); AudioEvent event2
-             * = new AudioEvent(AudioEvent.Type.PLAY, AudioResource.TEST2);
-             * n.notifyObservers(event2); Thread.sleep(5000000); } catch
-             * (InterruptedException ex) {
-             * Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null,
-             * ex); }
-             */
-            new Game(800, 600, "test", new Scene());
+    public static void main(String[] args) throws IOException {
 
-            AssetManager am = new AssetManager(new FileProvider());
-            am.registerType("audio", new AudioAssetLoader());
-            ServiceLocator.provideAssetManager(am);
+        ServiceLocator.provideAssetManager(new AssetManager());
+        new Game(800, 600, "test", new Scene());
+
+        try {
+
             AudioEngine ae = new AudioEngine();
             ae.start();
             Notifier n = new Notifier();
             n.registerObserver(ae);
-            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1"));
-            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2"));
+            n.notifyObservers(new AudioEvent(n,
+                    AudioEvent.Type.PLAY, "test1.wav"));
+            n.notifyObservers(new AudioEvent(n,
+                    AudioEvent.Type.PLAY, "test2.wav"));
             Thread.sleep(500);
-            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1"));
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1.wav"));
             Thread.sleep(10000);
-            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2", "2"));
-            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1"));
-            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.STOP, "test2"));
+            n.notifyObservers(new AudioEvent(n,
+                    AudioEvent.Type.PLAY, "test2.wav", "2"));
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1.wav"));
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.STOP, "test2.wav"));
             Thread.sleep(10000);
-            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2"));
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2.wav"));
         } catch (InterruptedException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 }

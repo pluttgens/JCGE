@@ -1,6 +1,7 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
+import java.awt.Graphics;
 
 /**
  * Superclass représentant tous les objets du jeu.
@@ -19,7 +20,7 @@ public abstract class GameObject implements Displayable {
      * - Pascal Luttgens.
      */
     protected final ComponentManager componentManager;
-    
+
     /**
      * Flag indiquant si le Game Object doit call update et render. Utile pour
      * le pattern object pool qui consiste a avoir une liste d'objets
@@ -64,18 +65,20 @@ public abstract class GameObject implements Displayable {
      * - Pascal Luttgens.
      */
     protected void updateObject() {
-        
+
     }
 
     /**
      * Vérifie que le Game Object est actif avant de procéder au rendering.
      *
      * - Pascal Luttgens.
+     *
+     * @param g
      */
     @Override
-    public final void render() {
+    public final void render(Graphics g) {
         if (this.isActive) {
-            renderObject();
+            renderObject(g);
         }
     }
 
@@ -85,7 +88,7 @@ public abstract class GameObject implements Displayable {
      *
      * - Pascal Luttgens.
      */
-    protected void renderObject() {
+    protected void renderObject(Graphics g) {
 
     }
 

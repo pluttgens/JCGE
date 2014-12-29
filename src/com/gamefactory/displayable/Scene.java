@@ -2,6 +2,7 @@ package com.gamefactory.displayable;
 
 import java.util.List;
 import com.gamefactory.game.Displayable;
+import java.awt.Graphics;
 
 /**
  *
@@ -17,7 +18,7 @@ public class Scene implements Displayable {
     }
 
     @Override
-    public void render() {
+    public void render(Graphics g) {
    
     }
     

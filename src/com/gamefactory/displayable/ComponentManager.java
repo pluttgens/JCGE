@@ -37,7 +37,7 @@ public class ComponentManager {
     public void init(String[] componentNames) {
         for (String componentName : componentNames) {
             try {
-                components.add((Component) Class.forName("pjs4.gamefactory.components." + componentName).newInstance());
+                components.add((Component) Class.forName("com.gamefactory.components." + componentName).newInstance());
             } catch (ClassNotFoundException ex) {
                 throw new IllegalArgumentException("Le component " + componentName + " n'existe pas.");
             } catch (InstantiationException | IllegalAccessException ex) {

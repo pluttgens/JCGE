@@ -5,7 +5,15 @@
  */
 package com.gamefactory.services;
 
-import com.gamefactory.assetmanager.AssetManager;
+import com.gamefactory.assets.assetmanager.AssetManager;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONObject;
 
 /**
  * Le locateur de service sert d'interface entre le code et les services afin de
@@ -19,22 +27,42 @@ import com.gamefactory.assetmanager.AssetManager;
  */
 public class ServiceLocator {
 
-    private static AudioService audioService;
+    private final static JSONObject config = getJSONObjectFromFile(new File("config/config.cfg"));
+    private final static HashMap<String, Service> services = new HashMap<>();
     private static AssetManager assetManager;
 
-    public static void provideAudioService(AudioService audioService) {
-        ServiceLocator.audioService = audioService;
+    public static void provideService(String serviceName, Service service) {
+        ServiceLocator.services.put(serviceName, service);
     }
 
     public static void provideAssetManager(AssetManager assetManager) {
         ServiceLocator.assetManager = assetManager;
     }
 
-    public static AudioService getAudioService() {
-        return audioService;
+    public static Service getService(String type) {
+        return ServiceLocator.services.get(type);
     }
 
     public static AssetManager getAssetManager() {
         return assetManager;
+    }
+
+    public static JSONObject getConfig() {
+        return ServiceLocator.config;
+    }
+
+    public static JSONObject getJSONObjectFromFile(File file) {
+        try (FileReader fr = new FileReader(file)) {
+            String json = new String();
+            while (fr.ready()) {
+                json += (char) fr.read();
+            }
+            int index = json.indexOf("{");
+            json = json.substring(index);
+            return new JSONObject(json);
+        } catch (IOException ex) {
+            Logger.getLogger(ServiceLocator.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex);
+        }
     }
 }

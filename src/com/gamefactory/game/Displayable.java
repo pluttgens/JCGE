@@ -1,5 +1,7 @@
 package com.gamefactory.game;
 
+import java.awt.Graphics;
+
 /**
  * Interface définissant les deux méthodes à implémenter pour qu'un objet soit
  * affichable par le jeu.
@@ -14,6 +16,6 @@ public interface Displayable {
 
     void update();
 
-    void render();
+    void render(Graphics g);
 
 }

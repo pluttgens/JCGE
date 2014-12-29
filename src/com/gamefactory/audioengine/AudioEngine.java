@@ -5,6 +5,7 @@
  */
 package com.gamefactory.audioengine;
 
+import com.gamefactory.assets.types.AudioAsset;
 import java.io.IOException;
 import java.util.EventObject;
 import java.util.HashMap;
@@ -20,6 +21,8 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.DataLine;
 import com.gamefactory.services.ServiceLocator;
 import com.gamefactory.utils.collections.RingBuffer;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.SourceDataLine;
 
 /**
  * AudioEngine est le moteur audio par défaut de la librairie, il permet de
@@ -137,20 +140,11 @@ public class AudioEngine implements AudioService {
     private Clip loadClipFromEvent(AudioEvent ae) {
         synchronized (lock) {
             try {
-                AudioInputStream inputStream = (AudioInputStream) ServiceLocator.getAssetManager().getAsset(assetType, ae.getAsset());
-                AudioFormat af = inputStream.getFormat();
-                int size = (int) (af.getFrameSize() * inputStream.getFrameLength());
-                byte[] audio = new byte[size];
-                DataLine.Info info = new DataLine.Info(Clip.class, af, size);
-                inputStream.mark(size);
-                inputStream.read(audio, 0, size);
-                inputStream.reset();
-                System.out.println(inputStream.available());
-
-                Clip clip = (Clip) AudioSystem.getLine(info);
-                clip.open(af, audio, 0, size);
+                AudioAsset audioAsset = (AudioAsset) ServiceLocator.getAssetManager().getAssetCopy(assetType, ae.getAsset());               
+                Clip clip = (Clip) AudioSystem.getLine(audioAsset.getInfo());                
+                clip.open(audioAsset.getFormat(),  audioAsset.getAudioData(), 0, audioAsset.getAudioData().length);
                 return clip;
-            } catch (LineUnavailableException | IOException ex) {
+            } catch (LineUnavailableException ex) {
                 Logger.getLogger(AudioEngine.class.getName()).log(Level.SEVERE, null, ex);
             }
             return null;

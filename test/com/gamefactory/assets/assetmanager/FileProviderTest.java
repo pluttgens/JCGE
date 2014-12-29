@@ -3,16 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.assetmanager;
+package com.gamefactory.assets.assetmanager;
 
-import java.io.InputStream;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author scalpa
  */
-public interface TypeLoader {
+public class FileProviderTest {
     
-    Object LoadFromStream (InputStream asseInputStream);
+    @Test
+    public void test() {
+    }
     
 }
