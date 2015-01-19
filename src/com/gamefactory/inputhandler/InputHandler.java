@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.inputhandler;
 
 import java.awt.event.KeyEvent;
@@ -11,8 +6,13 @@ import com.gamefactory.utils.events.Notifier;
 import com.gamefactory.utils.events.Subject;
 
 /**
+ * 
+ * 
+ * @author Pascal Luttgens
  *
- * @author scalpa
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public class InputHandler implements KeyListener, Subject {
 

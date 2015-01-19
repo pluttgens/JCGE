@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.audioengine;
 
 import java.util.EventObject;
 
 /**
- * AudioEvent permet d'identifier une requête effectuée au Moteur Audio/
+ * AudioEvent permet d'identifier une requête effectuée au Moteur Audio.
  *
  * @author Pascal Luttgens
  */

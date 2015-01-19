@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.assets.cache;
 
 import com.gamefactory.assets.assetmanager.Asset;
@@ -10,6 +5,16 @@ import com.gamefactory.assets.assetmanager.AssetCache;
 import com.gamefactory.assets.assetmanager.AssetKey;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Implémentation basique de l'interface AssetCache sans aucun comportement
+ * prédéfini pour la supression des assets.
+ *
+ * @author Pascal Luttgens
+ *
+ * @version 1.0
+ *
+ * @since 1.0
+ */
 public class BasicCacheImpl implements AssetCache {
 
     private final ConcurrentHashMap<AssetKey, Asset> cache;

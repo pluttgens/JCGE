@@ -19,7 +19,7 @@ public abstract class Component {
 
     // private final int updatePriority; je reflechis encore à comment l'implémenter - Pascal Luttgens.
     /**
-     * Retourne l'indice de priorité permettant de determiner à quel moment la
+     * Retourne l'indice de priorité permettant de déterminer à quel moment la
      * méthode update du component va etre appelée par rapport aux autres
      * components faisant parti d'une même liste.
      *

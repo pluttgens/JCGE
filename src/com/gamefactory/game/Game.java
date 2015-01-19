@@ -156,7 +156,7 @@ public class Game extends Canvas implements Runnable {
         scene.update();
     }
 
-    private BufferedImage image = new TileSheet("tileset.png").loadTile();
+    private BufferedImage image = new TileSheet("tileset.png").loadTile(1);
 
     /**
      * Met à jour l'affichage de tous les élément de la scene
@@ -174,6 +174,8 @@ public class Game extends Canvas implements Runnable {
         scene.render(g);
 
         g.drawImage(image, 0, 0, null);
+        
+        
         g.dispose();
         bs.show();
     }

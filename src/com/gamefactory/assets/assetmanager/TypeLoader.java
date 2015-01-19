@@ -1,17 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.assets.assetmanager;
 
-
 /**
+ * L'interface TypeLoader permet de charger un asset à partir d'un
+ * InputStreamWithMime. En effet en fonction du type d'asset (image, son,
+ * texte...), ceux-ci ne seront pas stockée de la même façon dans le cache et 
+ * nécessite donc différentes implémentations de la méthode LoadFromStream.
  *
- * @author scalpa
+ *
+ * @author Pascal Luttgens
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public interface TypeLoader {
-    
-    public Asset LoadFromStream (AssetInputStreamProvider.DecoratedInputStream assetInputStream);
-    
+
+    public Asset LoadFromStream(AssetInputStreamProvider.InputStreamWithMime assetInputStream);
+
 }

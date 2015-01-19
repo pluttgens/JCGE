@@ -8,6 +8,10 @@ package com.gamefactory.services;
 /**
  *
  * @author Pascal Luttgens
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public interface Resource {
     

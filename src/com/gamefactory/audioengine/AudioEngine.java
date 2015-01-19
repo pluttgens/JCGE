@@ -1,28 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.audioengine;
 
 import com.gamefactory.assets.types.AudioAsset;
-import java.io.IOException;
 import java.util.EventObject;
 import java.util.HashMap;
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
-import com.gamefactory.services.AudioService;
+import com.gamefactory.services.Service;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.DataLine;
 import com.gamefactory.services.ServiceLocator;
-import com.gamefactory.utils.collections.RingBuffer;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.SourceDataLine;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * AudioEngine est le moteur audio par défaut de la librairie, il permet de
@@ -41,13 +30,13 @@ import javax.sound.sampled.SourceDataLine;
  *
  * @since 1.0
  */
-public class AudioEngine implements AudioService {
+public class AudioEngine implements Service {
 
     private final Object lock = new Object();
 
     private final static String assetType = "audio";
 
-    private final RingBuffer<AudioEvent> soundEvents;
+    private final LinkedBlockingQueue<AudioEvent> soundEvents;
     private final HashMap<String, Clip> playingSounds;
 
     private final Thread handler;
@@ -60,7 +49,7 @@ public class AudioEngine implements AudioService {
      */
     public AudioEngine() {
 
-        this.soundEvents = new RingBuffer<>();
+        this.soundEvents = new LinkedBlockingQueue<>();
 
         this.playingSounds = new HashMap<>();
 
@@ -74,54 +63,58 @@ public class AudioEngine implements AudioService {
                 () -> {
                     while (true) {
                         AudioEvent event;
-                        synchronized (lock) {
-                            event = soundEvents.get();
-                        }
-                        AudioEvent.Type eventType = event.getType();
-                        if (eventType.equals(AudioEvent.Type.PLAY)) {
-                            if (playingSounds.containsKey(event.getId())) {
-                                Clip c = playingSounds.get(event.getId());
-                                if (!c.isRunning()) {
-                                    c.start();
-                                    continue;
+
+                        try {
+                            event = soundEvents.take();
+
+                            AudioEvent.Type eventType = event.getType();
+                            if (eventType.equals(AudioEvent.Type.PLAY)) {
+                                if (playingSounds.containsKey(event.getId())) {
+                                    Clip c = playingSounds.get(event.getId());
+                                    if (!c.isRunning()) {
+                                        c.start();
+                                        continue;
+                                    }
                                 }
-                            }
-                            Clip clip = loadClipFromEvent(event);
-                            if (clip != null) {
-                                clip.addLineListener((LineEvent le) -> {
-                                    if (le.getType().equals(LineEvent.Type.STOP)) {
-                                        long eventPos = le.getFramePosition();
-                                        Clip eventClip = (Clip) le.getLine();
-                                        if (eventPos - eventClip.getFrameLength() > -0.1
-                                        && eventPos - eventClip.getFrameLength() < 0.1) {
-                                            le.getLine().close();
+                                Clip clip = loadClipFromEvent(event);
+                                if (clip != null) {
+                                    clip.addLineListener((LineEvent le) -> {
+                                        if (le.getType().equals(LineEvent.Type.STOP)) {
+                                            long eventPos = le.getFramePosition();
+                                            Clip eventClip = (Clip) le.getLine();
+                                            if (eventPos - eventClip.getFrameLength() > -0.1
+                                            && eventPos - eventClip.getFrameLength() < 0.1) {
+                                                le.getLine().close();
+                                            }
                                         }
-                                    }
-                                });
-                                /**
-                                 * Ajoute un listener sur le clip pour le fermer
-                                 * lorsque sa lecture est finie.
-                                 */
-                                clip.addLineListener((LineEvent le) -> {
-                                    if (le.getType().equals(LineEvent.Type.CLOSE)) {
-                                        String id = event.getId();
-                                        le.getLine().close();
-                                        playingSounds.remove(id);
-                                    }
-                                });
+                                    });
+                                    /**
+                                     * Ajoute un listener sur le clip pour le
+                                     * fermer lorsque sa lecture est finie.
+                                     */
+                                    clip.addLineListener((LineEvent le) -> {
+                                        if (le.getType().equals(LineEvent.Type.CLOSE)) {
+                                            String id = event.getId();
+                                            le.getLine().close();
+                                            playingSounds.remove(id);
+                                        }
+                                    });
 
-                                synchronized (playingSounds) {
-                                    playingSounds.put(event.getId(), clip);
+                                    synchronized (playingSounds) {
+                                        playingSounds.put(event.getId(), clip);
+                                    }
+
+                                    clip.start();
+
                                 }
 
-                                clip.start();
-
+                            } else if (eventType.equals(AudioEvent.Type.STOP)) {
+                                synchronized (playingSounds) {
+                                    playingSounds.get(event.getId()).stop();
+                                }
                             }
-
-                        } else if (eventType.equals(AudioEvent.Type.STOP)) {
-                            synchronized (playingSounds) {
-                                playingSounds.get(event.getId()).stop();
-                            }
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(AudioEngine.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 });
@@ -137,12 +130,13 @@ public class AudioEngine implements AudioService {
      *
      * @return Le clip du système initialisé avec la ressource
      */
+
     private Clip loadClipFromEvent(AudioEvent ae) {
         synchronized (lock) {
             try {
-                AudioAsset audioAsset = (AudioAsset) ServiceLocator.getAssetManager().getAssetCopy(assetType, ae.getAsset());               
-                Clip clip = (Clip) AudioSystem.getLine(audioAsset.getInfo());                
-                clip.open(audioAsset.getFormat(),  audioAsset.getAudioData(), 0, audioAsset.getAudioData().length);
+                AudioAsset audioAsset = (AudioAsset) ServiceLocator.getAssetManager().getAssetCopy(assetType, ae.getAsset());
+                Clip clip = (Clip) AudioSystem.getLine(audioAsset.getInfo());
+                clip.open(audioAsset.getFormat(), audioAsset.getAudioData(), 0, audioAsset.getAudioData().length);
                 return clip;
             } catch (LineUnavailableException ex) {
                 Logger.getLogger(AudioEngine.class.getName()).log(Level.SEVERE, null, ex);
@@ -171,7 +165,7 @@ public class AudioEngine implements AudioService {
      * Lance les processus de l'AudioEngine.
      */
     public void start() {
-        handler.start();
+        this.handler.start();
     }
 
 }

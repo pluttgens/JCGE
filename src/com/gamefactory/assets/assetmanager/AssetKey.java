@@ -1,22 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.assets.assetmanager;
 
 import java.util.Objects;
 
 /**
+ * La classe AssetKey représente une clé permettant d'identifier un asset.
  *
- * @author scalpa
+ * Elle est composée de : - le type qui représente le dossier dans lequel se
+ * trouve l'asset. - le nom de l'asset qui contient l'extension
+ *
+ * Supposons que l'on est un fichier asset.png dans le dossier images, on pourra
+ * accéder à celui ci en créeant un new AssetKey("images", "asset.png").
+ *
+ * @author Pascal Luttgens
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public class AssetKey {
-    
+
     protected final String type;
-    
+
     protected final String name;
-    
+
     protected final String extension;
 
     public AssetKey(String type, String name) {
@@ -24,14 +30,13 @@ public class AssetKey {
         this.name = name;
         this.extension = retrieveExtension(name);
     }
-    
-    
+
     private String retrieveExtension(String assetName) {
         int index = assetName.lastIndexOf(".");
         if (index <= 0 || index == assetName.length() - 1) {
             throw new IllegalArgumentException("Nom d'asset invalide.");
         }
-        return assetName.substring(index + 1); 
+        return assetName.substring(index + 1);
     }
 
     public String getType() {
@@ -73,7 +78,4 @@ public class AssetKey {
         return true;
     }
 
-
-
-    
 }

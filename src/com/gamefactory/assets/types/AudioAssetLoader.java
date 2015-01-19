@@ -19,10 +19,30 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * La classe AudioAssetLoader permet de créer un AudioAsset optimisé pour son
+ * stockage et son utilisation pour le moteur à paritr d'un InputStreamWithMime.
+ *
+ * @author Pascal Luttgens
+ *
+ * @version 1.0
+ *
+ * @since 1.0
+ */
 public class AudioAssetLoader implements TypeLoader {
 
+    /**
+     * Retourne un AudioAsset à partir d'un InputStream. Le MIME est inutile
+     * ici.
+     *
+     * - Pascal Luttgens.
+     *
+     * @param assetInputStream
+     *
+     * @return un AudioAsset.
+     */
     @Override
-    public Asset LoadFromStream(AssetInputStreamProvider.DecoratedInputStream assetInputStream) {
+    public Asset LoadFromStream(AssetInputStreamProvider.InputStreamWithMime assetInputStream) {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(assetInputStream.getInputStream()));
             AudioFormat af = ais.getFormat();
@@ -34,7 +54,7 @@ public class AudioAssetLoader implements TypeLoader {
             return new AudioAsset(audio, af, info);
         } catch (UnsupportedAudioFileException | IOException ex) {
             Logger.getLogger(AudioAssetLoader.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IllegalArgumentException("Impossible de creer un asset à partir du stream.");
         }
-        return null;
     }
 }

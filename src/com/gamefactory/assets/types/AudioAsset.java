@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.assets.types;
 
 import com.gamefactory.assets.assetmanager.Asset;
@@ -12,14 +7,19 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.DataLine;
 
 /**
+ * La classe AudioAsset représente le stockage d'une resource audio.
+ * 
+ * @author Pascal Luttgens
  *
- * @author scalpa
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public class AudioAsset extends Asset {
 
-    private byte[] audioData;
-    private AudioFormat af;
-    private DataLine.Info info;
+    private final byte[] audioData;
+    private final AudioFormat af;
+    private final DataLine.Info info;
 
     public AudioAsset(byte[] audioData, AudioFormat af, DataLine.Info info) {
         this.audioData = audioData;
@@ -57,10 +57,7 @@ public class AudioAsset extends Asset {
             return false;
         }
         final AudioAsset other = (AudioAsset) obj;
-        if (!Arrays.equals(this.audioData, other.audioData)) {
-            return false;
-        }
-        return true;
+        return Arrays.equals(this.audioData, other.audioData);
     }
     
     

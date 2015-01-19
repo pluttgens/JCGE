@@ -8,25 +8,22 @@ package com.gamefactory.graphicengine;
 import com.gamefactory.assets.types.TileAsset;
 import com.gamefactory.services.ServiceLocator;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
+ * La classe TileSheet représente une grille de tile.
+ * 
+ * @author Pascal Luttgens
  *
- * @author scalpa
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public class TileSheet {
 
-    BufferedImage im;
+    private final BufferedImage im;
 
     public TileSheet(String name) {
         im = loadTileSheet(name);
@@ -42,7 +39,8 @@ public class TileSheet {
         }
     }
     
-    public BufferedImage loadTile() {
+    //A continuer
+    public BufferedImage loadTile(int position) {
         return im.getSubimage(0, 0, 32, 32);
     }
 

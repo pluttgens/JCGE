@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.services;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,7 +13,10 @@ import org.json.JSONObject;
  * Le locateur de service sert d'interface entre le code et les services afin de
  * les découpler et de contrôler l'instance des services.
  *
- * @author Pascal Luttgens.
+ * Il possède aussi des méthodes statiques utilites notamment pour l'utilisation
+ * des objet JSON.
+ *
+ * @author Pascal Luttgens
  *
  * @version 1.0
  *

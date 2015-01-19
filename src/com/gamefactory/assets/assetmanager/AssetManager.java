@@ -1,23 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.assets.assetmanager;
 
+import com.gamefactory.assets.providers.FileProvider;
 import com.gamefactory.assets.cache.BasicCacheImpl;
 import com.gamefactory.services.ServiceLocator;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONObject;
 
 /**
+ * L'AssetManager est la facade de tout notre systeme de gestion d'asset. C'est
+ * lui qui va servir d'interface entre le reste du programme et tous les aspects
+ * liés à la gestion des assets.
  *
- * @author scalpa
+ * Il contient (pour l'instant) un provider mais on pourrait peut être en avoir
+ * plusieurs de même pour le cache et une map de TypeLoaders.
+ *
+ * Il ne propose que à l'utilisateur de charger un asset, une copie d'un asset
+ * ou de vider le cache (pour l'instant).
+ *
+ * @author Pascal Luttgens
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public class AssetManager {
 
@@ -27,13 +34,21 @@ public class AssetManager {
     private final HashMap<String, TypeLoader> loaders;
     private final AssetCache cache;
 
-
+    // Doit être vide.
     public AssetManager() {
         this.loaders = new HashMap<>();
         this.cache = new BasicCacheImpl();
         init();
     }
 
+    //PENSER A RAJOUTER DES FACTORY POUR LES PROVIDERS/TYPELOADERS.
+    
+    /**
+     * Initialise le provider et la liste des loaders à partir d'un fichier de
+     * configuration.
+     *
+     * - Pascal Luttgens.
+     */
     public final void init() {
         this.provider = new FileProvider();
         JSONObject config = ServiceLocator.getConfig();
@@ -48,10 +63,10 @@ public class AssetManager {
             }
         }
     }
-    
+
     private Asset loadAsset(String type, String name) {
         TypeLoader loader = loaders.get(type);
-        AssetInputStreamProvider.DecoratedInputStream assetStream = provider.getInputStream(new AssetKey(type, name));
+        AssetInputStreamProvider.InputStreamWithMime assetStream = provider.getInputStream(new AssetKey(type, name));
 
         return loader.LoadFromStream(assetStream);
     }
@@ -63,7 +78,7 @@ public class AssetManager {
     public Object getAsset(String type, String name) {
         synchronized (lock) {
             Asset asset = cache.getFromCache(new AssetKey(type, name));
-            if ( asset != null) {
+            if (asset != null) {
                 return asset;
             }
             asset = loadAsset(type, name);
@@ -71,11 +86,11 @@ public class AssetManager {
             return asset;
         }
     }
-    
-        public Object getAssetCopy(String type, String name) {
+
+    public Object getAssetCopy(String type, String name) {
         synchronized (lock) {
             Asset asset = cache.getCopyFromCache(new AssetKey(type, name));
-            if ( asset != null) {
+            if (asset != null) {
                 return asset;
             }
             asset = loadAsset(type, name);

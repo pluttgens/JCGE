@@ -1,24 +1,68 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.assets.assetmanager;
 
 /**
+ * L'interface AssetCache définit les opérations qu'un cache d'asset doit
+ * réaliser. Un cache d'asset est une stratégie de mise et de maintien en
+ * mémoire des ressources. Il évite de devoir recharger une ressource lorsque
+ * l'on en a besoin plusieurs fois au même moment.
  *
- * @author scalpa
+ * @author Pascal Luttgens
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public interface AssetCache {
 
+    /**
+     * Ajoute un asset au cache avec la clé permettant de l'identifier.
+     *
+     * - Pascal Luttgens.
+     *
+     * @param assetKey
+     * @param asset
+     */
     public void addToCache(AssetKey assetKey, Asset asset);
 
+    /**
+     * Récupère un asset du cache à partir de la clé permettant de l'identifier.
+     *
+     * - Pascal Luttgens.
+     *
+     * @param assetKey
+     *
+     * @return
+     */
     public Asset getFromCache(AssetKey assetKey);
-    
+
+    /**
+     * Essaie de récupérer une copie de l'asset à partir de la clé permettant de
+     * l'identifier.
+     *
+     * - Pascal Luttgens.
+     *
+     * @param assetKey
+     *
+     * @return
+     */
     public Asset getCopyFromCache(AssetKey assetKey);
 
+    /**
+     * Retire un asset du cache à partir de la clé permettant de l'identifier.
+     *
+     * - Pascal Luttgens.
+     *
+     * @param assetKey
+     *
+     * @return
+     */
     public boolean removeFromCache(AssetKey assetKey);
 
+    /**
+     * Vide le cache.
+     *
+     * - Pascal Luttgens.
+     */
     public void clearCache();
 
 }

@@ -1,47 +1,61 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.assets.assetmanager;
 
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
+ * La Superclass AssetInputStreamProvider sert de base au différentes classe
+ * permettant de récupérer un InputStream à partir d'une source découplée du
+ * programme.
  *
- * @author scalpa
+ * On peut en effet récupérer un InputStream à partir d'un fichier, d'une base
+ * de données ou peu importe, cela ne nous interesse pas au niveau du programme
+ * lui même tant que nous avons l'InputStream et l'extension (MIME) provenant de
+ * l'asset.
+ *
+ * @author Pascal Luttgens
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public abstract class AssetInputStreamProvider {
 
-    public class DecoratedInputStream{
+    /**
+     * Un InputStream décoré (Pattern Decorator) pour connaitre son extension
+     * afin de savoir comment le lire si il y'a besoin.
+     *
+     * @author Pascal Luttgens
+     *
+     * @version 1.0
+     *
+     * @since 1.0
+     */
+    public class InputStreamWithMime {
+
         private final InputStream inputStream;
 
-        private final String mime;
-        
-        public DecoratedInputStream(InputStream inputStream, String mime) {
+        private final String mime; // L'extension du fichier.
+
+        public InputStreamWithMime(InputStream inputStream, String mime) {
             this.inputStream = inputStream;
             this.mime = mime;
         }
-        
+
         public InputStream getInputStream() {
             return this.inputStream;
         }
-        
+
         public String getMime() {
             return this.mime;
         }
     }
-    
-    public abstract DecoratedInputStream getInputStream(AssetKey assetKey);
+
+    /**
+     * Récupère l'asset via le provider à partir de l'AssetKey
+     * 
+     * @param assetKey
+     * @return 
+     */
+    public abstract InputStreamWithMime getInputStream(AssetKey assetKey);
 
 }

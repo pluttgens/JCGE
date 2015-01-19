@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Un notifier est un objet que les classe subject doivent contenir afin de
+ * Un notifier est un objet que les classes subject doivent contenir afin de
  * pouvoir passer des events à leurs observers.
  *
  * Ce système permet de découple les senders et les receivers.

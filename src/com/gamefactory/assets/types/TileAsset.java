@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.assets.types;
 
 import com.gamefactory.assets.assetmanager.Asset;
@@ -10,13 +5,18 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
+ * La classe TileAsset représente le stockage d'une grille de tiles.
+ * 
+ * @author Pascal Luttgens
  *
- * @author scalpa
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public class TileAsset extends Asset {
 
-    private byte[] pixels;
-    private String extention;
+    private final byte[] pixels;
+    private final String extention;
 
     public TileAsset(byte[] pixels, String extention) {
         this.pixels = pixels;
