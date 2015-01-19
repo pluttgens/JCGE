@@ -18,7 +18,7 @@ import java.io.InputStream;
  *
  * @since 1.0
  */
-public abstract class AssetInputStreamProvider {
+public interface AssetInputStreamProvider {
 
     /**
      * Un InputStream décoré (Pattern Decorator) pour connaitre son extension

@@ -20,7 +20,7 @@ import org.json.JSONException;
  *
  * @since 1.0
  */
-public class FileProvider extends AssetInputStreamProvider {
+public class FileProvider implements AssetInputStreamProvider {
 
     private static String assetLocation;
 
