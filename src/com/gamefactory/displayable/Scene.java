@@ -16,7 +16,7 @@ import java.awt.Graphics;
 public class Scene implements Displayable {
 
     private List<GameObject> gameObjects;
-
+    
     @Override
     public void update() {
 

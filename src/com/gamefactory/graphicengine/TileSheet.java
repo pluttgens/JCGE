@@ -26,7 +26,7 @@ public class TileSheet {
     private final BufferedImage im;
 
     public TileSheet(String name) {
-        im = loadTileSheet(name);
+        im = loadTileSheet(name);    
     }
 
     private BufferedImage loadTileSheet(String name) {
