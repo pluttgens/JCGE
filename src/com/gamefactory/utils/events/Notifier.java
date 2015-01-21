@@ -25,7 +25,7 @@ public class Notifier {
     
     private final Object lock;
     
-    private List<Observer> observers;
+    private final List<Observer> observers;
     
     public Notifier() {
         this.observers = new LinkedList<>();
