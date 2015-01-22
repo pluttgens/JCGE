@@ -33,7 +33,7 @@ public class ComponentManager {
      *
      * @since 1.0
      */
-    public void init(String[] componentNames) {
+    public void init(String ... componentNames) {
         for (String componentName : componentNames) {
             try {
                 components.add((Component) Class.forName("com.gamefactory.components." + componentName).newInstance());

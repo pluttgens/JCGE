@@ -3,11 +3,13 @@ package com.gamefactory.game;
 import com.gamefactory.assets.assetmanager.AssetManager;
 import com.gamefactory.audioengine.AudioEngine;
 import com.gamefactory.audioengine.AudioEvent;
+import com.gamefactory.components.InputHandler;
+import com.gamefactory.displayable.GameObjectTest;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.graphicengine.TileSheet;
-import com.gamefactory.inputhandler.InputHandler;
 import com.gamefactory.services.ServiceLocator;
 import com.gamefactory.utils.events.Notifier;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -28,12 +30,12 @@ public class Game extends Canvas implements Runnable {
     /**
      * Longueur de la fenetre.
      */
-    private int WIDTH;
+    public final static int WIDTH=600;
 
     /**
      * Hauteur de la fenetre.
      */
-    private int HEIGHT;
+    public final static int HEIGHT=800;
 
     /**
      * Nom du jeu.
@@ -185,7 +187,7 @@ public class Game extends Canvas implements Runnable {
         ServiceLocator.provideAssetManager(new AssetManager());
         new Game(800, 600, "test", new Scene());
 
-        try {
+        /*try {
 
             AudioEngine ae = new AudioEngine();
             ae.start();
@@ -206,7 +208,8 @@ public class Game extends Canvas implements Runnable {
             n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2.wav"));
         } catch (InterruptedException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
+        GameObjectTest a = new GameObjectTest();
 
     }
 }

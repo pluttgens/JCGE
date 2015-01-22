@@ -30,7 +30,7 @@ public abstract class GameObject implements Displayable {
      */
     private boolean isActive;
 
-    public GameObject(Class<? extends Component> c) {
+    public GameObject() {
         this.componentManager = new ComponentManager();
         this.isActive = false;
     }
