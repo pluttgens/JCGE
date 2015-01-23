@@ -41,7 +41,8 @@ public class TileSheet {
     
     //A continuer
     public BufferedImage loadTile(int position) {
-        return im.getSubimage(0, 0, 32, 32);
+    	Coord2D c = Coord2D.convCoord(32,position);
+        return im.getSubimage(c.getX(), c.getY(), 32, 32);
     }
 
 }
