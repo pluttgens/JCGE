@@ -1,6 +1,7 @@
 package com.gamefactory.components;
 
 import com.gamefactory.displayable.Component;
+import com.gamefactory.displayable.ComponentManager;
 
 /**
  * Component permettant de gérer la position d'une unité et ses déplacements
@@ -20,7 +21,8 @@ public class Position extends Component {
     private float xVelocity;
     private float yVelocity;
 
-    public Position() {
+    public Position(ComponentManager owner) {
+        super(owner);
         this.x = 0;
         this.y = 0;
         this.xVelocity = 0;
@@ -59,9 +61,11 @@ public class Position extends Component {
         this.yVelocity = yVelocity;
     }
 
+    @Override
     public void update() {
         this.x += this.xVelocity;
         this.y += this.yVelocity;
+        System.out.println(x);
     }
 
 }

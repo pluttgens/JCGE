@@ -2,6 +2,9 @@ package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
 import java.awt.Graphics;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Superclass représentant tous les objets du jeu.
@@ -32,7 +35,8 @@ public abstract class GameObject implements Displayable {
 
     public GameObject() {
         this.componentManager = new ComponentManager();
-        this.isActive = false;
+        this.isActive = true;
+        init();
     }
 
     /**
@@ -65,7 +69,7 @@ public abstract class GameObject implements Displayable {
      * - Pascal Luttgens.
      */
     protected void updateObject() {
-
+        componentManager.update();
     }
 
     /**
@@ -89,7 +93,12 @@ public abstract class GameObject implements Displayable {
      * - Pascal Luttgens.
      */
     protected void renderObject(Graphics g) {
-
+        Component renderer = componentManager.getComponent("Renderer");
+        try {
+            renderer.getClass().getMethod("render", Graphics.class).invoke(renderer, g);
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
