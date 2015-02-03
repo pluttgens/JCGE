@@ -24,9 +24,11 @@ import javax.imageio.ImageIO;
 public class TileSheet {
 
     private final BufferedImage im;
+    private final int width;
 
     public TileSheet(String name) {
-        im = loadTileSheet(name);    
+        this.im = loadTileSheet(name);    
+        this.width = im.getWidth()/TileEngine.TILE_WIDTH;
     }
 
     private BufferedImage loadTileSheet(String name) {
@@ -39,9 +41,8 @@ public class TileSheet {
         }
     }
     
-    //A continuer
     public BufferedImage loadTile(int position) {
-    	Coord2D c = Coord2D.convCoord(32,position);
+    	Coord2D c = Coord2D.convCoord(this.width, position);
         return im.getSubimage(c.getX(), c.getY(), 32, 32);
     }
 

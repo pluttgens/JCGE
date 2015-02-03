@@ -5,18 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gamefactory.game.Displayable;
+import com.gamefactory.graphicengine.Coord2D;
 import com.gamefactory.graphicengine.Tile;
+import com.gamefactory.graphicengine.TileSheet;
 
 public class Landscape implements Displayable {
 	
 	private List<Tile> tiles;
 	
-	public Landscape(List<Tile> t){
-		tiles = t;
-	}
 	public Landscape(){
 		tiles = new ArrayList<Tile>();
-	}
+                tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(0, 0)));
+                
+                tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(32, 32)));
+                
+                tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(0, 32)));
+                
+                tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(32, 0)));
+        }
 	
 	public List<Tile> getTiles(){
 		return tiles;
@@ -31,7 +37,7 @@ public class Landscape implements Displayable {
 	@Override
 	public void render(Graphics g) {
 		for (Tile tile:tiles){
-			g.drawImage(tile.getImage(), tile.getX(), tile.getY(),null);
+                    g.drawImage(tile.getImage(), tile.getX(), tile.getY(),null);
 		}
 	}
 	
