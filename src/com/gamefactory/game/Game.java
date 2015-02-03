@@ -1,16 +1,25 @@
 package com.gamefactory.game;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
-import com.gamefactory.displayable.EmptyGameObject;
+import com.gamefactory.audioengine.AudioEngine;
+import com.gamefactory.audioengine.AudioEvent;
+import com.gamefactory.components.InputHandler;
 import com.gamefactory.displayable.GameObjectTest;
 import com.gamefactory.displayable.Scene;
+import com.gamefactory.graphicengine.TileSheet;
 import com.gamefactory.services.ServiceLocator;
+import com.gamefactory.utils.events.Notifier;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.EventObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -21,12 +30,12 @@ public class Game extends Canvas implements Runnable {
     /**
      * Longueur de la fenetre.
      */
-    public final static int WIDTH = 600;
+    public final static int WIDTH=600;
 
     /**
      * Hauteur de la fenetre.
      */
-    public final static int HEIGHT = 800;
+    public final static int HEIGHT=800;
 
     /**
      * Nom du jeu.
@@ -49,7 +58,7 @@ public class Game extends Canvas implements Runnable {
      * @see pcomgamefactory.displayable.Scene
      * @see Displayable
      */
-    private Displayable displayable = new EmptyGameObject();
+    private Displayable scene;
 
     /**
      * Construit un jeu à partir des dimensions de sa fenetre et de son nom.
@@ -60,9 +69,17 @@ public class Game extends Canvas implements Runnable {
      *
      * @see #window()
      */
-    public Game(int WIDTH, int HEIGHT, String NAME) {
+    public Game(int WIDTH, int HEIGHT, String NAME, Displayable scene) {
+        this.WIDTH = WIDTH;
+        this.HEIGHT = HEIGHT;
         this.NAME = NAME;
+        this.scene = scene;
         window();
+        InputHandler ih = new InputHandler();
+        ih.getNotifier().registerObserver((EventObject event) -> {
+            System.out.println("ca marche");
+        });
+        addKeyListener(ih);
     }
 
     /**
@@ -72,10 +89,6 @@ public class Game extends Canvas implements Runnable {
      */
     private void window() {
         new Window(this.WIDTH, this.HEIGHT, this.NAME, this);
-    }
-
-    public void setDisplayable(Displayable displayable) {
-        this.displayable = displayable;
     }
 
     /**
@@ -142,8 +155,10 @@ public class Game extends Canvas implements Runnable {
      * Met à jour tous les élément de la scene
      */
     public void update() {
-        displayable.update();
+        scene.update();
     }
+
+    private BufferedImage image = new TileSheet("tileset.png").loadTile(1);
 
     /**
      * Met à jour l'affichage de tous les élément de la scene
@@ -158,8 +173,11 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        displayable.render(g);
+        scene.render(g);
 
+        g.drawImage(image, 0, 0, null);
+        
+        
         g.dispose();
         bs.show();
     }
@@ -167,27 +185,30 @@ public class Game extends Canvas implements Runnable {
     public static void main(String[] args) throws IOException {
 
         ServiceLocator.provideAssetManager(new AssetManager());
-        Game game = new Game(800, 600, "test");
-        game.setDisplayable(new Scene());
+        new Game(800, 600, "test", new Scene());
 
-        /*
-         * try {
-         *
-         * AudioEngine ae = new AudioEngine(); ae.start(); Notifier n = new
-         * Notifier(); n.registerObserver(ae); n.notifyObservers(new
-         * AudioEvent(n, AudioEvent.Type.PLAY, "test1.wav"));
-         * n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY,
-         * "test2.wav")); Thread.sleep(500); n.notifyObservers(new AudioEvent(n,
-         * AudioEvent.Type.PLAY, "test1.wav")); Thread.sleep(10000);
-         * n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY,
-         * "test2.wav", "2")); n.notifyObservers(new AudioEvent(n,
-         * AudioEvent.Type.PLAY, "test1.wav")); n.notifyObservers(new
-         * AudioEvent(n, AudioEvent.Type.STOP, "test2.wav"));
-         * Thread.sleep(10000); n.notifyObservers(new AudioEvent(n,
-         * AudioEvent.Type.PLAY, "test2.wav")); } catch (InterruptedException
-         * ex) { Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null,
-         * ex); }
-         */
+        /*try {
+
+            AudioEngine ae = new AudioEngine();
+            ae.start();
+            Notifier n = new Notifier();
+            n.registerObserver(ae);
+            n.notifyObservers(new AudioEvent(n,
+                    AudioEvent.Type.PLAY, "test1.wav"));
+            n.notifyObservers(new AudioEvent(n,
+                    AudioEvent.Type.PLAY, "test2.wav"));
+            Thread.sleep(500);
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1.wav"));
+            Thread.sleep(10000);
+            n.notifyObservers(new AudioEvent(n,
+                    AudioEvent.Type.PLAY, "test2.wav", "2"));
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test1.wav"));
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.STOP, "test2.wav"));
+            Thread.sleep(10000);
+            n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY, "test2.wav"));
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
         GameObjectTest a = new GameObjectTest();
 
     }

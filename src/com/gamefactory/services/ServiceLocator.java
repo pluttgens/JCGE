@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import org.json.JSONObject;
 
 /**
@@ -28,7 +27,6 @@ public class ServiceLocator {
     private final static JSONObject config = getJSONObjectFromFile(new File("config/config.cfg"));
     private final static HashMap<String, Service> services = new HashMap<>();
     private static AssetManager assetManager;
-    private static JFrame frame;
 
     public static void provideService(String serviceName, Service service) {
         ServiceLocator.services.put(serviceName, service);
@@ -49,15 +47,7 @@ public class ServiceLocator {
     public static JSONObject getConfig() {
         return ServiceLocator.config;
     }
-    
-    public static void provideWindow(JFrame frame) {
-        ServiceLocator.frame = frame;
-    }
 
-    public static JFrame getWindow() {
-        return ServiceLocator.frame;
-    }
-    
     public static JSONObject getJSONObjectFromFile(File file) {
         try (FileReader fr = new FileReader(file)) {
             String json = new String();

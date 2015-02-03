@@ -1,7 +1,6 @@
 package com.gamefactory.components;
 
 import com.gamefactory.displayable.Component;
-import com.gamefactory.displayable.ComponentManager;
 /**
  * Component permettant de gérer les effets de la gravité sur l'objet.
  * 
@@ -13,13 +12,12 @@ import com.gamefactory.displayable.ComponentManager;
  */
 public class RigidBody extends Component {
     
-    private float gravity = 0;
-
-    public RigidBody(ComponentManager owner) {
-        super(owner);
+    private float gravity;
+    
+    public RigidBody() {
+        this.gravity = 0;
     }
     
-
     public float getGravity() {
         return this.gravity;
     }

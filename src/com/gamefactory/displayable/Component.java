@@ -6,10 +6,9 @@
 package com.gamefactory.displayable;
 
 import java.util.Comparator;
-
 /**
  * Un component encapsule une fonctionalité d'un game object.
- *
+ * 
  * @author Pascal Luttgens
  *
  * @version 1.0
@@ -17,20 +16,6 @@ import java.util.Comparator;
  * @since 1.0
  */
 public abstract class Component {
-
-    protected final ComponentManager owner;
-
-    public Component(ComponentManager owner) {
-        this.owner = owner;
-    }
-
-    public void init() {
-
-    }
-
-    public void update() {
-
-    }
 
     // private final int updatePriority; je reflechis encore à comment l'implémenter - Pascal Luttgens.
     /**
