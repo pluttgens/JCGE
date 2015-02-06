@@ -19,8 +19,7 @@ public class ComponentManagerTest {
     @Test
     public void test() {
         ComponentManager cm = new ComponentManager();
-        String[] components = {"Position", "RigidBody"};
-        cm.init(components);
+        cm.init(new Position(cm), new RigidBody(cm));
         assertTrue("Le component 'Position' a bien été ajouté ! ( STRING_CHECK )", cm.checkForComponent("Position"));
         assertTrue("Le component 'Position' a bien été ajouté ! ( CLASS_CHECK )", cm.checkForComponent(Position.class));
         assertTrue("Le component 'RigidBody' a bien été ajouté ! ( STRING_CHECK )", cm.checkForComponent("RigidBody"));

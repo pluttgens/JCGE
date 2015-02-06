@@ -91,6 +91,8 @@ public abstract class GameObject implements Displayable {
      * call de son rendering.
      *
      * - Pascal Luttgens.
+     *
+     * @param g
      */
     protected void renderObject(Graphics g) {
         Component renderer = componentManager.getComponent("Renderer");

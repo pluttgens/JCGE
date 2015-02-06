@@ -1,8 +1,8 @@
 package com.gamefactory.game;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
-import com.gamefactory.displayable.EmptyGameObject;
-import com.gamefactory.displayable.GameObjectTest;
+import com.gamefactory.displayable.gameobjects.EmptyGameObject;
+import com.gamefactory.displayable.gameobjects.Hero;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.services.ServiceLocator;
 
@@ -188,7 +188,7 @@ public class Game extends Canvas implements Runnable {
          * ex) { Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null,
          * ex); }
          */
-        GameObjectTest a = new GameObjectTest();
+        Hero a = new Hero();
 
     }
 }

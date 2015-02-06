@@ -1,5 +1,6 @@
 package com.gamefactory.displayable;
 
+import com.gamefactory.displayable.gameobjects.Hero;
 import java.util.List;
 import com.gamefactory.game.Displayable;
 import java.awt.Graphics;
@@ -20,7 +21,7 @@ public class Scene implements Displayable {
     private Landscape Landscape = new Landscape();
 
     public Scene() {
-        gameObjects.add(new GameObjectTest());
+        gameObjects.add(new Hero());
     }
 
     @Override

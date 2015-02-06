@@ -19,11 +19,18 @@ import java.util.Comparator;
 public abstract class Component {
 
     protected final ComponentManager owner;
-
+    protected Script script;
+    
     public Component(ComponentManager owner) {
         this.owner = owner;
     }
 
+    public Component registerScript(Script script) {
+        this.script = script;
+        script.init(this);
+        return this;
+    }
+    
     public void init() {
 
     }

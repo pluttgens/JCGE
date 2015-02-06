@@ -28,9 +28,9 @@ public class RigidBody extends Component {
         this.gravity = gravity;
     }
  
+    @Override
     public void update() {
         
     }
-    
-    
+
 }
