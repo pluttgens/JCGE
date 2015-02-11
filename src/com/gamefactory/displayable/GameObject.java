@@ -37,9 +37,6 @@ public abstract class GameObject implements Displayable {
     
     protected Scene scene;
 
-    protected void testggg() {
-        
-    }
     public GameObject() {
         this.componentManager = new ComponentManager();
         this.isActive = true;

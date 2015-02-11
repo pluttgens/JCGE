@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import static javafx.scene.input.KeyCode.G;
 
 /**
  *

@@ -37,7 +37,7 @@ public class AnimatorFourDirections extends Script {
     }
 
     public void loadAnimations(Image animations) {
-
+        
     }
 
     @Override

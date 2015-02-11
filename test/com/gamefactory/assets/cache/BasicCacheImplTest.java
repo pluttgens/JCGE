@@ -8,7 +8,7 @@ package com.gamefactory.assets.cache;
 import com.gamefactory.assets.assetmanager.Asset;
 import com.gamefactory.assets.assetmanager.AssetKey;
 import com.gamefactory.assets.types.AudioAsset;
-import com.gamefactory.assets.types.TileAsset;
+import com.gamefactory.assets.types.ImageAsset;
 import javax.sound.sampled.AudioFormat;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,7 +23,7 @@ public class BasicCacheImplTest {
     public void test() {
         BasicCacheImpl cache = new BasicCacheImpl();
         AssetKey key = new AssetKey("type", "name.ext");
-        Asset asset = new TileAsset(new byte[10], "ext");
+        Asset asset = new ImageAsset(new byte[10], "ext");
         cache.addToCache(key, asset);
 
         assertTrue(asset.equals(cache.getFromCache(key)));

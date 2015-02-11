@@ -15,8 +15,6 @@ public class Event extends EventObject {
 
     private final String event;
     
-    private final Object
-    
     public Event(Object o, String event) {
         super(o);
         this.event = event;

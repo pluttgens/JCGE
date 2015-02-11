@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
- * La classe TileAssetLoader permet de créer un TileAsset optimisé pour son
- * stockage et son utilisation pour le moteur à paritr d'un InputStreamWithMime.
+ * La classe ImageAssetLoader permet de créer un ImageAsset optimisé pour son
+ stockage et son utilisation pour le moteur à paritr d'un InputStreamWithMime.
  *
  * @author Pascal Luttgens
  *
@@ -25,7 +25,7 @@ import javax.imageio.ImageIO;
  *
  * @since 1.0
  */
-public class TileAssetLoader implements TypeLoader {
+public class ImageAssetLoader implements TypeLoader {
 
     @Override
     public Asset LoadFromStream(AssetInputStreamProvider.InputStreamWithMime assetInputStream) {
@@ -38,9 +38,9 @@ public class TileAssetLoader implements TypeLoader {
                 baos.flush();
                 iminbyte = baos.toByteArray();
             }
-            return new TileAsset(iminbyte, assetInputStream.getMime());
+            return new ImageAsset(iminbyte, assetInputStream.getMime());
         } catch (IOException ex) {
-            Logger.getLogger(TileAssetLoader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImageAssetLoader.class.getName()).log(Level.SEVERE, null, ex);
             throw new IllegalArgumentException("Impossible de creer un asset à partir du stream.");
         }
     }

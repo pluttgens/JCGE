@@ -13,7 +13,7 @@ public class Renderer extends Component {
     @Override
     public void init(ComponentManager owner) {
         super.init(owner);
-        position = (Position) owner.getComponent("Position");
+        position = (Position) owner.getComponent(Position.class);
     }
 
     public void render(Graphics g) {

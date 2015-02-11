@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * La classe TileAsset représente le stockage d'une grille de tiles.
+ * La classe ImageAsset représente le stockage d'une grille de tiles.
  * 
  * @author Pascal Luttgens
  *
@@ -13,12 +13,12 @@ import java.util.Objects;
  *
  * @since 1.0
  */
-public class TileAsset extends Asset {
+public class ImageAsset extends Asset {
 
     private final byte[] pixels;
     private final String extention;
 
-    public TileAsset(byte[] pixels, String extention) {
+    public ImageAsset(byte[] pixels, String extention) {
         this.pixels = pixels;
         this.extention = extention;
     }
@@ -47,7 +47,7 @@ public class TileAsset extends Asset {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TileAsset other = (TileAsset) obj;
+        final ImageAsset other = (ImageAsset) obj;
         if (!Arrays.equals(this.pixels, other.pixels)) {
             return false;
         }
@@ -57,7 +57,7 @@ public class TileAsset extends Asset {
     
     @Override
     public Asset clone() {
-        return new TileAsset(Arrays.copyOf(pixels, pixels.length), extention);
+        return new ImageAsset(Arrays.copyOf(pixels, pixels.length), extention);
     }
 
 }
