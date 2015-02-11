@@ -32,7 +32,7 @@ public class TileSheet {
     }
 
     private BufferedImage loadTileSheet(String name) {
-        final ImageAsset tileAsset = (ImageAsset) ServiceLocator.getAssetManager().getAsset("tiles", name);
+        final ImageAsset tileAsset = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", name);
 
         try {
             return ImageIO.read(new ByteArrayInputStream(tileAsset.getPixels()));

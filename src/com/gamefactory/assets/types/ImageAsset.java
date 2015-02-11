@@ -1,12 +1,18 @@
 package com.gamefactory.assets.types;
 
 import com.gamefactory.assets.assetmanager.Asset;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  * La classe ImageAsset représente le stockage d'une grille de tiles.
- * 
+ *
  * @author Pascal Luttgens
  *
  * @version 1.0
@@ -29,6 +35,10 @@ public class ImageAsset extends Asset {
 
     public String getExtention() {
         return extention;
+    }
+
+    public BufferedImage getBufferedImage() throws IOException {
+        return ImageIO.read(new ByteArrayInputStream(this.getPixels()));
     }
 
     @Override
@@ -54,7 +64,6 @@ public class ImageAsset extends Asset {
         return true;
     }
 
-    
     @Override
     public Asset clone() {
         return new ImageAsset(Arrays.copyOf(pixels, pixels.length), extention);

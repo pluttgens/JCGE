@@ -43,9 +43,14 @@ public class ComponentManager {
             }
         }
         this.components.sort(new Component.UpdatePriorityComparator());
-        Iterator<Component> it = this.components.iterator();
-        while (it.hasNext()) {
-            it.next().init(this);
+        Iterator<Component> itComponent = this.components.iterator();
+        while (itComponent.hasNext()) {
+            itComponent.next().init(this);
+        }
+
+        Iterator<Script> itScript = this.scripts.iterator();
+        while (itScript.hasNext()) {
+            itScript.next().init(this);
         }
     }
 

@@ -42,6 +42,8 @@ public class Position extends Component {
         this.yVelocity = 0;
         this.orientation = Orientation.DOWN;
     }
+    
+    
 
     @Override
     public void init(ComponentManager owner) {
@@ -103,4 +105,17 @@ public class Position extends Component {
         return Integer.MAX_VALUE;
     }
 
+
+    public Position deepClone() {
+        Position ret = new Position();
+        ret.setX(this.x);
+        ret.setY(this.y);
+        ret.setOrientation(this.getOrientation());
+        ret.setxVelocity(this.xVelocity);
+        ret.setyVelocity(this.yVelocity);
+        return ret;
+    }
+
+    
+    
 }

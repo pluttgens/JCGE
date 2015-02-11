@@ -3,15 +3,8 @@ package com.gamefactory.displayable.gameobjects;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
 import com.gamefactory.scripts.PlayerInputHandler;
-import com.gamefactory.displayable.Script;
-import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.GameObject;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import com.gamefactory.scripts.AnimatorFourDirections;
 
 public class Hero extends GameObject {
 
@@ -21,32 +14,8 @@ public class Hero extends GameObject {
 
     @Override
     public void init() {
-        componentManager.init(new Position()(new PlayerInputHandler()), new Renderer(componentManager).registerScript(new RendererScript()));
+        componentManager.init(new Position(), new Renderer(), new AnimatorFourDirections(), new PlayerInputHandler());
 
-    }
-
-    public class RendererScript implements Script {
-
-        private BufferedImage image;
-        private Renderer renderer;
-
-        public RendererScript() {
-            try {
-                this.image = ImageIO.read(new File("tileset.png"));
-            } catch (IOException ex) {
-                Logger.getLogger(Hero.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        @Override
-        public void init(Component component) {
-            renderer = (Renderer) component;
-        }
-
-        @Override
-        public void update() {
-            renderer.setImage(image);
-        }
     }
 
 }
