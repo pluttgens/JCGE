@@ -9,6 +9,7 @@ import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.Script;
+import com.gamefactory.services.ServiceLocator;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -37,7 +38,29 @@ public class AnimatorFourDirections extends Script {
     }
 
     public void loadAnimations(Image animations) {
-
+        //Ouest
+        animationsLeft.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "ouest/1O.png"));
+        animationsLeft.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "ouest/2O.png"));
+        animationsLeft.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "ouest/3O.png"));
+        animationsLeft.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "ouest/4O.png"));
+        
+        //Est
+        animationsRight.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "ouest/1E.png"));
+        animationsRight.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "ouest/2E.png"));
+        animationsRight.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "ouest/3E.png"));
+        animationsRight.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "ouest/4E.png"));
+        
+        //Nord
+        animationsUp.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "nord/1N.png"));
+        animationsUp.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "nord/2N.png"));
+        animationsUp.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "nord/3N.png"));
+        animationsUp.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "nord/4N.png"));
+        
+        //Sud
+        animationsDown.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "sud/1S.png"));
+        animationsDown.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "sud/2S.png"));
+        animationsDown.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "sud/3S.png"));
+        animationsDown.add((BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "sud/4S.png"));
     }
 
     @Override
@@ -69,6 +92,32 @@ public class AnimatorFourDirections extends Script {
                 image = images.get((i + 1) % images.size());
                 return image;
             }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
         return images.get(1);
     }

@@ -13,7 +13,6 @@ package com.gamefactory.assets.assetmanager;
  * @since 1.0
  */
 public interface AssetCache {
-
     /**
      * Ajoute un asset au cache avec la clé permettant de l'identifier.
      *
