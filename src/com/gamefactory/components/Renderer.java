@@ -9,25 +9,25 @@ public class Renderer extends Component {
 
     private Position position;
     private BufferedImage image;
-    
-    public Renderer(ComponentManager owner) {
-        super(owner);
-    }
 
     @Override
-    public void init() {
+    public void init(ComponentManager owner) {
+        super.init(owner);
         position = (Position) owner.getComponent("Position");
     }
 
     public void render(Graphics g) {
-        script.update();
         g.drawImage(image, (int) position.getX(), (int) position.getY(), null);
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
     
     public void setImage(BufferedImage image) {
         this.image = image;
     }
-    
+
     public Position getPosition() {
         return position;
     }

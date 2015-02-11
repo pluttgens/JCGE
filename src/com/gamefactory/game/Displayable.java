@@ -13,7 +13,7 @@ import java.awt.Graphics;
  * @since 1.0
  */
 public interface Displayable {
-
+    
     void update();
 
     void render(Graphics g);

@@ -1,10 +1,12 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.displayable.gameobjects.Hero;
-import java.util.List;
 import com.gamefactory.game.Displayable;
 import java.awt.Graphics;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import static javafx.scene.input.KeyCode.G;
 
 /**
  *
@@ -17,25 +19,39 @@ import java.util.ArrayList;
  */
 public class Scene implements Displayable {
 
-    private List<GameObject> gameObjects = new ArrayList<>();
+    private Map<String, GameObject> gameObjects = new HashMap<>();
     private Landscape Landscape = new Landscape();
 
     public Scene() {
-        gameObjects.add(new Hero());
+        GameObject hero = new Hero();
+        gameObjects.put(hero.id, hero);
+    }
+
+    public void init() {
+        Iterator<GameObject> it = gameObjects.values().iterator();
+        while (it.hasNext()) {
+            GameObject next = it.next();
+            next.init();
+            next.setScene(this);
+        }
     }
 
     @Override
     public void update() {
-        for (GameObject gameObject : gameObjects) {
-            gameObject.update();
+        Iterator<GameObject> it = gameObjects.values().iterator();
+        while (it.hasNext()) {
+            GameObject next = it.next();
+            next.update();
         }
     }
 
     @Override
     public void render(Graphics g) {
         Landscape.render(g);
-        for (GameObject gameObject : gameObjects) {
-            gameObject.render(g);
+        Iterator<GameObject> it = gameObjects.values().iterator();
+        while (it.hasNext()) {
+            GameObject next = it.next();
+            next.render(g);
         }
     }
 

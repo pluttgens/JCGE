@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
+package com.gamefactory.displayable;
 
 /**
  *
  * @author scalpa
  */
-public class Script {
+public class GameObjectManager {
     
 }

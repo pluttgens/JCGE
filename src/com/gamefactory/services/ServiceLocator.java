@@ -1,6 +1,8 @@
 package com.gamefactory.services;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
+import com.gamefactory.utils.events.Notifier;
+import com.gamefactory.utils.events.Subject;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,6 +27,7 @@ import org.json.JSONObject;
  */
 public class ServiceLocator {
 
+    private final static Notifier notifier = new Notifier(null);
     private final static JSONObject config = getJSONObjectFromFile(new File("config/config.cfg"));
     private final static HashMap<String, Service> services = new HashMap<>();
     private static AssetManager assetManager;
@@ -32,10 +35,12 @@ public class ServiceLocator {
 
     public static void provideService(String serviceName, Service service) {
         ServiceLocator.services.put(serviceName, service);
+        ServiceLocator.notifier.notifyObservers(serviceName.toUpperCase() + "_SERVICE_PROVIDED");
     }
 
     public static void provideAssetManager(AssetManager assetManager) {
         ServiceLocator.assetManager = assetManager;
+        ServiceLocator.notifier.notifyObservers("ASSET_MANAGER_PROVIDED");
     }
 
     public static Service getService(String type) {
@@ -52,6 +57,7 @@ public class ServiceLocator {
     
     public static void provideWindow(JFrame frame) {
         ServiceLocator.frame = frame;
+        ServiceLocator.notifier.notifyObservers("GAME_WINDOW_PROVIDED");
     }
 
     public static JFrame getWindow() {
@@ -71,5 +77,9 @@ public class ServiceLocator {
             Logger.getLogger(ServiceLocator.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException(ex);
         }
+    }
+
+    public static Notifier getNotifier() {
+        return ServiceLocator.notifier;
     }
 }

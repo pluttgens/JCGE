@@ -25,11 +25,14 @@ public class Notifier {
     
     private final Object lock;
     
+    private final Object owner;
+    
     private final List<Observer> observers;
     
-    public Notifier() {
+    public Notifier(Object owner) {
         this.observers = new LinkedList<>();
         this.lock = new Object();
+        this.owner = owner;
     }
     
     public void registerObserver(Observer o) {
@@ -52,10 +55,10 @@ public class Notifier {
         }
     }
     
-    public void notifyObservers(EventObject e) {
+    public void notifyObservers(String event) {
         synchronized (lock) {
             for (Observer o : observers) {
-                o.onNotify(e);
+                o.onNotify(new Event(owner, event));
             }
         }
     }

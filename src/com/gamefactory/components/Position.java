@@ -2,6 +2,9 @@ package com.gamefactory.components;
 
 import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.ComponentManager;
+import com.gamefactory.utils.events.Event;
+import com.gamefactory.utils.events.Notifier;
+import java.awt.event.AWTEventListener;
 
 /**
  * Component permettant de gérer la position d'une unité et ses déplacements
@@ -15,18 +18,34 @@ import com.gamefactory.displayable.ComponentManager;
  */
 public class Position extends Component {
 
+    public enum Orientation {
+
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+
+    }
+
     private float x;
     private float y;
 
     private float xVelocity;
     private float yVelocity;
 
-    public Position(ComponentManager owner) {
-        super(owner);
+    private Orientation orientation;
+
+    public Position() {
         this.x = 0;
         this.y = 0;
         this.xVelocity = 0;
         this.yVelocity = 0;
+        this.orientation = Orientation.DOWN;
+    }
+
+    @Override
+    public void init(ComponentManager owner) {
+        super.init(owner);
     }
 
     public float getX() {
@@ -61,11 +80,32 @@ public class Position extends Component {
         this.yVelocity = yVelocity;
     }
 
+    public Orientation getOrientation() {
+        return this.orientation;
+    }
+
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
+
+    public float distanceWith(Position position) {
+        return (float) Math.hypot(this.x - position.x, this.y - position.y);
+    }
+
     @Override
     public void update() {
         this.x += this.xVelocity;
         this.y += this.yVelocity;
-        System.out.println(x);
+    }
+
+    @Override
+    protected int getUpdatePriority() {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public void onNotify(Event event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

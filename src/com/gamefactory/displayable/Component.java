@@ -5,6 +5,9 @@
  */
 package com.gamefactory.displayable;
 
+import com.gamefactory.utils.events.Notifier;
+import com.gamefactory.utils.events.Observer;
+import com.gamefactory.utils.events.Subject;
 import java.util.Comparator;
 
 /**
@@ -16,30 +19,24 @@ import java.util.Comparator;
  *
  * @since 1.0
  */
-public abstract class Component {
+public abstract class Component implements Observer, Subject {
 
-    protected final ComponentManager owner;
-    protected Script script;
-    
-    public Component(ComponentManager owner) {
+    protected ComponentManager owner;
+
+    private final Notifier notifier;
+
+    public Component() {
+        this.notifier = new Notifier(this);
+    }
+
+    public void init(ComponentManager owner) {
         this.owner = owner;
-    }
-
-    public Component registerScript(Script script) {
-        this.script = script;
-        script.init(this);
-        return this;
-    }
-    
-    public void init() {
-
     }
 
     public void update() {
 
     }
 
-    // private final int updatePriority; je reflechis encore à comment l'implémenter - Pascal Luttgens.
     /**
      * Retourne l'indice de priorité permettant de déterminer à quel moment la
      * méthode update du component va etre appelée par rapport aux autres
@@ -77,6 +74,11 @@ public abstract class Component {
                 return 1;
             }
         }
+    }
+
+    @Override
+    public Notifier getNotifier() {
+        return this.notifier;
     }
 
 }

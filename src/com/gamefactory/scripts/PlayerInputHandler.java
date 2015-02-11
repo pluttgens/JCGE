@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.components.scripts;
+package com.gamefactory.scripts;
 
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.Script;
-import com.gamefactory.displayable.Component;
+import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.services.ServiceLocator;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -16,13 +16,18 @@ import java.awt.event.KeyListener;
  *
  * @author scalpa
  */
-public class PlayerInputHandler implements Script, KeyListener {
+public class PlayerInputHandler extends Script implements KeyListener {
 
     private Position position;
 
+    public PlayerInputHandler() {
+        super();
+    }
+
     @Override
-    public void init(Component component) {
-        this.position = (Position) component;
+    public void init(ComponentManager owner) {
+        this.owner = owner;
+        this.position = (Position) owner.getComponent(Position.class);
         ServiceLocator.getWindow().addKeyListener(this);
     }
 
@@ -36,15 +41,19 @@ public class PlayerInputHandler implements Script, KeyListener {
         int key = ke.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
+            position.setOrientation(Position.Orientation.LEFT);
             position.setxVelocity(-1f);
         }
         if (key == KeyEvent.VK_RIGHT) {
+            position.setOrientation(Position.Orientation.RIGHT);
             position.setxVelocity(1f);
         }
         if (key == KeyEvent.VK_UP) {
+            position.setOrientation(Position.Orientation.UP);
             position.setyVelocity(-1f);
         }
         if (key == KeyEvent.VK_DOWN) {
+            position.setOrientation(Position.Orientation.DOWN);
             position.setyVelocity(1f);
         }
     }

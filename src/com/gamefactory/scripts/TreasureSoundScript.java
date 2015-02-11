@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.displayable;
+package com.gamefactory.scripts;
 
 /**
  *
  * @author scalpa
  */
-public abstract class Script extends Component {
-
+public class TreasureSoundScript {
+    
 }

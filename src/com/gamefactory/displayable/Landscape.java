@@ -17,9 +17,9 @@ public class Landscape implements Displayable {
 		tiles = new ArrayList<Tile>();
                 tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(0, 0)));
                 
-                tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(32, 32)));
+                tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Coord2D(32, 32)));
                 
-                tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(0, 32)));
+                tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Coord2D(0, 32)));
                 
                 tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(32, 0)));
         }

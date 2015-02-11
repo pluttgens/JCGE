@@ -24,6 +24,8 @@ public abstract class GameObject implements Displayable {
      */
     protected final ComponentManager componentManager;
 
+    protected final String id;
+
     /**
      * Flag indiquant si le Game Object doit call update et render. Utile pour
      * le pattern object pool qui consiste a avoir une liste d'objets
@@ -32,10 +34,23 @@ public abstract class GameObject implements Displayable {
      * - Pascal Luttgens.
      */
     private boolean isActive;
+    
+    protected Scene scene;
 
+    protected void testggg() {
+        
+    }
     public GameObject() {
         this.componentManager = new ComponentManager();
         this.isActive = true;
+        this.id = this.getClass().getSimpleName();
+        init();
+    }
+
+    protected GameObject(String id) {
+        this.componentManager = new ComponentManager();
+        this.isActive = true;
+        this.id = id;
         init();
     }
 
@@ -49,6 +64,10 @@ public abstract class GameObject implements Displayable {
      * - Pascal Luttgens.
      */
     public abstract void init();
+    
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
 
     /**
      * Vérifie que le GameObject est actif avant de procéder à l'update.

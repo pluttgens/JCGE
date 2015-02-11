@@ -15,7 +15,8 @@ public class AudioEngineTest {
     public void test() {
         ServiceLocator.provideAssetManager(new AssetManager());
         AudioEngine ae = new AudioEngine();
-        ae.start();
+
+        ae.playSound("test", null);
         
         Notifier n = new Notifier();
         n.registerObserver(ae);
