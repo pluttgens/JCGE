@@ -9,8 +9,10 @@ import com.gamefactory.components.Position;
 import com.gamefactory.displayable.Script;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.services.ServiceLocator;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.JComponent;
 
 /**
  *
@@ -28,7 +30,9 @@ public class PlayerInputHandler extends Script implements KeyListener {
     public void init(ComponentManager owner) {
         this.owner = owner;
         this.position = (Position) owner.getComponent(Position.class);
-        ServiceLocator.getWindow().addKeyListener(this);
+        ServiceLocator.getGameWindow().getFrame().addKeyListener(this);
+        ServiceLocator.getGameWindow().getCanvas().addKeyListener(this);
+        
     }
 
     @Override

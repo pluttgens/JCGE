@@ -1,10 +1,7 @@
 package com.gamefactory.game;
 
 import com.gamefactory.services.ServiceLocator;
-import java.awt.Canvas;
 import java.awt.Dimension;
-import java.awt.event.KeyListener;
-import java.util.EventListener;
 import javax.swing.JFrame;
 
 /**
@@ -16,7 +13,7 @@ import javax.swing.JFrame;
  *
  * @since 1.0
  */
-public class Window extends Canvas {
+public class Window {
     
     public Window(int width, int heigth, String title, Game game) {
 
@@ -42,7 +39,8 @@ public class Window extends Canvas {
         frame.setFocusable(true);
         //Lance le jeu
 
-        ServiceLocator.provideWindow(frame);
+        
+        ServiceLocator.provideGameWindow(frame, game);
 
         game.start();
 

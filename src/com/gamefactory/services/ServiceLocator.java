@@ -3,6 +3,7 @@ package com.gamefactory.services;
 import com.gamefactory.assets.assetmanager.AssetManager;
 import com.gamefactory.utils.events.Notifier;
 import com.gamefactory.utils.events.Subject;
+import java.awt.Canvas;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -31,7 +32,27 @@ public class ServiceLocator {
     private final static JSONObject config = getJSONObjectFromFile(new File("config/config.cfg"));
     private final static HashMap<String, Service> services = new HashMap<>();
     private static AssetManager assetManager;
-    private static JFrame frame;
+    private static GameWindow gameWindow;
+
+    public static class GameWindow {
+
+        private final Canvas canvas;
+        private final JFrame frame;
+
+        public GameWindow(Canvas canvas, JFrame frame) {
+            this.canvas = canvas;
+            this.frame = frame;
+        }
+
+        public Canvas getCanvas() {
+            return canvas;
+        }
+
+        public JFrame getFrame() {
+            return frame;
+        }
+
+    }
 
     public static void provideService(String serviceName, Service service) {
         ServiceLocator.services.put(serviceName, service);
@@ -54,16 +75,16 @@ public class ServiceLocator {
     public static JSONObject getConfig() {
         return ServiceLocator.config;
     }
-    
-    public static void provideWindow(JFrame frame) {
-        ServiceLocator.frame = frame;
-        ServiceLocator.notifier.notifyObservers("GAME_WINDOW_PROVIDED");
+
+    public static void provideGameWindow(JFrame frame, Canvas canvas) {
+        ServiceLocator.gameWindow = new GameWindow(canvas, frame);
+        ServiceLocator.notifier.notifyObservers("GAME_PROVIDED");
     }
 
-    public static JFrame getWindow() {
-        return ServiceLocator.frame;
+    public static GameWindow getGameWindow() {
+        return ServiceLocator.gameWindow;
     }
-    
+
     public static JSONObject getJSONObjectFromFile(File file) {
         try (FileReader fr = new FileReader(file)) {
             String json = new String();
