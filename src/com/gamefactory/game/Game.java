@@ -21,12 +21,12 @@ public class Game extends Canvas implements Runnable {
     /**
      * Longueur de la fenetre.
      */
-    public final static int WIDTH = 600;
+    public final static int WIDTH = 400;
 
     /**
      * Hauteur de la fenetre.
      */
-    public final static int HEIGHT = 800;
+    public final static int HEIGHT = 600;
 
     /**
      * Nom du jeu.
