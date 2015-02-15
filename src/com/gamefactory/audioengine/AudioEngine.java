@@ -73,7 +73,7 @@ public class AudioEngine implements Service {
     public void playSound(String name, String id, int volume) {
         synchronized (this.playingSounds) {
             Clip clip = loadClipFromAssetName(name);
-            FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
+            FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             //changer le volume...
             clip.addLineListener((LineEvent le) -> {
                 if (le.getType().equals(LineEvent.Type.STOP)) {

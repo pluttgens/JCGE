@@ -26,6 +26,8 @@ public class Renderer extends Component {
     
     public void setImage(BufferedImage image) {
         this.image = image;
+        this.position.setHeight(this.image.getHeight());
+        this.position.setWidth(this.image.getWidth());
     }
 
     public Position getPosition() {

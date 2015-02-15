@@ -6,6 +6,7 @@ import com.gamefactory.game.Game;
 import com.gamefactory.utils.events.Event;
 import com.gamefactory.utils.events.Notifier;
 import java.awt.event.AWTEventListener;
+import java.util.Objects;
 
 /**
  * Component permettant de gérer la position d'une unité et ses déplacements
@@ -134,7 +135,57 @@ public class Position extends Component {
         ret.setOrientation(this.getOrientation());
         ret.setxVelocity(this.xVelocity);
         ret.setyVelocity(this.yVelocity);
+        ret.setHeight(this.height);
+        ret.setWidth(this.width);
         return ret;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 43 * hash + Float.floatToIntBits(this.x);
+        hash = 43 * hash + Float.floatToIntBits(this.y);
+        hash = 43 * hash + Float.floatToIntBits(this.xVelocity);
+        hash = 43 * hash + Float.floatToIntBits(this.yVelocity);
+        hash = 43 * hash + Objects.hashCode(this.orientation);
+        hash = 43 * hash + this.height;
+        hash = 43 * hash + this.width;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Position other = (Position) obj;
+        if (Float.floatToIntBits(this.x) != Float.floatToIntBits(other.x)) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.y) != Float.floatToIntBits(other.y)) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.xVelocity) != Float.floatToIntBits(other.xVelocity)) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.yVelocity) != Float.floatToIntBits(other.yVelocity)) {
+            return false;
+        }
+        if (this.orientation != other.orientation) {
+            return false;
+        }
+        if (this.height != other.height) {
+            return false;
+        }
+        if (this.width != other.width) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
 }
