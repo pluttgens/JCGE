@@ -16,11 +16,10 @@ public class AudioEngineTest {
         ServiceLocator.provideAssetManager(new AssetManager());
         AudioEngine ae = new AudioEngine();
 
-        ae.playSound("test", null);
+        ae.playSound("test1.wav", null);
         
-        Notifier n = new Notifier();
-        n.registerObserver(ae);
-        n.notifyObservers(new AudioEvent(ae, AudioEvent.Type.PLAY, "test1.wav"));
+        
+        
     }
 
 }
