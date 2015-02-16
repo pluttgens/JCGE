@@ -6,6 +6,7 @@ import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.services.ServiceLocator;
 import com.gamefactory.utils.events.Event;
 import com.gamefactory.utils.events.Observer;
+import java.util.EventObject;
 
 public class Sound extends Component {
 
@@ -13,7 +14,7 @@ public class Sound extends Component {
 
     static {
         Observer o = (Event event) -> {
-            if (event.getEvent().equals("AUDIO_SERVICE_PROVIDED")) {
+            if (((Event) event).getEvent().equals("AUDIO_SERVICE_PROVIDED")) {
                 ae = (AudioEngine) ServiceLocator.getService("AUDIO");
             }
         };

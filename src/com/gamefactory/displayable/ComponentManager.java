@@ -1,7 +1,8 @@
 package com.gamefactory.displayable;
 
+import com.gamefactory.utils.events.Notifier;
+import com.gamefactory.utils.events.Subject;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,12 +16,14 @@ import java.util.List;
  *
  * @since 1.0
  */
-public class ComponentManager {
+public final class ComponentManager implements Subject {
 
-    private List<Component> components;
-    private List<Script> scripts;
+    private final Notifier notifier;
+    private final List<Component> components;
+    private final List<Script> scripts;
 
     public ComponentManager() {
+        this.notifier = new Notifier(this);
         this.components = new ArrayList<>();
         this.scripts = new ArrayList<>();
     }
@@ -138,5 +141,10 @@ public class ComponentManager {
             }
         }
         return false;
+    }
+
+    @Override
+    public Notifier getNotifier() {
+        return notifier;
     }
 }

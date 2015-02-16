@@ -1,8 +1,13 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
+import com.gamefactory.utils.events.Event;
+import com.gamefactory.utils.events.Notifier;
+import com.gamefactory.utils.events.Observer;
+import com.gamefactory.utils.events.Subject;
 import java.awt.Graphics;
 import java.lang.reflect.InvocationTargetException;
+import java.util.EventObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,8 +20,10 @@ import java.util.logging.Logger;
  *
  * @since 1.0
  */
-public abstract class GameObject implements Displayable {
+public abstract class GameObject implements Displayable, Observer, Subject {
 
+    protected final Notifier notifier;
+    
     /**
      * Encapsulation de l'ensemble des components du Game Object
      *
@@ -41,6 +48,7 @@ public abstract class GameObject implements Displayable {
         this.componentManager = new ComponentManager();
         this.isActive = true;
         this.id = this.getClass().getSimpleName();
+        this.notifier = new Notifier(this);
         init();
     }
 
@@ -48,6 +56,7 @@ public abstract class GameObject implements Displayable {
         this.componentManager = new ComponentManager();
         this.isActive = true;
         this.id = id;
+        this.notifier = new Notifier(this);
         init();
     }
 
@@ -136,4 +145,16 @@ public abstract class GameObject implements Displayable {
     public void disable() {
         this.isActive = false;
     }
+
+    @Override
+    public void onNotify(Event event) {
+        this.componentManager.getNotifier().notifyObservers(event);
+    }
+
+    @Override
+    public Notifier getNotifier() {
+        return this.notifier;
+    }
+    
+    
 }

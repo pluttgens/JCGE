@@ -1,6 +1,7 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.displayable.gameobjects.Hero;
+import com.gamefactory.displayable.gameobjects.Treasure;
 import com.gamefactory.game.Displayable;
 import java.awt.Graphics;
 import java.util.HashMap;
@@ -23,15 +24,17 @@ public class Scene implements Displayable {
 
     public Scene() {
         GameObject hero = new Hero();
+        Treasure treasure = new Treasure();
         gameObjects.put(hero.id, hero);
+        gameObjects.put(treasure.id, treasure);
     }
 
     public void init() {
         Iterator<GameObject> it = gameObjects.values().iterator();
         while (it.hasNext()) {
             GameObject next = it.next();
-            next.init();
             next.setScene(this);
+            next.init();
         }
     }
 
@@ -52,6 +55,15 @@ public class Scene implements Displayable {
             GameObject next = it.next();
             next.render(g);
         }
+    }
+    
+    public GameObject getGameObject(String id) {
+        return this.gameObjects.get(id);
+    }
+    
+    public void register(GameObject listener, String subject) {
+        GameObject subjectObject = this.gameObjects.get(subject);
+        subjectObject.getNotifier().registerObserver(listener);
     }
 
 }

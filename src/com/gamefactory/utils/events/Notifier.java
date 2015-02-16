@@ -22,21 +22,18 @@ import java.util.List;
  * @since 1.0
  */
 public class Notifier {
-    
-    private final Object lock;
-    
+        
     private final Object owner;
     
     private final List<Observer> observers;
     
     public Notifier(Object owner) {
         this.observers = new LinkedList<>();
-        this.lock = new Object();
         this.owner = owner;
     }
     
     public void registerObserver(Observer o) {
-        synchronized (lock) {
+        synchronized (this.observers) {
             if (!observers.contains(o)) {
                 observers.add(o);
             }
@@ -44,21 +41,34 @@ public class Notifier {
     }
     
     public void unregisterObserver(Observer o) {
-        synchronized (lock) {
+        synchronized (this.observers) {
             observers.remove(o);
         }
     }
     
     public boolean isRegistered(Observer o) {
-        synchronized (lock) {
+        synchronized (this.observers) {
             return observers.contains(o);
         }
     }
     
+    public void notifyObservers(Event event) {
+        synchronized (this.observers) {
+            for (Observer o : this.observers) {
+                o.onNotify(event);
+            }
+        }
+    }
+    
     public void notifyObservers(String event) {
-        synchronized (lock) {
-            for (Observer o : observers) {
-                o.onNotify(new Event(owner, event));
+        synchronized (this.observers) {
+            notifyObservers(event, null);
+        }
+    }
+    public void notifyObservers(String event, Object message) {
+        synchronized (this.observers) {
+            for (Observer o : this.observers) {
+                o.onNotify(new Event(owner, event, message));
             }
         }
     }

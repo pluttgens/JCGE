@@ -14,14 +14,31 @@ import java.util.EventObject;
 public class Event extends EventObject {
 
     private final String event;
+    private final Object message;
     
-    public Event(Object o, String event) {
-        super(o);
+    
+    public Event(Object source, String event) {
+        super(source);
         this.event = event;
+        this.message = null;
     }
+    
+    public Event(Object source, String event, Object message) {
+        super(source);
+        this.event = event;
+        this.message = message;
+    }
+    
     
     public String getEvent() {
         return this.event;
     }
-   
+    
+    public Object getMessage() {
+        return this.message;
+    }
+    
+    public boolean hasMessage() {
+        return this.message != null;
+    }
 }

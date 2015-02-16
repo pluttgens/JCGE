@@ -5,6 +5,9 @@
  */
 package com.gamefactory.displayable.gameobjects;
 
+import com.gamefactory.components.Position;
+import com.gamefactory.components.Renderer;
+import com.gamefactory.components.Sound;
 import com.gamefactory.displayable.GameObject;
 
 /**
@@ -17,11 +20,10 @@ public class Treasure extends GameObject {
         super();
     }
 
-    
-    
     @Override
     public void init() {
-        
+        this.componentManager.init(new Position(), new Renderer(), new Sound());
+        this.scene.register(this, "Hero");
     }
     
     
