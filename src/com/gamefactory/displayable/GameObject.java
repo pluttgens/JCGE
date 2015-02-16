@@ -38,14 +38,14 @@ public abstract class GameObject implements Displayable {
     protected Scene scene;
 
     public GameObject() {
-        this.componentManager = new ComponentManager();
+        this.componentManager = new ComponentManager(this);
         this.isActive = true;
         this.id = this.getClass().getSimpleName();
         init();
     }
 
     protected GameObject(String id) {
-        this.componentManager = new ComponentManager();
+        this.componentManager = new ComponentManager(this);
         this.isActive = true;
         this.id = id;
         init();
@@ -66,6 +66,10 @@ public abstract class GameObject implements Displayable {
         this.scene = scene;
     }
 
+    public Scene getScene() {
+        return this.scene;
+    }
+    
     /**
      * Vérifie que le GameObject est actif avant de procéder à l'update.
      *

@@ -17,10 +17,12 @@ import java.util.List;
  */
 public class ComponentManager {
 
-    private List<Component> components;
-    private List<Script> scripts;
+    private final GameObject owner;
+    private final List<Component> components;
+    private final List<Script> scripts;
 
-    public ComponentManager() {
+    public ComponentManager(GameObject owner) {
+        this.owner = owner;
         this.components = new ArrayList<>();
         this.scripts = new ArrayList<>();
     }
