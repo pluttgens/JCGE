@@ -45,19 +45,17 @@ public abstract class GameObject implements Displayable, Observer, Subject {
     protected Scene scene;
 
     public GameObject() {
-        this.componentManager = new ComponentManager();
+        this.componentManager = new ComponentManager(this);
         this.isActive = true;
-        this.id = this.getClass().getSimpleName();
+        this.id = this.getClass().getSimpleName().toUpperCase();;
         this.notifier = new Notifier(this);
-        init();
     }
 
     protected GameObject(String id) {
-        this.componentManager = new ComponentManager();
+        this.componentManager = new ComponentManager(this);
         this.isActive = true;
-        this.id = id;
+        this.id = id.toUpperCase();;
         this.notifier = new Notifier(this);
-        init();
     }
 
     /**
@@ -71,8 +69,21 @@ public abstract class GameObject implements Displayable, Observer, Subject {
      */
     public abstract void init();
     
+    public String getId() {
+        return this.id;
+    }
+    
     public void setScene(Scene scene) {
         this.scene = scene;
+    }
+    
+    public Scene getScene() {
+        
+        return this.scene;
+    }
+    
+    public ComponentManager getComponentManager() {
+        return this.componentManager;
     }
 
     /**

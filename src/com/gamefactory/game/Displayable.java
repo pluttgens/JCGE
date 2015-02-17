@@ -14,6 +14,8 @@ import java.awt.Graphics;
  */
 public interface Displayable {
     
+    void init();
+    
     void update();
 
     void render(Graphics g);

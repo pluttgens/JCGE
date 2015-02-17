@@ -58,12 +58,8 @@ public class Scene implements Displayable {
     }
     
     public GameObject getGameObject(String id) {
-        return this.gameObjects.get(id);
+        GameObject ret = this.gameObjects.get(id);
+        return ret;
     }
     
-    public void register(GameObject listener, String subject) {
-        GameObject subjectObject = this.gameObjects.get(subject);
-        subjectObject.getNotifier().registerObserver(listener);
-    }
-
 }

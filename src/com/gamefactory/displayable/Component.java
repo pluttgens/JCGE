@@ -31,7 +31,6 @@ public abstract class Component /**implements Observer, Subject **/{
 
     public void init(ComponentManager owner) {
         this.owner = owner;
-        //this.owner.getNotifier().registerObserver(this);
     }
 
     public void update() {

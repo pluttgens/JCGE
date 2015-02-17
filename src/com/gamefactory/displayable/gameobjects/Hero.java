@@ -15,7 +15,6 @@ public class Hero extends GameObject {
     @Override
     public void init() {
         componentManager.init(new Position(), new Renderer(), new AnimatorFourDirections(), new PlayerInputHandler());
-        this.scene.register(this, "Treasure");
     }
 
 }

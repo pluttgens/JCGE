@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable {
      * @see pcomgamefactory.displayable.Scene
      * @see Displayable
      */
-    private Displayable displayable = new EmptyGameObject();
+    private Displayable displayable;
 
     /**
      * Construit un jeu à partir des dimensions de sa fenetre et de son nom.
@@ -62,6 +62,8 @@ public class Game extends Canvas implements Runnable {
      */
     public Game(int WIDTH, int HEIGHT, String NAME) {
         this.NAME = NAME;
+        this.displayable = new EmptyGameObject();
+        this.displayable.init();
         window();
     }
 
@@ -76,6 +78,7 @@ public class Game extends Canvas implements Runnable {
 
     public void setDisplayable(Displayable displayable) {
         this.displayable = displayable;
+        displayable.init();
     }
 
     /**

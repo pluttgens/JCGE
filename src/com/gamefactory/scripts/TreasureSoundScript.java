@@ -12,6 +12,7 @@ import com.gamefactory.displayable.Script;
 import com.gamefactory.utils.events.Event;
 import com.gamefactory.utils.timer.Timer;
 import java.util.EventObject;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -19,7 +20,8 @@ import java.util.EventObject;
  */
 public class TreasureSoundScript extends Script {
 
-    private Position position;
+    private Position selfPosition;
+    private Position heroPosition;
     private Sound sound;
     private final Timer timer;
 
@@ -31,23 +33,16 @@ public class TreasureSoundScript extends Script {
     public void init(ComponentManager owner) {
         super.init(owner); //To change body of generated methods, choose Tools | Templates.
         sound = (Sound) this.owner.getComponent(Sound.class);
+        selfPosition = (Position) this.owner.getComponent(Position.class);
+        heroPosition = (Position) this.owner.getComponentFromGO("HERO", Position.class);
+        timer.start();
     }
 
     @Override
     public void update() {
-        if (timer.getElapsedTime() > 10000000000l) {
-            this.getNotifier().notifyObservers("REQUEST_POSITION", "Hero");
+        if (timer.getElapsedTime(TimeUnit.SECONDS) > 10) {
+            sound.getAudioEngine().playSound("test1.wav", null);
         }
-    }
-
-    // @Override
-    public void onNotify(Event event) {
-        if (event.hasMessage() && event.getEvent().equals("HERO_POSITION")) {
-            Position hero;
-            hero = (Position) event.getMessage();
-            float distance = position.distanceWith(hero);
-        }
-
     }
 
 }

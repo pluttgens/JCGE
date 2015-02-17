@@ -1,24 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.utils.timer;
 
-/**
- *
- * @author scalpa
- */
+import java.util.concurrent.TimeUnit;
+
 public class Timer {
     
+    private static final long GLOBAL_START_TIME = System.nanoTime();
+    
     private long startTime;
-
-    public Timer() {
+    
+    public void start() {
         this.startTime = System.nanoTime();
     }
     
-    public long getElapsedTime() {
-        return System.nanoTime() - this.startTime;
+    public static long getGlobalElapsedTime(TimeUnit tu) {
+        return TimeUnit.NANOSECONDS.convert(System.nanoTime() -  Timer.GLOBAL_START_TIME, tu);
+    }
+    
+    public long getElapsedTime(TimeUnit tu) {
+        return TimeUnit.NANOSECONDS.convert(System.nanoTime() - this.startTime, tu);
     }
     
     public void resetTimer() {
