@@ -154,5 +154,9 @@ public final class ComponentManager  {
     public Component getComponentFromGO(String id, Class<? extends Component> componentClass) {
         return this.owner.getScene().getGameObject(id).getComponentManager().getComponent(componentClass);
     }
+    
+    public Scene getScene(){
+        return this.owner.getScene();
+    }
 
 }

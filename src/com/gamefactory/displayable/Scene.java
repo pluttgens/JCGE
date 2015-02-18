@@ -4,6 +4,7 @@ import com.gamefactory.displayable.gameobjects.Hero;
 import com.gamefactory.displayable.gameobjects.Treasure;
 import com.gamefactory.game.Displayable;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -74,4 +75,7 @@ public class Scene implements Displayable {
         return ret;
     }
     
+    public ArrayList<GameObject> getGameObjects(){
+        return new ArrayList(gameObjects.values());
+    }
 }
