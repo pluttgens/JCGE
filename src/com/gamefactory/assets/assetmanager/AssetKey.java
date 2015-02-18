@@ -39,26 +39,14 @@ public class AssetKey {
         return assetName.substring(index + 1);
     }
 
-    /**
-     * Récupère le type (dossier) identifiant l'asset
-     * @return
-     */
     public String getType() {
         return type;
     }
 
-    /**
-     * Récupère le nom de l'asset
-     * @return
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Récupère l'extension de l'asset
-     * @return
-     */
     public String getExtension() {
         return extension;
     }

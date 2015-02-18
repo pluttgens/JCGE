@@ -41,18 +41,10 @@ public interface AssetInputStreamProvider {
             this.mime = mime;
         }
 
-        /**
-         * Récupère le flux d'entrée
-         * @return
-         */
         public InputStream getInputStream() {
             return this.inputStream;
         }
 
-        /**
-         * Récupère l'extension du fichier
-         * @return
-         */
         public String getMime() {
             return this.mime;
         }
