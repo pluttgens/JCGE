@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @since 1.0
  */
-public abstract class GameObject implements Displayable, Observer, Subject {
+public abstract class GameObject implements Displayable {
 
     protected final Notifier notifier;
     
@@ -77,14 +77,13 @@ public abstract class GameObject implements Displayable, Observer, Subject {
     }
     
     public Scene getScene() {
-        
         return this.scene;
     }
     
     public ComponentManager getComponentManager() {
         return this.componentManager;
     }
-
+    
     /**
      * Vérifie que le GameObject est actif avant de procéder à l'update.
      *
@@ -154,17 +153,6 @@ public abstract class GameObject implements Displayable, Observer, Subject {
      */
     public void disable() {
         this.isActive = false;
-    }
-
-    @Override
-    public void onNotify(Event event) {
-        this.componentManager.getNotifier().notifyObservers(event);
-    }
-
-    @Override
-    public Notifier getNotifier() {
-        return this.notifier;
-    }
-    
+    }    
     
 }

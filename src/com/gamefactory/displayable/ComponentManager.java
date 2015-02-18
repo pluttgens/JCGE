@@ -16,16 +16,14 @@ import java.util.List;
  *
  * @since 1.0
  */
-public final class ComponentManager implements Subject {
+public final class ComponentManager  {
 
     private final GameObject owner;
-    private final Notifier notifier;
     private final List<Component> components;
     private final List<Script> scripts;
 
     public ComponentManager(GameObject owner) {
         this.owner = owner;
-        this.notifier = new Notifier(this);
         this.components = new ArrayList<>();
         this.scripts = new ArrayList<>();
     }
@@ -151,15 +149,7 @@ public final class ComponentManager implements Subject {
     }
 
     public Component getComponentFromGO(String id, Class<? extends Component> componentClass) {
-        Scene scene = this.owner.getScene();
-        GameObject go = scene.getGameObject(id);
-        ComponentManager cm = go.componentManager;
-        return cm.getComponent(componentClass);
-        //  return this.owner.getScene().getGameObject(id).getComponentManager().getComponent(componentClass);
+        return this.owner.getScene().getGameObject(id).getComponentManager().getComponent(componentClass);
     }
 
-    @Override
-    public Notifier getNotifier() {
-        return notifier;
-    }
 }
