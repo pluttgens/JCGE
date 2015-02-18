@@ -1,6 +1,7 @@
 package com.gamefactory.game;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
+import com.gamefactory.audioengine.AudioEngine;
 import com.gamefactory.displayable.gameobjects.EmptyGameObject;
 import com.gamefactory.displayable.gameobjects.Hero;
 import com.gamefactory.displayable.Scene;
@@ -11,6 +12,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -62,8 +65,6 @@ public class Game extends Canvas implements Runnable {
      */
     public Game(int WIDTH, int HEIGHT, String NAME) {
         this.NAME = NAME;
-        this.displayable = new EmptyGameObject();
-        this.displayable.init();
         window();
     }
 
@@ -81,6 +82,12 @@ public class Game extends Canvas implements Runnable {
         displayable.init();
     }
 
+    public void init() {
+        ServiceLocator.provideService("audio", new AudioEngine());
+        this.displayable = new Scene();
+        this.displayable.init();
+    }
+    
     /**
      * Demarre le processus du jeu.
      */
@@ -168,10 +175,13 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void main(String[] args) throws IOException {
-
+        try {
+            Class.forName("com.gamefactory.components.Sound");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ServiceLocator.provideAssetManager(new AssetManager());
         Game game = new Game(800, 600, "test");
-        game.setDisplayable(new Scene());
 
         /*
          * try {
@@ -191,7 +201,5 @@ public class Game extends Canvas implements Runnable {
          * ex) { Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null,
          * ex); }
          */
-        Hero a = new Hero();
-
     }
 }

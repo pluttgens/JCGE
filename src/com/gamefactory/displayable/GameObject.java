@@ -67,7 +67,6 @@ public abstract class GameObject implements Displayable, Observer, Subject {
      *
      * - Pascal Luttgens.
      */
-    public abstract void init();
     
     public String getId() {
         return this.id;

@@ -12,12 +12,13 @@ public class Sound extends Component {
 
     private static AudioEngine ae;
 
-    static {
-        Observer o = (Event event) -> {
+    private final static Observer o = (Event event) -> {
             if (((Event) event).getEvent().equals("AUDIO_SERVICE_PROVIDED")) {
                 ae = (AudioEngine) ServiceLocator.getService("AUDIO");
             }
         };
+    
+    static {
         ServiceLocator.getNotifier().registerObserver(o);
     }
 

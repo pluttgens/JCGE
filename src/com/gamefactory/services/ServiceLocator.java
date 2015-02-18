@@ -28,7 +28,7 @@ import org.json.JSONObject;
  */
 public class ServiceLocator {
 
-    private final static Notifier notifier = new Notifier(null);
+    private final static Notifier notifier = new Notifier(new Object());
     private final static JSONObject config = getJSONObjectFromFile(new File("config/config.cfg"));
     private final static HashMap<String, Service> services = new HashMap<>();
     private static AssetManager assetManager;
@@ -55,7 +55,7 @@ public class ServiceLocator {
     }
 
     public static void provideService(String serviceName, Service service) {
-        ServiceLocator.services.put(serviceName, service);
+        ServiceLocator.services.put(serviceName.toUpperCase(), service);
         ServiceLocator.notifier.notifyObservers(serviceName.toUpperCase() + "_SERVICE_PROVIDED");
     }
 

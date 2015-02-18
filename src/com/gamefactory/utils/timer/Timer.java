@@ -17,7 +17,7 @@ public class Timer {
     }
     
     public long getElapsedTime(TimeUnit tu) {
-        return TimeUnit.NANOSECONDS.convert(System.nanoTime() - this.startTime, tu);
+        return tu.convert(System.nanoTime() - this.startTime, TimeUnit.NANOSECONDS);
     }
     
     public void resetTimer() {

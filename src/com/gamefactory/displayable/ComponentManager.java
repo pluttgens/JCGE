@@ -48,6 +48,9 @@ public final class ComponentManager implements Subject {
             }
         }
         this.components.sort(new Component.UpdatePriorityComparator());
+    }
+
+    public void initComponents() {
         Iterator<Component> itComponent = this.components.iterator();
         while (itComponent.hasNext()) {
             itComponent.next().init(this);
@@ -57,6 +60,8 @@ public final class ComponentManager implements Subject {
         while (itScript.hasNext()) {
             itScript.next().init(this);
         }
+        System.out.println(this.owner.id + " : " + this.components.toString() + "   " + this.scripts.toString());
+
     }
 
     public void update() {
@@ -144,13 +149,13 @@ public final class ComponentManager implements Subject {
         }
         return false;
     }
-    
+
     public Component getComponentFromGO(String id, Class<? extends Component> componentClass) {
         Scene scene = this.owner.getScene();
         GameObject go = scene.getGameObject(id);
         ComponentManager cm = go.componentManager;
         return cm.getComponent(componentClass);
-      //  return this.owner.getScene().getGameObject(id).getComponentManager().getComponent(componentClass);
+        //  return this.owner.getScene().getGameObject(id).getComponentManager().getComponent(componentClass);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class Window {
 
         
         ServiceLocator.provideGameWindow(frame, game);
-
+        game.init();
         game.start();
 
     }

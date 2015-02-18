@@ -9,9 +9,7 @@ import com.gamefactory.components.Position;
 import com.gamefactory.components.Sound;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.Script;
-import com.gamefactory.utils.events.Event;
 import com.gamefactory.utils.timer.Timer;
-import java.util.EventObject;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,8 +38,10 @@ public class TreasureSoundScript extends Script {
 
     @Override
     public void update() {
-        if (timer.getElapsedTime(TimeUnit.SECONDS) > 10) {
+        long time = timer.getElapsedTime(TimeUnit.SECONDS);
+        if ( time > 10) {
             sound.getAudioEngine().playSound("test1.wav", null);
+            timer.resetTimer();
         }
     }
 

@@ -29,12 +29,19 @@ public class Scene implements Displayable {
         gameObjects.put(treasure.id, treasure);
     }
 
+    @Override
     public void init() {
         Iterator<GameObject> it = gameObjects.values().iterator();
         while (it.hasNext()) {
             GameObject next = it.next();
             next.setScene(this);
             next.init();
+        }
+        it = gameObjects.values().iterator();
+                while (it.hasNext()) {
+            GameObject next = it.next();
+            next.setScene(this);
+            next.getComponentManager().initComponents();
         }
     }
 
