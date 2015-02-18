@@ -66,10 +66,19 @@ public class AudioEngine implements Service {
         throw new IllegalStateException("Erreur lors du chargement de l'asset : " + assetName);
     }
 
+    /**
+     * Lance le son du jeu
+     */
     public void playSound(String name, String id) {
         playSound(name, id, 50);
     }
 
+    /**
+     * Lance le son du jeu avec un systeme de volume
+     * @param name
+     * @param id
+     * @param volume
+     */
     public void playSound(String name, String id, int volume) {
         synchronized (this.playingSounds) {
             Clip clip = loadClipFromAssetName(name);
@@ -104,6 +113,12 @@ public class AudioEngine implements Service {
         }
     }
 
+    /**
+     * Initialise le volume
+     * @param name
+     * @param id
+     * @param volume
+     */
     public void setVolume(String name, String id, int volume) {
         FloatControl volumeControl;
         synchronized (this.playingSounds) {
@@ -112,6 +127,11 @@ public class AudioEngine implements Service {
         // changer le volume...
     }
 
+    /**
+     * Arrête le son du jeu
+     * @param name
+     * @param id
+     */
     public void stopSound(String name, String id) {
         synchronized (this.playingSounds) {
             playingSounds.get(name + ((id != null) ? id : "")).stop();

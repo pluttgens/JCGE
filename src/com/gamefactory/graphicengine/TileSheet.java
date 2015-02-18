@@ -31,6 +31,11 @@ public class TileSheet {
         this.width = im.getWidth()/TileEngine.TILE_WIDTH;
     }
 
+    /**
+     * Charge la grille de tile
+     * @param name
+     * @return
+     */
     private BufferedImage loadTileSheet(String name) {
         final ImageAsset tileAsset = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", name);
 
@@ -41,9 +46,14 @@ public class TileSheet {
         }
     }
     
+    /**
+     * Charge les images selon les positions
+     * @param position
+     * @return
+     */
     public BufferedImage loadTile(int position) {
     	Coord2D c = Coord2D.convCoord(this.width, position);
-        return im.getSubimage(c.getX() * TileEngine.TILE_HEIGHT, c.getY()*TileEngine.TILE_WIDTH, 32, 32);
+        return im.getSubimage(c.getX(), c.getY(), 32, 32);
     }
 
 }

@@ -27,10 +27,17 @@ public class AudioAsset extends Asset {
         this.info = info;
     }
 
+    /**
+     * Recupere les donnees d'une ressource audio
+     */
     public byte[] getAudioData() {
         return audioData;
     }
 
+    /**
+     * Recupere le format d'une ressource audio
+     * @return
+     */
     public AudioFormat getFormat() {
         return af;
     }
@@ -59,8 +66,6 @@ public class AudioAsset extends Asset {
         final AudioAsset other = (AudioAsset) obj;
         return Arrays.equals(this.audioData, other.audioData);
     }
-    
-    
 
     @Override
     public Asset clone() {

@@ -57,8 +57,6 @@ public abstract class GameObject implements Displayable {
         this.id = id.toUpperCase();;
         this.notifier = new Notifier(this);
     }
-    
-    
 
     /**
      * Doit être overridée pour spécifier la liste des components à charger dans
@@ -69,24 +67,36 @@ public abstract class GameObject implements Displayable {
      *
      * - Pascal Luttgens.
      */
-    @Override
-    public void init() {
-        
-    }
     
-    
+    /**
+     * Recupere l'id du GameObject
+     * @return
+     */
     public String getId() {
         return this.id;
     }
     
+    /**
+     * Initialise la scene
+     * @param scene
+     */
     public void setScene(Scene scene) {
         this.scene = scene;
     }
     
+    /**
+     * Recupere la scene
+     * @return
+     */
     public Scene getScene() {
         return this.scene;
     }
     
+    /**
+     * Recupere le ComponentManager encapsulant le 
+     * comportement des components au sein d'un GameObject
+     * @return
+     */
     public ComponentManager getComponentManager() {
         return this.componentManager;
     }

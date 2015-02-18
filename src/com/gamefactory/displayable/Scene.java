@@ -64,6 +64,11 @@ public class Scene implements Displayable {
         }
     }
     
+    /**
+     * Recupere l'id du GameObject
+     * @param id
+     * @return
+     */
     public GameObject getGameObject(String id) {
         GameObject ret = this.gameObjects.get(id);
         return ret;

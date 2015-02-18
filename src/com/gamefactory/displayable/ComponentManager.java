@@ -48,6 +48,9 @@ public final class ComponentManager  {
         this.components.sort(new Component.UpdatePriorityComparator());
     }
 
+    /**
+     * Initialise tous les components
+     */
     public void initComponents() {
         Iterator<Component> itComponent = this.components.iterator();
         while (itComponent.hasNext()) {

@@ -57,58 +57,118 @@ public class Position extends Component {
         super.init(owner);
     }
 
+    /**
+     * Recupere la valeur en abscisse
+     * @return
+     */
     public float getX() {
         return x;
     }
 
+    /**
+     * Initialise les valeurs en abscisse
+     * @param x
+     */
     public void setX(float x) {
         this.x = x;
     }
 
+    /**
+     * Recupere la valeur en ordonnee
+     * @return
+     */
     public float getY() {
         return y;
     }
 
+    /**
+     * Initialise les valeurs en ordonnee
+     * @param y
+     */
     public void setY(float y) {
         this.y = y;
     }
 
+    /**
+     * Recupere la vitesse de deplacement du 
+     * personnage de haut en bas (abscisse x)
+     * @return
+     */
     public float getxVelocity() {
         return xVelocity;
     }
 
+    /**
+     * Initialise la vitesse de deplacement du 
+     * personnage de haut en bas (abscisse x)
+     * @param xVelocity
+     */
     public void setxVelocity(float xVelocity) {
         this.xVelocity = xVelocity;
     }
 
+    /**
+     * Recupere la vitesse de deplacement du 
+     * personnage de gauche à droite (ordonnee y)
+     * @return
+     */
     public float getyVelocity() {
         return yVelocity;
     }
 
+    /**
+     * Initialise la vitesse de deplacement du 
+     * personnage de gauche à droite (ordonnee y)
+     * @param yVelocity
+     */
     public void setyVelocity(float yVelocity) {
         this.yVelocity = yVelocity;
     }
 
+    /**
+     * Recupere la hauteur du personnage
+     * @return
+     */
     public int getHeight() {
         return height;
     }
-
+    
+    /**
+     * Initialise la taille du personnage
+     * @param height
+     */
     public void setHeight(int height) {
         this.height = height;
     }
 
+    /**
+     * Recupere la largeur du personnage
+     * @return
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Initialise la largeur du personnage
+     * @param width
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
+    /**
+     * Recupere l'orientation du personnage
+     * @return
+     */
     public Orientation getOrientation() {
         return this.orientation;
     }
 
+    /**
+     * Initialise l'orientation du personnage
+     * @param orientation
+     */
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }

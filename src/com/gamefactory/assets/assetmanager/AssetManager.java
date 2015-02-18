@@ -64,6 +64,12 @@ public class AssetManager {
         }
     }
 
+    /**
+     * Chargement d'un asset par l'utilisateur
+     * @param type
+     * @param name
+     * @return
+     */
     private Asset loadAsset(String type, String name) {
         TypeLoader loader = loaders.get(type);
         AssetInputStreamProvider.InputStreamWithMime assetStream = provider.getInputStream(new AssetKey(type, name));
@@ -71,10 +77,21 @@ public class AssetManager {
         return loader.LoadFromStream(assetStream);
     }
 
+    /**
+     * 
+     * @param type
+     * @param loader
+     */
     public void registerType(String type, TypeLoader loader) {
         loaders.put(type, loader);
     }
 
+    /**
+     * Recupere l'asset
+     * @param type
+     * @param name
+     * @return
+     */
     public Object getAsset(String type, String name) {
         synchronized (lock) {
             Asset asset = cache.getFromCache(new AssetKey(type, name));
@@ -87,6 +104,12 @@ public class AssetManager {
         }
     }
 
+    /**
+     * Recupere le copie de l'asset
+     * @param type
+     * @param name
+     * @return
+     */
     public Object getAssetCopy(String type, String name) {
         synchronized (lock) {
             Asset asset = cache.getCopyFromCache(new AssetKey(type, name));
@@ -99,6 +122,9 @@ public class AssetManager {
         }
     }
 
+    /**
+     * Vide le cache
+     */
     public void clearCache() {
         synchronized (lock) {
             cache.clearCache();

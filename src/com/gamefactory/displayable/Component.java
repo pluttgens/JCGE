@@ -29,6 +29,11 @@ public abstract class Component /**implements Observer, Subject **/{
         this.notifier = new Notifier(this);
     }
 
+    /**
+     * Initialise le component encapsulant 
+     * une fonctionnalité d'un game object
+     * @param owner
+     */
     public void init(ComponentManager owner) {
         this.owner = owner;
     }
