@@ -11,17 +11,17 @@ import com.gamefactory.graphicengine.TileSheet;
 
 public class Landscape implements Displayable {
 
-    private List<Tile> tiles;
+    private final int width;
+    private final int height;
+
+    private final List<Tile> tiles;
 
     public Landscape() {
+        this.width = 2000;
+        this.height = 2000;
+
         tiles = new ArrayList<Tile>();
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(0, 0)));
 
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Coord2D(32, 32)));
-
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Coord2D(0, 32)));
-
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(32, 0)));
     }
 
     public List<Tile> getTiles() {
@@ -41,6 +41,13 @@ public class Landscape implements Displayable {
 
     @Override
     public void init() {
+        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(0, 0)));
+
+        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Coord2D(32, 32)));
+
+        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Coord2D(0, 32)));
+
+        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(32, 0)));
     }
 
 }

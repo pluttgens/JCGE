@@ -172,4 +172,8 @@ public abstract class GameObject implements Displayable {
         this.isActive = false;
     }    
     
+    public boolean isInCameraField() {
+        
+    }
+    
 }

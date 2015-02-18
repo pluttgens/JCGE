@@ -2,8 +2,6 @@ package com.gamefactory.game;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
 import com.gamefactory.audioengine.AudioEngine;
-import com.gamefactory.displayable.gameobjects.EmptyGameObject;
-import com.gamefactory.displayable.gameobjects.Hero;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.services.ServiceLocator;
 
