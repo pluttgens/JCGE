@@ -32,6 +32,9 @@ public class FileProvider implements AssetInputStreamProvider {
         }
     }
 
+    /**
+     * Récupère le flux d'entrée ainsi que l'extension de la clé de l'asset
+     */
     @Override
     public InputStreamWithMime getInputStream(AssetKey assetKey) {
 

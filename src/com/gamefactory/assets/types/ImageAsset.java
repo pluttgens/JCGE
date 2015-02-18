@@ -29,20 +29,29 @@ public class ImageAsset extends Asset {
         this.extention = extention;
     }
 
+    /**
+     * Récupère le contenu du tableau de pixels (en byte)
+     * @return
+     */
     public byte[] getPixels() {
         return pixels;
     }
 
+    /**
+     * Récupère l'extension de l'image
+     * @return
+     */
     public String getExtention() {
         return extention;
     }
 
-    public BufferedImage getBufferedImage()  {
-       try {
+    /**
+     * Récupère le flux d'entrée d'images
+     * @return
+     * @throws IOException
+     */
+    public BufferedImage getBufferedImage() throws IOException {
         return ImageIO.read(new ByteArrayInputStream(this.getPixels()));
-       } catch (IOException e) {
-           throw new IllegalStateException("L'image n'a pas pu Ãªtre lue");
-       }
     }
 
     @Override
@@ -68,6 +77,9 @@ public class ImageAsset extends Asset {
         return true;
     }
 
+    /**
+     * Crée une copie de l'image
+     */
     @Override
     public Asset clone() {
         return new ImageAsset(Arrays.copyOf(pixels, pixels.length), extention);

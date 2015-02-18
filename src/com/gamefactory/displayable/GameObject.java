@@ -57,8 +57,6 @@ public abstract class GameObject implements Displayable {
         this.id = id.toUpperCase();;
         this.notifier = new Notifier(this);
     }
-    
-    
 
     /**
      * Doit être overridée pour spécifier la liste des components à charger dans
@@ -69,11 +67,6 @@ public abstract class GameObject implements Displayable {
      *
      * - Pascal Luttgens.
      */
-    @Override
-    public void init() {
-        
-    }
-    
     
     public String getId() {
         return this.id;

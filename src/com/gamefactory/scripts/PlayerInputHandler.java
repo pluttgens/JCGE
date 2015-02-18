@@ -37,6 +37,7 @@ public class PlayerInputHandler extends Script implements KeyListener {
         this.position.setY(Game.HEIGHT / 2 - 20);
         ServiceLocator.getGameWindow().getFrame().addKeyListener(this);
         ServiceLocator.getGameWindow().getCanvas().addKeyListener(this);
+
     }
 
     private boolean isDirectionalArrow(int key) {

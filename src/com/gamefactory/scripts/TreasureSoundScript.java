@@ -39,7 +39,7 @@ public class TreasureSoundScript extends Script {
     @Override
     public void update() {
         long time = timer.getElapsedTime(TimeUnit.SECONDS);
-        if ( time >= 2) {
+        if ( time > 10) {
             sound.getAudioEngine().playSound("test1.wav", null);
             timer.resetTimer();
         }

@@ -50,7 +50,7 @@ public class AnimatorFourDirections extends Script {
 
     public void loadAnimations() {
         try {
-        //Ouest
+//Ouest
             ImageAsset o1 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "ouest/1O.png");
             animationsLeft.add(ImageIO.read(new ByteArrayInputStream(o1.getPixels())));
             ImageAsset o2 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "ouest/2O.png");
