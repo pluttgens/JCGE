@@ -9,6 +9,7 @@ import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
 import com.gamefactory.components.Sound;
 import com.gamefactory.displayable.GameObject;
+import com.gamefactory.scripts.PlayerFindTreasureScript;
 import com.gamefactory.scripts.TreasurePositionScript;
 import com.gamefactory.scripts.TreasureSoundScript;
 
@@ -24,6 +25,6 @@ public class Treasure extends GameObject {
 
     @Override
     public void init() {
-        this.componentManager.init(new Position(), new Renderer(), new Sound(), new TreasureSoundScript(),new TreasurePositionScript());
+        this.componentManager.init(new Position(), new Renderer(), new Sound(), new TreasureSoundScript(),new TreasurePositionScript(), new PlayerFindTreasureScript());
     }
 }

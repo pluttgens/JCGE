@@ -37,8 +37,12 @@ public class ImageAsset extends Asset {
         return extention;
     }
 
-    public BufferedImage getBufferedImage() throws IOException {
+    public BufferedImage getBufferedImage()  {
+       try {
         return ImageIO.read(new ByteArrayInputStream(this.getPixels()));
+       } catch (IOException e) {
+           throw new IllegalStateException("L'image n'a pas pu être lue");
+       }
     }
 
     @Override

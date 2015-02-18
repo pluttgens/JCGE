@@ -5,6 +5,7 @@
  */
 package com.gamefactory.scripts;
 
+import com.gamefactory.assets.types.ImageAsset;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.ComponentManager;
@@ -24,7 +25,7 @@ public class PlayerFindTreasureScript extends Script {
     private BufferedImage image;
 
     public PlayerFindTreasureScript() {
-        this.image = (BufferedImage) ServiceLocator.getAssetManager().getAsset("image", "treasure.png");
+        this.image = ((ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "treasure.png")).getBufferedImage();
     }
     
     
@@ -32,14 +33,14 @@ public class PlayerFindTreasureScript extends Script {
     @Override
     public void init(ComponentManager owner) {
         super.init(owner); //To change body of generated methods, choose Tools | Templates.
-        this.hero = (Position) this.owner.getComponentFromGO("Hero", Position.class);
+        this.hero = (Position) this.owner.getComponentFromGO("HERO", Position.class);
         this.tresure = (Position) this.owner.getComponent(Position.class);
         this.renderer = (Renderer) this.owner.getComponent(Renderer.class);
     }
 
     @Override
     public void update() {
-        if (hero.distanceWith(tresure) < 150) {
+        if (hero.distanceWith(tresure) < 10) {
             renderer.setImage(image);
         }
     }
