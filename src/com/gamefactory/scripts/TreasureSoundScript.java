@@ -36,13 +36,14 @@ public class TreasureSoundScript extends Script {
         timer.start();
     }
 
+    private int volume = -80;
     @Override
     public void update() {
         long time = timer.getElapsedTime(TimeUnit.SECONDS);
         if ( time >= 2) {
-            // les bornes vonts de - 80 a 6 pour ce son
-            sound.getAudioEngine().playSound("test1.wav",null,-50);
-            
+            // les bornes vont de - 80 a 6 pour ce son
+            sound.getAudioEngine().playSound("test1.wav",null,volume);
+            volume += 10;
             timer.resetTimer();
         }
     }

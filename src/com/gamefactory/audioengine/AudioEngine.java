@@ -84,7 +84,7 @@ public class AudioEngine implements Service {
             Clip clip = loadClipFromAssetName(name);
             FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             //Changement volume
-            volumeControl.setValue(volume);
+            volumeControl.setValue(volume > volumeControl.getMaximum() ? volumeControl.getMaximum() : volume);
             clip.addLineListener((LineEvent le) -> {
                 if (le.getType().equals(LineEvent.Type.STOP)) {
                     long eventPos = le.getFramePosition();

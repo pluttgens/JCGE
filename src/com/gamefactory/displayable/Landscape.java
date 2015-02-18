@@ -30,8 +30,6 @@ public class Landscape implements Displayable {
 
     @Override
     public void update() {
-		// TODO Auto-generated method stub
-
     }
 
     @Override
