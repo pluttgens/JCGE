@@ -173,7 +173,7 @@ public abstract class GameObject implements Displayable {
     }    
     
     public boolean isInCameraField() {
-        
+        return true;
     }
     
 }

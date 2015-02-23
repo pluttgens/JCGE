@@ -22,8 +22,10 @@ public class Scene implements Displayable {
 
     private Map<String, GameObject> gameObjects = new HashMap<>();
     private Landscape Landscape = new Landscape();
+    private Camera camera;
 
     public Scene() {
+        this.camera = new Camera(this);
         GameObject hero = new Hero();
         Treasure treasure = new Treasure();
         gameObjects.put(hero.id, hero);
@@ -32,6 +34,8 @@ public class Scene implements Displayable {
 
     @Override
     public void init() {
+        this.Landscape.init();
+        this.camera.init();
         Iterator<GameObject> it = gameObjects.values().iterator();
         while (it.hasNext()) {
             GameObject next = it.next();
@@ -48,6 +52,7 @@ public class Scene implements Displayable {
 
     @Override
     public void update() {
+        this.camera.update();
         Iterator<GameObject> it = gameObjects.values().iterator();
         while (it.hasNext()) {
             GameObject next = it.next();
@@ -57,7 +62,7 @@ public class Scene implements Displayable {
 
     @Override
     public void render(Graphics g) {
-        Landscape.render(g);
+        camera.render(g);
         Iterator<GameObject> it = gameObjects.values().iterator();
         while (it.hasNext()) {
             GameObject next = it.next();
@@ -67,15 +72,25 @@ public class Scene implements Displayable {
     
     /**
      * Recupere l'id du GameObject
-     * @param id
-     * @return
+     * @param id L'id du GameObject
+     * @return Le GameObject
      */
     public GameObject getGameObject(String id) {
         GameObject ret = this.gameObjects.get(id);
         return ret;
     }
     
+    
+    /**
+     * Retourne l'ensemble des GameObjects contenu dans la scene
+     * 
+     * @return L'ensemble des GameObjects
+     */
     public ArrayList<GameObject> getGameObjects(){
         return new ArrayList(gameObjects.values());
+    }
+    
+    public Landscape getLandscape() {
+        return this.Landscape;
     }
 }
