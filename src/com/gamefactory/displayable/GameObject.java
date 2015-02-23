@@ -5,6 +5,7 @@ import com.gamefactory.utils.events.Event;
 import com.gamefactory.utils.events.Notifier;
 import com.gamefactory.utils.events.Observer;
 import com.gamefactory.utils.events.Subject;
+
 import java.awt.Graphics;
 import java.lang.reflect.InvocationTargetException;
 import java.util.EventObject;
@@ -149,9 +150,10 @@ public abstract class GameObject implements Displayable {
         Component renderer = componentManager.getComponent("Renderer");
         try {
             renderer.getClass().getMethod("render", Graphics.class).invoke(renderer, g);
+            
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }   
     }
 
     /**
@@ -170,9 +172,29 @@ public abstract class GameObject implements Displayable {
      */
     public void disable() {
         this.isActive = false;
-    }    
+    }
+
+
+	public void onEnterCollision(String id) {
+		componentManager.onEnterCollision(id);
+		
+	}
+	
+	public void detectCollision() {
+		if(!componentManager.checkForComponent("Collider"))
+			return;
+		Component collider = componentManager.getComponent("Collider");
+        try {
+        	collider.getClass().getMethod("detectCollision").invoke(collider);
+            
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+	}
+ 
     
     public boolean isInCameraField() {
+		return false;
         
     }
     

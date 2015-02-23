@@ -1,8 +1,11 @@
 package com.gamefactory.displayable;
 
+import com.gamefactory.components.Collider;
 import com.gamefactory.displayable.gameobjects.Hero;
+import com.gamefactory.displayable.gameobjects.Obstacle;
 import com.gamefactory.displayable.gameobjects.Treasure;
 import com.gamefactory.game.Displayable;
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,8 +29,10 @@ public class Scene implements Displayable {
     public Scene() {
         GameObject hero = new Hero();
         Treasure treasure = new Treasure();
+        Obstacle obstacle = new Obstacle();
         gameObjects.put(hero.id, hero);
         gameObjects.put(treasure.id, treasure);
+        gameObjects.put(obstacle.id, obstacle);
     }
 
     @Override
@@ -52,7 +57,7 @@ public class Scene implements Displayable {
         while (it.hasNext()) {
             GameObject next = it.next();
             next.update();
-        }
+        } 
     }
 
     @Override
@@ -65,6 +70,17 @@ public class Scene implements Displayable {
         }
     }
     
+    @Override
+    public void detectCollision() {
+        Iterator<GameObject> it = gameObjects.values().iterator();
+        while (it.hasNext()) {
+            GameObject next = it.next();
+            next.detectCollision();
+        }
+    }
+    
+    
+    
     /**
      * Recupere l'id du GameObject
      * @param id
@@ -75,7 +91,13 @@ public class Scene implements Displayable {
         return ret;
     }
     
-    public ArrayList<GameObject> getGameObjects(){
-        return new ArrayList(gameObjects.values());
+    
+    /**
+     * Renvoie la liste des Gameobjects
+     * 
+     */
+    public ArrayList<GameObject> getGameObjects(){		
+    	return new ArrayList(gameObjects.values());		
     }
+    
 }
