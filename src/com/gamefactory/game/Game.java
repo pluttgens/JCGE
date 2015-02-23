@@ -152,6 +152,7 @@ public class Game extends Canvas implements Runnable {
      */
     public void update() {
         displayable.update();
+        displayable.detectCollision();
     }
 
     /**

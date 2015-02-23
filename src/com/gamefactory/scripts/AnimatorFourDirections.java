@@ -98,7 +98,7 @@ public class AnimatorFourDirections extends Script {
 
     @Override
     public void update() {
-        if (this.previousPosition.distanceWith(position) > 5) {
+        if (this.previousPosition.distanceWith(position) > 3) {
             Position.Orientation orientation = position.getOrientation();
             BufferedImage current = this.renderer.getImage();
             switch (orientation) {

@@ -28,4 +28,10 @@ public class Treasure extends GameObject {
     public void init() {
         this.componentManager.init(new Position(), new Renderer(), new Sound(), new TreasureSoundScript(),new TreasurePositionScript(), new PlayerFindTreasureScript());
     }
+
+	@Override
+	public void detectCollision() {
+		// TODO Auto-generated method stub
+		
+	}
 }

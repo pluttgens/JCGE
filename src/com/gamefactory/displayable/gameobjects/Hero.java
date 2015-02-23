@@ -18,4 +18,10 @@ public class Hero extends GameObject {
         componentManager.init(new Position(), new Renderer(), new AnimatorFourDirections(), new PlayerInputHandler(), new Collider());
     }
 
+	@Override
+	public void detectCollision() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -179,9 +179,22 @@ public abstract class GameObject implements Displayable {
 		componentManager.onEnterCollision(id);
 		
 	}
+	
+	public void detectCollision() {
+		if(!componentManager.checkForComponent("Collider"))
+			return;
+		Component collider = componentManager.getComponent("Collider");
+        try {
+        	collider.getClass().getMethod("detectCollision").invoke(collider);
+            
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+	}
  
     
     public boolean isInCameraField() {
+		return false;
         
     }
     

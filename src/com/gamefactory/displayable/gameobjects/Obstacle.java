@@ -28,6 +28,12 @@ public class Obstacle extends GameObject {
     public void init() {
         this.componentManager.init(new Position(), new Renderer(), new Collider());
     }
+
+	@Override
+	public void detectCollision() {
+		// TODO Auto-generated method stub
+		
+	}
     
     
 }

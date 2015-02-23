@@ -167,5 +167,19 @@ public final class ComponentManager  {
         }
 		
 	}
+	
+	/**
+     * Retourne la Scène
+     *
+     */
+	public Scene getScene() {
+		return this.owner.getScene();
+	}
+	
+	public GameObject getGameObject() {
+		return owner;
+	}
+
+
 
 }

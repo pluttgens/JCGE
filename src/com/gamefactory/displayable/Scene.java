@@ -7,6 +7,7 @@ import com.gamefactory.displayable.gameobjects.Treasure;
 import com.gamefactory.game.Displayable;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -56,45 +57,7 @@ public class Scene implements Displayable {
         while (it.hasNext()) {
             GameObject next = it.next();
             next.update();
-        }
-        
-        
-        
-        // Je met ici mais à déplacer, crée dépendance Scene <-> Collider
-        it = gameObjects.values().iterator();
-        while (it.hasNext()) {
-            GameObject next = it.next();
-            try {
-	        	Collider col  = (Collider) next.getComponentManager().getComponent("Collider");
-	
-	            Iterator<GameObject> it2 = gameObjects.values().iterator();
-	            while (it2.hasNext()) {
-	                GameObject next2 = it2.next();
-	
-	                if(next != next2) {
-	                	try {
-	                		Collider col2  = (Collider) next2.getComponentManager().getComponent("Collider");
-		                	if (col.getX() < col2.getX() + col2.getWidth() &&
-		        			   col.getX() + col.getWidth() > col2.getX() &&
-		        			   col.getY() < col2.getY() + col2.getHeight() &&
-		        			   col.getHeight() + col.getY() > col2.getY()) {
-		        			    next2.onEnterCollision(next.id);
-		        			    next.onEnterCollision(next2.id);
-		                	}
-	                	}
-		                catch(java.lang.IllegalStateException e) {
-		                	// next2 n'a pas de Collider
-	                	}
-	        		}
-	            }
-	                
-            }
-            catch( java.lang.IllegalStateException e) {
-            	// next n'a pas de Collider
-            }
-            
-        }
-        
+        } 
     }
 
     @Override
@@ -104,6 +67,15 @@ public class Scene implements Displayable {
         while (it.hasNext()) {
             GameObject next = it.next();
             next.render(g);
+        }
+    }
+    
+    @Override
+    public void detectCollision() {
+        Iterator<GameObject> it = gameObjects.values().iterator();
+        while (it.hasNext()) {
+            GameObject next = it.next();
+            next.detectCollision();
         }
     }
     
@@ -117,6 +89,15 @@ public class Scene implements Displayable {
     public GameObject getGameObject(String id) {
         GameObject ret = this.gameObjects.get(id);
         return ret;
+    }
+    
+    
+    /**
+     * Renvoie la liste des Gameobjects
+     * 
+     */
+    public ArrayList<GameObject> getGameObjects(){		
+    	return new ArrayList(gameObjects.values());		
     }
     
 }

@@ -20,5 +20,7 @@ public interface Displayable {
 
     void render(Graphics g);
 
+	void detectCollision();
+
 
 }
