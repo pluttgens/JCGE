@@ -11,11 +11,13 @@ import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.Script;
 import com.gamefactory.services.ServiceLocator;
+
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -96,7 +98,7 @@ public class AnimatorFourDirections extends Script {
 
     @Override
     public void update() {
-        if (this.previousPosition.distanceWith(position) > 3) {
+        if (this.previousPosition.distanceWith(position) > 5) {
             Position.Orientation orientation = position.getOrientation();
             BufferedImage current = this.renderer.getImage();
             switch (orientation) {
@@ -127,5 +129,10 @@ public class AnimatorFourDirections extends Script {
 
         }
         return images.get(1);
+    }
+    
+    @Override
+    public void onEnterCollision(String id) {
+    	System.out.println("Bonjour je colisionne avec " + id);
     }
 }

@@ -1,10 +1,12 @@
 package com.gamefactory.displayable;
 
+import com.gamefactory.components.Collider;
 import com.gamefactory.displayable.gameobjects.Hero;
+import com.gamefactory.displayable.gameobjects.Obstacle;
 import com.gamefactory.displayable.gameobjects.Treasure;
 import com.gamefactory.game.Displayable;
+
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -26,8 +28,10 @@ public class Scene implements Displayable {
     public Scene() {
         GameObject hero = new Hero();
         Treasure treasure = new Treasure();
+        Obstacle obstacle = new Obstacle();
         gameObjects.put(hero.id, hero);
         gameObjects.put(treasure.id, treasure);
+        gameObjects.put(obstacle.id, obstacle);
     }
 
     @Override
@@ -53,6 +57,44 @@ public class Scene implements Displayable {
             GameObject next = it.next();
             next.update();
         }
+        
+        
+        
+        // Je met ici mais à déplacer, crée dépendance Scene <-> Collider
+        it = gameObjects.values().iterator();
+        while (it.hasNext()) {
+            GameObject next = it.next();
+            try {
+	        	Collider col  = (Collider) next.getComponentManager().getComponent("Collider");
+	
+	            Iterator<GameObject> it2 = gameObjects.values().iterator();
+	            while (it2.hasNext()) {
+	                GameObject next2 = it2.next();
+	
+	                if(next != next2) {
+	                	try {
+	                		Collider col2  = (Collider) next2.getComponentManager().getComponent("Collider");
+		                	if (col.getX() < col2.getX() + col2.getWidth() &&
+		        			   col.getX() + col.getWidth() > col2.getX() &&
+		        			   col.getY() < col2.getY() + col2.getHeight() &&
+		        			   col.getHeight() + col.getY() > col2.getY()) {
+		        			    next2.onEnterCollision(next.id);
+		        			    next.onEnterCollision(next2.id);
+		                	}
+	                	}
+		                catch(java.lang.IllegalStateException e) {
+		                	// next2 n'a pas de Collider
+	                	}
+	        		}
+	            }
+	                
+            }
+            catch( java.lang.IllegalStateException e) {
+            	// next n'a pas de Collider
+            }
+            
+        }
+        
     }
 
     @Override
@@ -65,6 +107,8 @@ public class Scene implements Displayable {
         }
     }
     
+    
+    
     /**
      * Recupere l'id du GameObject
      * @param id
@@ -75,7 +119,4 @@ public class Scene implements Displayable {
         return ret;
     }
     
-    public ArrayList<GameObject> getGameObjects(){
-        return new ArrayList(gameObjects.values());
-    }
 }

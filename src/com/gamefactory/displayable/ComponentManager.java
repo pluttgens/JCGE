@@ -2,6 +2,7 @@ package com.gamefactory.displayable;
 
 import com.gamefactory.utils.events.Notifier;
 import com.gamefactory.utils.events.Subject;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -154,9 +155,17 @@ public final class ComponentManager  {
     public Component getComponentFromGO(String id, Class<? extends Component> componentClass) {
         return this.owner.getScene().getGameObject(id).getComponentManager().getComponent(componentClass);
     }
+
     
-    public Scene getScene(){
-        return this.owner.getScene();
-    }
+    /**
+     * Appelle la méthode onEnterCollision dans tous les scripts appartenant au Go
+     *
+     */
+	public void onEnterCollision(String id) {
+		for (Script script : this.scripts) {
+            script.onEnterCollision(id);
+        }
+		
+	}
 
 }

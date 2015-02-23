@@ -50,4 +50,5 @@ public class Landscape implements Displayable {
         tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(32, 0)));
     }
 
+
 }
