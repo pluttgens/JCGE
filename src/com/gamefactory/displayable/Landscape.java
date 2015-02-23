@@ -43,4 +43,5 @@ public class Landscape implements Displayable {
     public void init() {
     }
 
+
 }

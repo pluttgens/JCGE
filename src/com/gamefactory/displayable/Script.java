@@ -11,4 +11,10 @@ package com.gamefactory.displayable;
  */
 public abstract class Script extends Component {
 
+	
+	public void onEnterCollision(String id) {
+		
+		
+	}
+
 }
