@@ -18,15 +18,16 @@ import com.gamefactory.scripts.TreasureSoundScript;
  *
  * @author scalpa
  */
-public class Treasure extends GameObject {
+public class Obstacle extends GameObject {
 
-    public Treasure() {
+    public Obstacle() {
         super();
     }
 
     @Override
     public void init() {
-        this.componentManager.init(new Position(), new Renderer(), new Sound(), new TreasureSoundScript(),new TreasurePositionScript(), new PlayerFindTreasureScript());
+        this.componentManager.init(new Position(), new Renderer(), new Collider());
     }
-
+   
+    
 }

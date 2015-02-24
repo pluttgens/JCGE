@@ -1,8 +1,11 @@
 package com.gamefactory.displayable;
 
+import com.gamefactory.components.Collider;
 import com.gamefactory.displayable.gameobjects.Hero;
+import com.gamefactory.displayable.gameobjects.Obstacle;
 import com.gamefactory.displayable.gameobjects.Treasure;
 import com.gamefactory.game.Displayable;
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +31,10 @@ public class Scene implements Displayable {
         this.camera = new Camera(this);
         GameObject hero = new Hero();
         Treasure treasure = new Treasure();
+        Obstacle obstacle = new Obstacle();
         gameObjects.put(hero.id, hero);
         gameObjects.put(treasure.id, treasure);
+        gameObjects.put(obstacle.id, obstacle);
     }
 
     @Override
@@ -57,7 +62,7 @@ public class Scene implements Displayable {
         while (it.hasNext()) {
             GameObject next = it.next();
             next.update();
-        }
+        } 
     }
 
     @Override
@@ -69,6 +74,7 @@ public class Scene implements Displayable {
             next.render(g);
         }
     }
+      
     
     /**
      * Recupere l'id du GameObject
@@ -90,7 +96,12 @@ public class Scene implements Displayable {
         return new ArrayList(gameObjects.values());
     }
     
+    public Iterator<GameObject> iterateOverGO(){
+        return this.gameObjects.values().iterator();
+    }
+    
     public Landscape getLandscape() {
         return this.Landscape;
     }
+
 }

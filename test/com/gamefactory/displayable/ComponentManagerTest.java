@@ -18,7 +18,7 @@ public class ComponentManagerTest {
 
     @Test
     public void test() {
-        ComponentManager cm = new ComponentManager(new GameObject());
+        ComponentManager cm = new ComponentManager(null);
         cm.init(new Position(), new RigidBody());
         assertTrue("Le component 'Position' a bien été ajouté ! ( STRING_CHECK )", cm.checkForComponent("Position"));
         assertTrue("Le component 'Position' a bien été ajouté ! ( CLASS_CHECK )", cm.checkForComponent(Position.class));
