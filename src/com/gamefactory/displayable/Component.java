@@ -31,7 +31,7 @@ public abstract class Component /**implements Observer, Subject **/{
 
     /**
      * Initialise le component encapsulant 
-     * une fonctionnalité d'un game object
+     * une fonctionnalitï¿½ d'un game object
      * @param owner
      */
     public void init(ComponentManager owner) {
@@ -84,6 +84,10 @@ public abstract class Component /**implements Observer, Subject **/{
     //@Override
     public Notifier getNotifier() {
         return this.notifier;
+    }
+    
+    public ComponentManager getOwner() {
+        return this.owner;
     }
 
 }

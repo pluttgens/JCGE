@@ -3,9 +3,10 @@ package com.gamefactory.displayable.gameobjects;
 import com.gamefactory.components.Collider;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
-import com.gamefactory.scripts.PlayerInputHandler;
 import com.gamefactory.displayable.GameObject;
 import com.gamefactory.scripts.AnimatorFourDirections;
+import com.gamefactory.scripts.PlayerCollision;
+import com.gamefactory.scripts.PlayerInputHandler;
 
 public class Hero extends GameObject {
 
@@ -15,7 +16,7 @@ public class Hero extends GameObject {
 
     @Override
     public void init() {
-        componentManager.init(new Position(), new Renderer(), new AnimatorFourDirections(), new PlayerInputHandler(), new Collider());
+        componentManager.init(new Position(), new Renderer(), new AnimatorFourDirections(), new PlayerInputHandler(), new Collider(),new PlayerCollision());
     }
 
 }

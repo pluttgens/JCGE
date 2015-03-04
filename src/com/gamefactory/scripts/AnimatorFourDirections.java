@@ -131,8 +131,4 @@ public class AnimatorFourDirections extends Script {
         return images.get(1);
     }
     
-    @Override
-    public void onEnterCollision(String id) {
-    	System.out.println("Bonjour je colisionne avec " + id);
-    }
 }

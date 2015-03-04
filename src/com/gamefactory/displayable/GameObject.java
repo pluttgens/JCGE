@@ -180,5 +180,10 @@ public abstract class GameObject implements Displayable {
     public boolean isInCameraField() {
         return true;
     }
+    
+    public boolean equals(GameObject g){
+        if(this.getClass().equals(g.getClass())) return true;
+        else return false;
+    }
 
 }
