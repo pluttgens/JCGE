@@ -6,9 +6,13 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
-import com.gamefactory.graphicengine.Coord2D;
+import com.gamefactory.game.Game;
+import com.gamefactory.scripts.CameraScript;
 import com.gamefactory.utils.timer.Timer;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,15 +41,14 @@ public class Camera implements Displayable {
     public void init() {
         this.x = 0;
         this.y = 0;
-        this.owner.getLandscape().setRenderedArea(new Coord2D(0, 0), new Coord2D(400, 400));
-        timer.start();
+        this.timer.start();
     }
 
     @Override
     public void update() {
-        if (timer.getElapsedTime(TimeUnit.SECONDS) >= 5) {
-            this.x += 50;
-            this.owner.getLandscape().setRenderedArea(new Coord2D(x, y), new Coord2D(400, 400));
+        if (timer.getElapsedTime(TimeUnit.SECONDS) >= 2) {
+            this.x -= 50;
+            this.owner.getLandscape().setRenderedArea(new Rectangle(new Point(x, y), new Dimension(Game.WIDTH, Game.HEIGHT)));
             timer.resetTimer();
         }
     }

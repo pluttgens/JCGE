@@ -26,7 +26,7 @@ public class Treasure extends GameObject {
 
     @Override
     public void init() {
-        this.componentManager.init(new Position(), new Renderer(), new Sound(), new TreasureSoundScript(),new TreasurePositionScript(), new PlayerFindTreasureScript());
+        this.componentManager.init(new Position(), new Renderer(), new Sound(),/* new TreasureSoundScript(),*/new TreasurePositionScript(), new PlayerFindTreasureScript());
     }
 
 }

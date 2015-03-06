@@ -1,14 +1,10 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
-import com.gamefactory.utils.events.Event;
 import com.gamefactory.utils.events.Notifier;
-import com.gamefactory.utils.events.Observer;
-import com.gamefactory.utils.events.Subject;
 
 import java.awt.Graphics;
 import java.lang.reflect.InvocationTargetException;
-import java.util.EventObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
