@@ -59,7 +59,7 @@ public class Landscape implements Displayable {
     }
 
     @Override
-    public void init() {
+    public void onLoading() {
         tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Point(200,200)));
 
         tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Point(232, 200)));

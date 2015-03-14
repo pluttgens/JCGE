@@ -3,20 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.displayable.gameobjects;
+package com.gamefactory.scripts;
 
 import com.gamefactory.displayable.GameObject;
 
-
-public class EmptyGameObject extends GameObject {
-
-    public EmptyGameObject() {
-        super();
-        this.disable();
-    }
-
-    @Override
-    public void onLoading() {
-    }
-
+/**
+ *
+ * @author scalpa
+ */
+public interface OnCollisionListener extends ComponentListener{
+    
+    void onEnterCollision(GameObject go);
 }

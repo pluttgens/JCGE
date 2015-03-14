@@ -5,7 +5,7 @@ import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.GameObject;
 import com.gamefactory.scripts.AnimatorFourDirections;
-import com.gamefactory.scripts.PlayerCollision;
+import com.gamefactory.scripts.BlockOnCollisionScript;
 import com.gamefactory.scripts.PlayerInputHandler;
 
 public class Hero extends GameObject {
@@ -15,8 +15,8 @@ public class Hero extends GameObject {
     }
 
     @Override
-    public void init() {
-        componentManager.init(new Position(), new Renderer(), new AnimatorFourDirections(), new PlayerInputHandler(), new Collider(),new PlayerCollision());
+    public void onLoading() {
+        componentManager.init(new Position(), new Renderer(), new AnimatorFourDirections(), new PlayerInputHandler(), new Collider(), new BlockOnCollisionScript());
     }
 
 }

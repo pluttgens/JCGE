@@ -31,6 +31,7 @@ public class Scene implements Displayable {
 
     public Scene() {
         this.camera = new Camera(this);
+        this.scripts = new ArrayList<>();
         GameObject hero = new Hero();
         Treasure treasure = new Treasure();
         Obstacle obstacle = new Obstacle();
@@ -40,15 +41,15 @@ public class Scene implements Displayable {
     }
 
     @Override
-    public void init() {
-        this.Landscape.init();
-        this.camera.init();
+    public void onLoading() {
+        this.Landscape.onLoading();
+        this.camera.onLoading();
         this.scripts.add(new CameraScript());
         Iterator<GameObject> it = gameObjects.values().iterator();
         while (it.hasNext()) {
             GameObject next = it.next();
             next.setScene(this);
-            next.init();
+            next.onLoading();
         }
         it = gameObjects.values().iterator();
         while (it.hasNext()) {

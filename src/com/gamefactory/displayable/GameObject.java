@@ -51,7 +51,7 @@ public abstract class GameObject implements Displayable {
     protected GameObject(String id) {
         this.componentManager = new ComponentManager(this);
         this.isActive = true;
-        this.id = id.toUpperCase();;
+        this.id = id.toUpperCase();
         this.notifier = new Notifier(this);
     }
 
@@ -175,11 +175,6 @@ public abstract class GameObject implements Displayable {
 
     public boolean isInCameraField() {
         return true;
-    }
-    
-    public boolean equals(GameObject g){
-        if(this.getClass().equals(g.getClass())) return true;
-        else return false;
     }
 
 }

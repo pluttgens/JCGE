@@ -1,11 +1,16 @@
 package com.gamefactory.displayable;
 
+import com.gamefactory.scripts.ComponentListener;
 import com.gamefactory.utils.events.Notifier;
 import com.gamefactory.utils.events.Subject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import jdk.nashorn.internal.objects.annotations.ScriptClass;
 
 /**
  * Le Component Manager encapsule le comportement des components au sein d'un
@@ -17,7 +22,7 @@ import java.util.List;
  *
  * @since 1.0
  */
-public final class ComponentManager  {
+public final class ComponentManager {
 
     private final GameObject owner;
     private final List<Component> components;
@@ -67,11 +72,13 @@ public final class ComponentManager  {
     }
 
     public void update() {
-        for (Script script : this.scripts) {
-            script.update();
+        Iterator<Script> itScript = this.scripts.iterator();
+        while (itScript.hasNext()) {
+            itScript.next().update();
         }
-        for (Component component : this.components) {
-            component.update();
+        Iterator<Component> itComponent = this.components.iterator();
+        while (itComponent.hasNext()) {
+            itComponent.next().update();
         }
     }
 
@@ -155,31 +162,29 @@ public final class ComponentManager  {
     public Component getComponentFromGO(String id, Class<? extends Component> componentClass) {
         return this.owner.getScene().getGameObject(id).getComponentManager().getComponent(componentClass);
     }
-
     
-    /**
-     * Appelle la méthode onEnterCollision dans tous les scripts appartenant au Go
-     *
-     */
-	public void onEnterCollision(String id) {
-		for (Script script : this.scripts) {
-            script.onEnterCollision(id);
+    public <T> List<T> getListenersForComponent(Class<T> scriptClass) {
+        ArrayList<T> ret = new ArrayList<>();
+        Iterator<Script> itScript = this.scripts.iterator();
+        while (itScript.hasNext()) {
+            Script script = itScript.next();
+            if (scriptClass.isInstance(script)) {
+                ret.add((T) script);
+            }
         }
-		
-	}
-	
-	/**
+        return ret;
+    }
+
+    /**
      * Retourne la Scène
      *
      */
-	public Scene getScene() {
-		return this.owner.getScene();
-	}
-	
-	public GameObject getGameObject() {
-		return owner;
-	}
+    public Scene getScene() {
+        return this.owner.getScene();
+    }
 
-
+    public GameObject getGameObject() {
+        return owner;
+    }
 
 }

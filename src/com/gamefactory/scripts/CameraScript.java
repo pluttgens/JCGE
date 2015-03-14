@@ -5,6 +5,8 @@
  */
 package com.gamefactory.scripts;
 
+import com.gamefactory.components.Position;
+import com.gamefactory.displayable.Scene;
 import com.gamefactory.displayable.Script;
 
 /**
@@ -13,5 +15,12 @@ import com.gamefactory.displayable.Script;
  */
 public class CameraScript extends Script {
     
+    private Scene scene;
+    
+    private Position position;
+
+    public CameraScript() {
+    }
+
     
 }
