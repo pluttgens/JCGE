@@ -23,7 +23,7 @@ public abstract class LoadingScript<T> implements Script<T> {
         executeOnce();
     }
 
-    public abstract void executeOnce();
+    protected abstract void executeOnce();
 
     @Override
     public boolean isConsumed() {

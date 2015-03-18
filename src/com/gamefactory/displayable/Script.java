@@ -5,10 +5,9 @@
  */
 package com.gamefactory.displayable;
 
+import com.gamefactory.callbacks.game.Callbacks;
 
-public interface Script<T> {
-    
-    void init(T t);
+public interface Script<T> extends Callbacks<T> {
     
     void execute();
     
