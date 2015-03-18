@@ -8,8 +8,7 @@ package com.gamefactory.scripts;
 import com.gamefactory.assets.types.ImageAsset;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
-import com.gamefactory.displayable.ComponentManager;
-import com.gamefactory.displayable.Script;
+import com.gamefactory.displayable.Component;
 import com.gamefactory.services.ServiceLocator;
 import java.awt.image.BufferedImage;
 
@@ -17,7 +16,7 @@ import java.awt.image.BufferedImage;
  *
  * @author scalpa
  */
-public class PlayerFindTreasureScript extends Script {
+public class PlayerFindTreasureScript extends UpdateScript<Component> {
     
     private Position hero;
     private Position tresure;
@@ -25,21 +24,22 @@ public class PlayerFindTreasureScript extends Script {
     private BufferedImage image;
 
     public PlayerFindTreasureScript() {
-        this.image = ((ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "treasure.png")).getBufferedImage();
+       
     }
     
     
     
     @Override
-    public void init(ComponentManager owner) {
-        super.init(owner); //To change body of generated methods, choose Tools | Templates.
-        this.hero = (Position) this.owner.getComponentFromGO("HERO", Position.class);
-        this.tresure = (Position) this.owner.getComponent(Position.class);
-        this.renderer = (Renderer) this.owner.getComponent(Renderer.class);
+    public void init(Component c) {
+        super.init(c);
+         this.image = ((ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "treasure.png")).getBufferedImage();
+        this.hero = (Position) this.owner.getComponentManager().getComponentFromGO("HERO", Position.class);
+        this.tresure = (Position) this.owner.getComponentManager().getComponent(Position.class);
+        this.renderer = (Renderer) this.owner.getComponentManager().getComponent(Renderer.class);
     }
 
     @Override
-    public void update() {
+    public void execute() {
         if (hero.distanceWith(tresure) < 10) {
             renderer.setImage(image);
         }

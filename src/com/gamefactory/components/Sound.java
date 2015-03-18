@@ -6,7 +6,6 @@ import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.services.ServiceLocator;
 import com.gamefactory.utils.events.Event;
 import com.gamefactory.utils.events.Observer;
-import java.util.EventObject;
 
 public class Sound extends Component {
 
@@ -23,16 +22,8 @@ public class Sound extends Component {
         ServiceLocator.getNotifier().registerObserver(o);
     }
 
-    @Override
-    public void init(ComponentManager owner) {
-        super.init(owner);
-    }
-    
     public AudioEngine getAudioEngine() {
         return ae;
     }
 
-    @Override
-    public void update() {
-    }
 }

@@ -52,11 +52,6 @@ public class Position extends Component {
         this.orientation = Orientation.DOWN;
     }
 
-    @Override
-    public void init(ComponentManager owner) {
-        super.init(owner);
-    }
-
     /**
      * Recupere la valeur en abscisse
      * @return
@@ -178,7 +173,7 @@ public class Position extends Component {
     }
 
     @Override
-    public void update() {
+    public void updateComponent() {
         this.x += (this.x + this.xVelocity > 0 && this.x + this.xVelocity < Game.WIDTH - this.width) ? this.xVelocity : 0;
         this.y += (this.y + this.yVelocity > 0 && this.y + this.yVelocity < Game.HEIGHT - this.height - Position.WINDOW_BORDER_SIZE) ? this.yVelocity : 0;
     }

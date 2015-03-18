@@ -20,22 +20,26 @@ import java.awt.Rectangle;
  *
  * @since 1.0
  */
-public class Landscape implements Displayable {
+public class Landscape implements Displayable<Scene> {
 
-    private final int width;
-    private final int height;
+    private Scene owner;
+    
+    private int width;
+    private int height;
 
-    private final Rectangle renderedArea;
+    private Rectangle renderedArea;
 
-    private final List<Tile> tiles;
+    private List<Tile> tiles;
 
-    public Landscape() {
-        this.width = 2000;
-        this.height = 2000;
-
-        tiles = new ArrayList<>();
-        this.renderedArea = new Rectangle();
+    @Override
+    public void init(Scene owner) {
+        this.owner = owner;
+        this.tiles = new ArrayList<>();
+        
     }
+
+
+    
 
     public List<Tile> getTiles() {
         return tiles;
@@ -59,7 +63,7 @@ public class Landscape implements Displayable {
     }
 
     @Override
-    public void onLoading() {
+    public void load() {
         tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Point(200,200)));
 
         tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Point(232, 200)));

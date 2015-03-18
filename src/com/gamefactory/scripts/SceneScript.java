@@ -5,7 +5,6 @@
  */
 package com.gamefactory.scripts;
 
-import com.gamefactory.components.Position;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.displayable.Script;
 
@@ -13,13 +12,18 @@ import com.gamefactory.displayable.Script;
  *
  * @author scalpa
  */
-public class CameraScript extends Script {
-    
-    private Scene scene;
-    
-    private Position position;
+public abstract class SceneScript implements Script<Scene> {
 
-    public CameraScript() {
+    protected Scene owner;
+
+    @Override
+    public void init(Scene s) {
+        this.owner = s;
+    }
+
+    @Override
+    public final boolean isConsumed() {
+        return false;
     }
 
     

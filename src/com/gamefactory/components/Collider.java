@@ -6,10 +6,8 @@ import java.awt.Graphics;
 import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.GameObject;
-import com.gamefactory.scripts.BlockOnCollisionScript;
-import com.gamefactory.scripts.OnCollisionListener;
-import java.util.ArrayList;
-import java.util.Collection;
+import com.gamefactory.listeners.BlockOnCollisionListener;
+import com.gamefactory.listeners.ComponentListener;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,37 +24,36 @@ public class Collider extends Component {
      */
     private Position position;
 
-    private List<OnCollisionListener> OnCollisionListeners;
+    private List<ComponentListener> onCollisionListeners;
 
     public Collider() {
-        this.OnCollisionListeners = new ArrayList<>();
     }
 
+
     @Override
-    public void init(ComponentManager owner) {
-        super.init(owner);
+    public void onLoad() {
         this.position = (Position) this.owner.getComponent(Position.class);
-        this.OnCollisionListeners.addAll((List<OnCollisionListener>) this.owner.getListenersForComponent(OnCollisionListener.class));
         this.width = position.getWidth();
         this.height = position.getHeight();
     }
 
     @Override
-    public void update() {
+    public void updateComponent() {
         //ArrayList<GameObject> gameObjects = owner.getScene().getGameObjects();
         Iterator<GameObject> it = this.owner.getScene().iterateOverGO();
         while (it.hasNext()) {
             GameObject go = it.next();
             if (go.getComponentManager().checkForComponent("Collider") /*
-                     * && (this.owner.getGameObject().getId().equals(cm.getGameObject().getId()))
+                     * &&
+                     * (this.owner.getGameObject().getId().equals(cm.getGameObject().getId()))
                      */) {
                 Collider col2 = (Collider) it.next().getComponentManager().getComponent("Collider");
                 if (this.getX() < col2.getX() + col2.getWidth()
                         && this.getX() + this.getWidth() > col2.getX()
                         && this.getY() < col2.getY() + col2.getHeight()
                         && this.getHeight() + this.getY() > col2.getY()) {
-                    onEnterCollision(go);
-                    col2.onEnterCollision(this.owner.getGameObject());
+                    onEnterCollision(col2);
+                    col2.onEnterCollision(this);
                 }
             }
         }
@@ -83,10 +80,10 @@ public class Collider extends Component {
         return (int) position.getY();
     }
 
-    public void onEnterCollision(GameObject go) {
-        Iterator<OnCollisionListener> it = this.OnCollisionListeners.iterator();
+    public void onEnterCollision(Collider c) {
+        Iterator<ComponentListener> it = this.onCollisionListeners.iterator();
         while (it.hasNext()) {
-            it.next().onEnterCollision(go);
+            it.next().onEvent(c);
         }
     }
 }

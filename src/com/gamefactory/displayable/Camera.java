@@ -7,7 +7,7 @@ package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
 import com.gamefactory.game.Game;
-import com.gamefactory.scripts.CameraScript;
+import com.gamefactory.scripts.GameObjectCameraScript;
 import com.gamefactory.utils.timer.Timer;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -25,20 +25,28 @@ import java.util.concurrent.TimeUnit;
  *
  * @since 2.0
  */
-public class Camera implements Displayable {
+public class Camera implements Displayable<Scene> {
 
     private Scene owner;
     private int x;
     private int y;
     private Timer timer;
 
-    public Camera(Scene scene) {
-        this.owner = scene;
+    public Camera() {
+    }
+
+    
+    
+    @Override
+    public void init(Scene owner) {
+        this.owner = owner;
         this.timer = new Timer();
     }
 
+    
+    
     @Override
-    public void onLoading() {
+    public void load() {
         this.x = 0;
         this.y = 0;
         this.timer.start();
@@ -74,4 +82,14 @@ public class Camera implements Displayable {
         this.y = y;
     }
 
+    public Scene getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Scene owner) {
+        this.owner = owner;
+    }
+
+    
+    
 }

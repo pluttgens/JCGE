@@ -16,7 +16,7 @@ public class EmptyGameObject extends GameObject {
     }
 
     @Override
-    public void onLoading() {
+    public void load() {
     }
 
 }

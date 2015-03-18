@@ -21,7 +21,7 @@ public class Obstacle extends GameObject {
     }
 
     @Override
-    public void onLoading() {
+    public void load() {
         this.componentManager.init(new Position(), new Renderer(), new Collider());
     }
    

@@ -77,13 +77,13 @@ public class Game extends Canvas implements Runnable {
 
     public void setDisplayable(Displayable displayable) {
         this.displayable = displayable;
-        displayable.onLoading();
+        displayable.load();
     }
 
     public void init() {
         ServiceLocator.provideService("audio", new AudioEngine());
         this.displayable = new Scene();
-        this.displayable.onLoading();
+        this.displayable.load();
     }
     
     /**
@@ -148,7 +148,7 @@ public class Game extends Canvas implements Runnable {
 
     
     public void loadGame() {
-        displayable.onLoading();
+        displayable.load();
     }
 
 	/**

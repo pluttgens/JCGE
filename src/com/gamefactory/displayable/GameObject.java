@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @since 1.0
  */
-public abstract class GameObject implements Displayable {
+public abstract class GameObject implements Displayable<Scene> {
 
     protected final Notifier notifier;
 
@@ -39,7 +39,7 @@ public abstract class GameObject implements Displayable {
      */
     private boolean isActive;
 
-    protected Scene scene;
+    protected Scene owner;
 
     public GameObject() {
         this.componentManager = new ComponentManager(this);
@@ -78,8 +78,8 @@ public abstract class GameObject implements Displayable {
      *
      * @param scene
      */
-    public void setScene(Scene scene) {
-        this.scene = scene;
+    public void setOwner(Scene scene) {
+        this.owner = scene;
     }
 
     /**
@@ -87,8 +87,8 @@ public abstract class GameObject implements Displayable {
      *
      * @return
      */
-    public Scene getScene() {
-        return this.scene;
+    public Scene getOwner() {
+        return this.owner;
     }
 
     /**
@@ -101,6 +101,17 @@ public abstract class GameObject implements Displayable {
         return this.componentManager;
     }
 
+    @Override
+    public void init(Scene owner) {
+        this.owner = owner;
+    }
+
+    @Override
+    public void load() {
+        
+    }
+    
+    
     /**
      * Vérifie que le GameObject est actif avant de procéder à l'update.
      *

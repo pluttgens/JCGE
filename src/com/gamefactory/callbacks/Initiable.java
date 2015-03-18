@@ -3,14 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.displayable;
+package com.gamefactory.callbacks;
 
+public interface Initiable<T> {
 
-public interface Script<T> {
-    
     void init(T t);
-    
-    void execute();
-    
-    boolean isConsumed();
+
 }

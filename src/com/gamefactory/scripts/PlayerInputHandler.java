@@ -6,6 +6,7 @@
 package com.gamefactory.scripts;
 
 import com.gamefactory.components.Position;
+import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.Script;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.game.Game;
@@ -17,22 +18,19 @@ import java.awt.event.KeyListener;
  *
  * @author scalpa
  */
-public class PlayerInputHandler extends Script implements KeyListener {
+public class PlayerInputHandler extends UpdateScript<Component> implements KeyListener {
 
     private final static int NB_KEYS = Short.MAX_VALUE;
 
     private Position position;
     private boolean[] keys;
 
-    public PlayerInputHandler() {
-        super();
-        this.keys = new boolean[NB_KEYS];
-    }
 
     @Override
-    public void init(ComponentManager owner) {
-        this.owner = owner;
-        this.position = (Position) owner.getComponent(Position.class);
+    public void init(Component c) {
+        super.init(c);
+        this.keys = new boolean[NB_KEYS];
+        this.position = (Position) owner.getComponentManager().getComponent(Position.class);
         this.position.setX(Game.WIDTH / 2 - 20);
         this.position.setY(Game.HEIGHT / 2 - 20);
         ServiceLocator.getGameWindow().getFrame().addKeyListener(this);
@@ -70,7 +68,7 @@ public class PlayerInputHandler extends Script implements KeyListener {
     }
 
     @Override
-    public void update() {
+    public void execute() {
         if (this.keys[KeyEvent.VK_LEFT]) {
             position.setOrientation(Position.Orientation.LEFT);
             position.setxVelocity(-1f);

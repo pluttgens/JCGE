@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
-
-import com.gamefactory.displayable.GameObject;
+package com.gamefactory.utils.builders;
 
 /**
  *
  * @author scalpa
  */
-public interface OnCollisionListener extends ComponentListener{
-    
-    void onEnterCollision(GameObject go);
+public class ArrayBuilder {
+    public static final <T> T[] asArray(T ... t) {
+        T[] ret = t;
+        return ret;
+    }
 }

@@ -8,6 +8,7 @@ package com.gamefactory.scripts;
 import com.gamefactory.assets.types.ImageAsset;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
+import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.Script;
 import com.gamefactory.services.ServiceLocator;
@@ -24,30 +25,27 @@ import javax.imageio.ImageIO;
  *
  * @author scalpa
  */
-public class AnimatorFourDirections extends Script {
+public class AnimatorFourDirections extends UpdateScript<Position> {
 
     private ArrayList<BufferedImage> animationsLeft;
     private ArrayList<BufferedImage> animationsRight;
     private ArrayList<BufferedImage> animationsUp;
     private ArrayList<BufferedImage> animationsDown;
 
-    private Position position;
     private Position previousPosition;
     private Renderer renderer;
 
     @Override
-    public void init(ComponentManager owner) {
+    public void init(Position p) {
+        super.init(p);
         this.animationsLeft = new ArrayList<>();
         this.animationsRight = new ArrayList<>();
         this.animationsUp = new ArrayList<>();
         this.animationsDown = new ArrayList<>();
-        this.owner = owner;
-        this.position = (Position) this.owner.getComponent(Position.class);
-        this.previousPosition = (Position) position.deepClone();
-        this.renderer = (Renderer) this.owner.getComponent(Renderer.class);
+        this.previousPosition = this.owner.deepClone();
+        this.renderer = (Renderer) this.owner.getComponentManager().getComponent(Renderer.class);
         this.loadAnimations();
         this.renderer.setImage(this.animationsDown.get(1));
-
     }
 
     public void loadAnimations() {
@@ -97,9 +95,9 @@ public class AnimatorFourDirections extends Script {
     }
 
     @Override
-    public void update() {
-        if (this.previousPosition.distanceWith(position) > 3) {
-            Position.Orientation orientation = position.getOrientation();
+    public void execute() {
+        if (this.previousPosition.distanceWith(this.owner) > 3) {
+            Position.Orientation orientation = this.owner.getOrientation();
             BufferedImage current = this.renderer.getImage();
             switch (orientation) {
                 case DOWN:
@@ -115,7 +113,7 @@ public class AnimatorFourDirections extends Script {
                     this.renderer.setImage(getNextImage(current, this.animationsRight));
                     break;
             }
-            this.previousPosition = position.deepClone();
+            this.previousPosition = this.owner.deepClone();
         }
     }
 

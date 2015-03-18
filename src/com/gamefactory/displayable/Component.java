@@ -5,10 +5,19 @@
  */
 package com.gamefactory.displayable;
 
+import com.gamefactory.listeners.ComponentListener;
+import com.gamefactory.scripts.LoadingScript;
+import com.gamefactory.scripts.UpdateScript;
 import com.gamefactory.utils.events.Notifier;
-import com.gamefactory.utils.events.Observer;
-import com.gamefactory.utils.events.Subject;
+import com.sun.org.apache.xml.internal.security.exceptions.AlgorithmAlreadyRegisteredException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 /**
  * Un component encapsule une fonctionalité d'un game object.
@@ -19,27 +28,82 @@ import java.util.Comparator;
  *
  * @since 1.0
  */
-public abstract class Component /**implements Observer, Subject **/{
-
+public abstract class Component /**
+ * implements Observer, Subject *
+ */
+{
+    
     protected ComponentManager owner;
-
+    
     private final Notifier notifier;
-
+    
+    private Stream<LoadingScript<Component>> loadingScripts;
+    
+    private final List<UpdateScript<Component>> updateScripts;
+    
+    private final List<Listener<Component, Void>> listeners;
+    
     public Component() {
         this.notifier = new Notifier(this);
+        this.loadingScripts = Stream.empty();
+        this.updateScripts = new ArrayList<>();
+        this.listeners = new ArrayList<>();
+    }
+    
+    public void addScripts(Script<Component>... scripts) {
+        for (Script<Component> script : scripts) {
+            if (script instanceof UpdateScript) {
+                this.updateScripts.add((UpdateScript<Component>) script);
+            } else {
+                this.loadingScripts = Stream.concat(loadingScripts, Stream.of((LoadingScript<Component>) script));
+            }
+        }
+    }
+    
+    public void addListeners(ComponentListener[] listeners) {
+        this.listeners.addAll(Arrays.asList(listeners));
     }
 
     /**
-     * Initialise le component encapsulant 
-     * une fonctionnalit� d'un game object
-     * @param owner
+     * Initialise le component encapsulant une fonctionnalit� d'un game object
+     *
      */
-    public void init(ComponentManager owner) {
-        this.owner = owner;
+    public void onLoad() {
     }
-
-    public void update() {
-
+    
+    public final void init(ComponentManager cm) {
+        this.owner = cm;
+        this.loadingScripts.forEach(s -> {
+            s.init(this);
+            s.executeOnce();
+        });
+        this.updateScripts.stream().forEach(s -> s.init(this));
+        this.listeners.stream().forEach(l -> l.init(this));
+        
+    }
+    
+    public static final Component build(Class<? extends Component> clazz, Script<Component>[] scripts, ComponentListener[] listeners) {
+        Component c = null;
+        try {
+            c = clazz.newInstance();
+            if (scripts != null) {
+                c.addScripts(scripts);
+            }
+            if (listeners != null) {
+                c.addListeners(listeners);
+            }
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(Component.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c;
+    }
+    
+    public void updateLogic() {
+        
+    }
+    
+    public void updateComponent() {
+        
     }
 
     /**
@@ -68,7 +132,7 @@ public abstract class Component /**implements Observer, Subject **/{
      * @since 1.0
      */
     public static class UpdatePriorityComparator implements Comparator<Component> {
-
+        
         @Override
         public int compare(Component c1, Component c2) {
             if (c1.getUpdatePriority() == c2.getUpdatePriority()) {
@@ -86,8 +150,8 @@ public abstract class Component /**implements Observer, Subject **/{
         return this.notifier;
     }
     
-    public ComponentManager getOwner() {
+    public ComponentManager getComponentManager() {
         return this.owner;
     }
-
+    
 }

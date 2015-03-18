@@ -9,6 +9,10 @@ package com.gamefactory.displayable;
  *
  * @author scalpa
  */
-public class GameObjectManager {
+public interface Listener<T, U> {
+    
+    void init(T t);
+    
+    void onEvent(U u);
     
 }
