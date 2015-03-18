@@ -6,9 +6,7 @@
 package com.gamefactory.scripts;
 
 import com.gamefactory.components.Position;
-import com.gamefactory.displayable.Component;
-import com.gamefactory.displayable.Script;
-import com.gamefactory.displayable.ComponentManager;
+import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.game.Game;
 import com.gamefactory.services.ServiceLocator;
 import java.awt.event.KeyEvent;
@@ -18,7 +16,7 @@ import java.awt.event.KeyListener;
  *
  * @author scalpa
  */
-public class PlayerInputHandler extends UpdateScript<ComponentManager> implements KeyListener {
+public class PlayerInputHandler extends UpdateScript implements KeyListener {
 
     private final static int NB_KEYS = Short.MAX_VALUE;
 
@@ -27,8 +25,8 @@ public class PlayerInputHandler extends UpdateScript<ComponentManager> implement
 
 
     @Override
-    public void init(ComponentManager cm) {
-        super.init(cm);
+    public void init(ScriptManager script) {
+        super.init(script);
         this.keys = new boolean[NB_KEYS];
         ServiceLocator.getGameWindow().getFrame().addKeyListener(this);
         ServiceLocator.getGameWindow().getCanvas().addKeyListener(this);

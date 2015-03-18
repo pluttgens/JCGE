@@ -8,7 +8,7 @@ package com.gamefactory.scripts;
 import com.gamefactory.assets.types.ImageAsset;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
-import com.gamefactory.displayable.Component;
+import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.services.ServiceLocator;
 import java.awt.image.BufferedImage;
 
@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
  *
  * @author scalpa
  */
-public class PlayerFindTreasureScript extends UpdateScript<Component> {
+public class PlayerFindTreasureScript extends UpdateScript{
 
     private Position hero;
     private Position tresure;
@@ -28,16 +28,16 @@ public class PlayerFindTreasureScript extends UpdateScript<Component> {
     }
 
     @Override
-    public void init(Component c) {
-        super.init(c);
+    public void init(ScriptManager script) {
+        super.init(script);
         this.image = ((ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "treasure.png")).getBufferedImage();
     }
 
     @Override
     public void load() {
-        this.hero = (Position) this.owner.getComponentManager().getComponentFromGO("HERO", Position.class);
-        this.tresure = (Position) this.owner.getComponentManager().getComponent(Position.class);
-        this.renderer = (Renderer) this.owner.getComponentManager().getComponent(Renderer.class);
+        this.hero = (Position) this.owner.getOwner().getComponentManager().getComponentFromGO("HERO", Position.class);
+        this.tresure = (Position) this.owner.getOwner().getComponentManager().getComponent(Position.class);
+        this.renderer = (Renderer) this.owner.getOwner().getComponentManager().getComponent(Renderer.class);
     }
 
     @Override

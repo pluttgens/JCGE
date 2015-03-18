@@ -7,15 +7,10 @@ package com.gamefactory.scripts;
 
 import com.gamefactory.displayable.Script;
 
-public abstract class LoadingScript<T> implements Script<T> {
+public abstract class LoadingScript extends AbstractScript {
 
-    protected T owner;
     private boolean isConsumed = false;
 
-    @Override
-    public void init(T t) {
-        this.owner = t;
-    }
 
     @Override
     public final void execute() {
