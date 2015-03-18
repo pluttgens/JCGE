@@ -21,11 +21,12 @@ public class GameObjectCameraScript extends UpdateScript<Scene> {
     private Position focus;
 
     @Override
-    public void init(Scene s) {
-        super.init(s);
-        c = s.getCamera();
-        focus = (Position) s.getGameObject("HERO").getComponentManager().getComponent(Position.class);
+    public void load() {
+        this.c = this.owner.getCamera();
+        this.focus = (Position) this.owner.getGameObject("HERO").getComponentManager().getComponent(Position.class);
     }
+    
+    
 
     @Override
     public void execute() {

@@ -28,7 +28,7 @@ import java.util.stream.Stream;
  *
  * @since 1.0
  */
-public abstract class Component /**
+public abstract class Component implements Callbacks<ComponentManager>/**
  * implements Observer, Subject *
  */
 {
@@ -48,12 +48,6 @@ public abstract class Component /**
         this.listeners.addAll(Arrays.asList(listeners));
     }
 
-    /**
-     * Initialise le component encapsulant une fonctionnalit� d'un game object
-     *
-     */
-    public void onLoad() {
-    }
     
     public final void init(ComponentManager cm) {
         this.owner = cm;

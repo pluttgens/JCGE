@@ -31,7 +31,7 @@ public class Collider extends Component {
 
 
     @Override
-    public void onLoad() {
+    public void load() {
         this.position = (Position) this.owner.getComponent(Position.class);
         this.width = position.getWidth();
         this.height = position.getHeight();
