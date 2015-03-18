@@ -7,7 +7,7 @@ package com.gamefactory.displayable;
 
 import com.gamefactory.callbacks.game.Callbacks;
 
-public interface Script<T> extends Callbacks<T> {
+public interface Script extends Callbacks<ScriptManager> {
     
     void execute();
     

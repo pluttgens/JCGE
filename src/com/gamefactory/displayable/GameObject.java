@@ -157,13 +157,7 @@ public abstract class GameObject implements Displayable<Scene> {
      * @param g
      */
     protected void renderObject(Graphics g) {
-        Component renderer = componentManager.getComponent("Renderer");
-        try {
-            renderer.getClass().getMethod("render", Graphics.class).invoke(renderer, g);
-
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Component renderer = componentManager.render(g);
     }
 
     /**

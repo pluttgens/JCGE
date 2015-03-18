@@ -5,13 +5,13 @@
  */
 package com.gamefactory.displayable;
 
+import com.gamefactory.callbacks.game.Callbacks;
+
 /**
  *
  * @author scalpa
  */
-public interface Listener<T, U> {
-    
-    void init(T t);
+public interface Listener<T, U> extends Callbacks<T> {
     
     void onEvent(U u);
     

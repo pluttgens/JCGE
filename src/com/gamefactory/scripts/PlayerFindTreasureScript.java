@@ -17,22 +17,24 @@ import java.awt.image.BufferedImage;
  * @author scalpa
  */
 public class PlayerFindTreasureScript extends UpdateScript<Component> {
-    
+
     private Position hero;
     private Position tresure;
     private Renderer renderer;
     private BufferedImage image;
 
     public PlayerFindTreasureScript() {
-       
+
     }
-    
-    
-    
+
     @Override
     public void init(Component c) {
         super.init(c);
-         this.image = ((ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "treasure.png")).getBufferedImage();
+        this.image = ((ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "treasure.png")).getBufferedImage();
+    }
+
+    @Override
+    public void load() {
         this.hero = (Position) this.owner.getComponentManager().getComponentFromGO("HERO", Position.class);
         this.tresure = (Position) this.owner.getComponentManager().getComponent(Position.class);
         this.renderer = (Renderer) this.owner.getComponentManager().getComponent(Renderer.class);
@@ -44,8 +46,5 @@ public class PlayerFindTreasureScript extends UpdateScript<Component> {
             renderer.setImage(image);
         }
     }
-    
-    
-    
-    
+
 }

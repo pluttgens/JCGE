@@ -16,10 +16,13 @@ import static java.util.concurrent.ThreadLocalRandom.current;
  */
 public class InitialPosition extends LoadingScript<Scene> {
 
+
     @Override
-    public void init(Scene s) {
-        super.init(s);
+    public void load() {
+        
     }
+    
+    
 
     @Override
     public void executeOnce() {
