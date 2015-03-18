@@ -157,7 +157,7 @@ public abstract class GameObject implements Displayable<Scene> {
      * @param g
      */
     protected void renderObject(Graphics g) {
-        Component renderer = componentManager.render(g);
+        componentManager.render(g);
     }
 
     /**
