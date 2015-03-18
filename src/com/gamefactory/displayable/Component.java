@@ -37,29 +37,13 @@ public abstract class Component /**
     
     private final Notifier notifier;
     
-    private Stream<LoadingScript<Component>> loadingScripts;
-    
-    private final List<UpdateScript<Component>> updateScripts;
-    
     private final List<Listener<Component, Void>> listeners;
     
     public Component() {
         this.notifier = new Notifier(this);
-        this.loadingScripts = Stream.empty();
-        this.updateScripts = new ArrayList<>();
         this.listeners = new ArrayList<>();
     }
-    
-    public void addScripts(Script<Component>... scripts) {
-        for (Script<Component> script : scripts) {
-            if (script instanceof UpdateScript) {
-                this.updateScripts.add((UpdateScript<Component>) script);
-            } else {
-                this.loadingScripts = Stream.concat(loadingScripts, Stream.of((LoadingScript<Component>) script));
-            }
-        }
-    }
-    
+
     public void addListeners(ComponentListener[] listeners) {
         this.listeners.addAll(Arrays.asList(listeners));
     }
@@ -73,11 +57,6 @@ public abstract class Component /**
     
     public final void init(ComponentManager cm) {
         this.owner = cm;
-        this.loadingScripts.forEach(s -> {
-            s.init(this);
-            s.executeOnce();
-        });
-        this.updateScripts.stream().forEach(s -> s.init(this));
         this.listeners.stream().forEach(l -> l.init(this));
         
     }
@@ -86,9 +65,6 @@ public abstract class Component /**
         Component c = null;
         try {
             c = clazz.newInstance();
-            if (scripts != null) {
-                c.addScripts(scripts);
-            }
             if (listeners != null) {
                 c.addListeners(listeners);
             }

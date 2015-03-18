@@ -25,28 +25,23 @@ import javax.imageio.ImageIO;
  *
  * @author scalpa
  */
-public class AnimatorFourDirections extends UpdateScript<Position> {
+public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
 
     private ArrayList<BufferedImage> animationsLeft;
     private ArrayList<BufferedImage> animationsRight;
     private ArrayList<BufferedImage> animationsUp;
     private ArrayList<BufferedImage> animationsDown;
 
+    private Position currentPosition;
     private Position previousPosition;
     private Renderer renderer;
 
     @Override
-    public void init(Position p) {
-        super.init(p);
-        this.animationsLeft = new ArrayList<>();
-        this.animationsRight = new ArrayList<>();
-        this.animationsUp = new ArrayList<>();
-        this.animationsDown = new ArrayList<>();
-        this.previousPosition = this.owner.deepClone();
-        this.renderer = (Renderer) this.owner.getComponentManager().getComponent(Renderer.class);
-        this.loadAnimations();
-        this.renderer.setImage(this.animationsDown.get(1));
+    public void init(ComponentManager cm) {
+        super.init(owner);
     }
+    
+    
 
     public void loadAnimations() {
         try {
