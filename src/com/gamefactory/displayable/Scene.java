@@ -67,7 +67,7 @@ public class Scene implements Displayable<DisplayableManager> {
         this.Landscape.load();
         this.camera.load();
         this.gameObjects.values().stream().forEach(new Loadable.ConsumerImpl());
-        this.scripts.stream().forEach(s -> s.executeOnce());
+        this.scripts.stream().forEach(s -> s.execute());
     }
     
     

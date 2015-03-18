@@ -27,12 +27,10 @@ public final class ComponentManager implements Displayable<GameObject>{
     
     private final GameObject owner;
     private final List<Component> components;
-    private final List<UpdateScript> scripts;
     
     public ComponentManager(GameObject owner) {
         this.owner = owner;
         this.components = new ArrayList<>();
-        this.scripts = new ArrayList<>();
     }
 
     /**
