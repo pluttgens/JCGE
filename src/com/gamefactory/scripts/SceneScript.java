@@ -12,15 +12,9 @@ import com.gamefactory.displayable.Script;
  *
  * @author scalpa
  */
-public abstract class SceneScript implements Script<Scene> {
+public abstract class SceneScript implements Script {
 
-    protected Scene owner;
-
-    @Override
-    public void init(Scene s) {
-        this.owner = s;
-    }
-
+    
     @Override
     public final boolean isConsumed() {
         return false;

@@ -14,22 +14,25 @@ import static java.util.concurrent.ThreadLocalRandom.current;
  *
  * @author Adrien
  */
-public class InitialPosition extends LoadingScript<Scene> {
+public class InitialPosition extends LoadingScript {
+
 
     @Override
-    public void init(Scene s) {
-        super.init(s);
+    public void load() {
+        
     }
+    
+    
 
     @Override
     public void executeOnce() {
-        this.owner.getGameObjects().stream().filter(go -> go.getId().equals("TREASURE")).forEach(go -> {
+        this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("TREASURE")).forEach(go -> {
             Position p = (Position) go.getComponentManager().getComponent(Position.class);
             p.setX((int) (Math.random() * Game.WIDTH));
             p.setY((int) (Math.random() * Game.HEIGHT));
         });
 
-        Position p = (Position) this.owner.getGameObjects().stream().filter(go -> go.getId().equals("HERO")).findFirst().get().getComponentManager().getComponent(Position.class);
+        Position p = (Position) this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("HERO")).findFirst().get().getComponentManager().getComponent(Position.class);
         p.setX(200);
         p.setY(200);
     }

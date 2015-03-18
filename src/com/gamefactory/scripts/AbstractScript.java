@@ -4,20 +4,23 @@
  * and open the template in the editor.
  */
 package com.gamefactory.scripts;
-
-import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.Script;
-
+import com.gamefactory.displayable.ScriptManager;
 /**
  *
- * @author scalpa
+ * @author rakotoar
  */
-public abstract class UpdateScript  extends AbstractScript {
-    
-    
-    
+public abstract class AbstractScript implements Script{
+   protected ScriptManager owner;
+   
     @Override
-    public final boolean isConsumed() {
-        return false;
+    public void init(ScriptManager owner) {
+        this.owner = owner;
+        
     }
+
+   
+
+    
+    
 }

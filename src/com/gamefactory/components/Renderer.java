@@ -23,7 +23,7 @@ public class Renderer extends Component {
     private BufferedImage image;
 
     @Override
-    public void onLoad() {
+    public void load() {
         position = (Position) owner.getComponent(Position.class);
         try {
         	collider = (Collider) owner.getComponent(Collider.class);

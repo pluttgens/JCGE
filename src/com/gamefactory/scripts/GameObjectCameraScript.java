@@ -14,18 +14,19 @@ import com.gamefactory.game.Game;
  *
  * @author scalpa
  */
-public class GameObjectCameraScript extends UpdateScript<Scene> {
+public class GameObjectCameraScript extends UpdateScript {
 
     private Camera c;
 
     private Position focus;
 
     @Override
-    public void init(Scene s) {
-        super.init(s);
-        c = s.getCamera();
-        focus = (Position) s.getGameObject("HERO").getComponentManager().getComponent(Position.class);
+    public void load() {
+        this.c = this.owner.getOwner().getCamera();
+        this.focus = (Position) this.owner.getOwner().getGameObject("HERO").getComponentManager().getComponent(Position.class);
     }
+    
+    
 
     @Override
     public void execute() {

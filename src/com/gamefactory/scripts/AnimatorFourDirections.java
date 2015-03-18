@@ -25,7 +25,7 @@ import javax.imageio.ImageIO;
  *
  * @author scalpa
  */
-public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
+public class AnimatorFourDirections extends UpdateScript {
 
     private ArrayList<BufferedImage> animationsLeft;
     private ArrayList<BufferedImage> animationsRight;
@@ -36,9 +36,12 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
     private Position previousPosition;
     private Renderer renderer;
 
+    
+
     @Override
-    public void init(ComponentManager cm) {
-        super.init(owner);
+    public void load() {
+        this.currentPosition = (Position) this.owner.getComponent(Position.class);
+        this.renderer = (Renderer) this.owner.getComponent(Renderer.class);
     }
     
     
@@ -91,8 +94,8 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
 
     @Override
     public void execute() {
-        if (this.previousPosition.distanceWith(this.owner) > 3) {
-            Position.Orientation orientation = this.owner.getOrientation();
+        if (this.previousPosition.distanceWith(this.currentPosition) > 3) {
+            Position.Orientation orientation = this.currentPosition.getOrientation();
             BufferedImage current = this.renderer.getImage();
             switch (orientation) {
                 case DOWN:
@@ -108,7 +111,7 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
                     this.renderer.setImage(getNextImage(current, this.animationsRight));
                     break;
             }
-            this.previousPosition = this.owner.deepClone();
+            this.previousPosition = this.currentPosition.deepClone();
         }
     }
 

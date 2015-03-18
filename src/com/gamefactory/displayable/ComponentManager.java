@@ -1,12 +1,17 @@
 package com.gamefactory.displayable;
 
-import com.gamefactory.scripts.LoadingScript;
+import com.gamefactory.components.Renderer;
+import com.gamefactory.game.Displayable;
 import com.gamefactory.scripts.UpdateScript;
+import java.awt.Graphics;
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Le Component Manager encapsule le comportement des components au sein d'un
@@ -18,16 +23,14 @@ import java.util.List;
  *
  * @since 1.0
  */
-public final class ComponentManager {
+public final class ComponentManager implements Displayable<GameObject>{
     
     private final GameObject owner;
     private final List<Component> components;
-    private final List<UpdateScript> scripts;
     
     public ComponentManager(GameObject owner) {
         this.owner = owner;
         this.components = new ArrayList<>();
-        this.scripts = new ArrayList<>();
     }
 
     /**
@@ -53,7 +56,7 @@ public final class ComponentManager {
      * Initialise tous les components
      */
     public void load() {
-        this.components.stream().forEach(c -> c.onLoad());
+        this.components.stream().forEach(c -> c.load());
         
     }
     
@@ -155,6 +158,17 @@ public final class ComponentManager {
     
     public GameObject getGameObject() {
         return owner;
+    }
+
+    @Override
+    public void render(Graphics g) {
+        Renderer renderer = (Renderer) getComponent("Renderer");
+        try {
+            renderer.getClass().getMethod("render", Graphics.class).invoke(renderer, g);
+
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

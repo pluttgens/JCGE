@@ -32,7 +32,7 @@ public class Scene implements Displayable<DisplayableManager> {
     private Map<String, GameObject> gameObjects = new HashMap<>();
     private Landscape Landscape = new Landscape();
     private Camera camera;
-    private List<LoadingScript<Scene>> scripts;
+    private List<LoadingScript> scripts;
 
     public Scene() {
     }
@@ -67,7 +67,7 @@ public class Scene implements Displayable<DisplayableManager> {
         this.Landscape.load();
         this.camera.load();
         this.gameObjects.values().stream().forEach(new Loadable.ConsumerImpl());
-        this.scripts.stream().forEach(s -> s.executeOnce());
+        this.scripts.stream().forEach(s -> s.execute());
     }
     
     

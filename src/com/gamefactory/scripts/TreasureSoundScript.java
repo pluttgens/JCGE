@@ -7,8 +7,7 @@ package com.gamefactory.scripts;
 
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Sound;
-import com.gamefactory.displayable.Component;
-import com.gamefactory.listeners.ComponentListener;
+import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.utils.timer.Timer;
 import java.util.concurrent.TimeUnit;
 
@@ -16,21 +15,19 @@ import java.util.concurrent.TimeUnit;
  *
  * @author scalpa
  */
-public class TreasureSoundScript extends ComponentListener<Position, Position> {
+public class TreasureSoundScript extends AbstractScript {
 
     private Position position;
     private Sound sound;
     private Timer timer;
 
     @Override
-    public void init(Position p) {
-        super.init(p);
+    public void init(ScriptManager script) {
+        super.init(script);
         this.timer = new Timer();
-        this.sound = (Sound) this.owner.getComponentManager().getComponent(Sound.class);
-        this.position = (Position) this.owner.getComponentManager().getComponentFromGO("HERO", Position.class);
-        timer.start();
     }
 
+    
 
     private int volume = -80;
 
