@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @since 1.0
  */
-public final class ComponentManager implements Displayable<GameObject>{
+public final class ComponentManager implements Manager<GameObject>{
     
     private final GameObject owner;
     private final List<Component> components;
