@@ -6,24 +6,18 @@
 package com.gamefactory.scripts;
 
 import com.gamefactory.components.Position;
-import com.gamefactory.displayable.ScriptManager;
 
-public class BlockOnCollisionListener extends ListenerScript {
-
+public class BlockOnCollisionListener extends ComponentListener<Position, Void> {
+    
     @Override
-    public void init(ScriptManager owner) {
-        super.init(owner); //To change body of generated methods, choose Tools | Templates.
+    public void init(Position p) {
+        super.init(p);
     }
 
     @Override
-    public void load() {
-        
-    }
-
-    @Override
-    public void onEvent() {
+    public void onEvent(Void event) {
         owner.setxVelocity(0);
         owner.setyVelocity(0);
-    }
-
+    }   
+    
 }

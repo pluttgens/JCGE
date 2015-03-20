@@ -6,6 +6,7 @@
 package com.gamefactory.scripts;
 
 import com.gamefactory.components.Position;
+import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.game.Game;
 import com.gamefactory.services.ServiceLocator;
@@ -16,7 +17,7 @@ import java.awt.event.KeyListener;
  *
  * @author scalpa
  */
-public class PlayerInputHandler extends UpdateScript implements KeyListener {
+public class PlayerInputHandler extends UpdateScript<ComponentManager> implements KeyListener {
 
     private final static int NB_KEYS = Short.MAX_VALUE;
 
@@ -38,7 +39,7 @@ public class PlayerInputHandler extends UpdateScript implements KeyListener {
 
     @Override
     public void load() {
-        this.position = (Position) owner.getComponent(Position.class);
+        this.position = (Position) owner.getOwner().getComponent(Position.class);
         this.position.setX(Game.WIDTH / 2 - 20);
         this.position.setY(Game.HEIGHT / 2 - 20);
     }

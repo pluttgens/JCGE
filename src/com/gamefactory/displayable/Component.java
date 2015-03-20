@@ -6,19 +6,10 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.callbacks.game.Callbacks;
-import com.gamefactory.scripts.ComponentListener;
-import com.gamefactory.scripts.LoadingScript;
-import com.gamefactory.scripts.UpdateScript;
 import com.gamefactory.utils.events.Notifier;
-import com.sun.org.apache.xml.internal.security.exceptions.AlgorithmAlreadyRegisteredException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 /**
  * Un component encapsule une fonctionalité d'un game object.
@@ -44,17 +35,17 @@ public abstract class Component implements Callbacks<ComponentManager>/**
         this.notifier = new Notifier(this);
         this.listeners = new ArrayList<>();
     }
-
-    public void addListeners(ComponentListener[] listeners) {
-        this.listeners.addAll(Arrays.asList(listeners));
-    }
-
     
     @Override
     public final void init(ComponentManager cm) {
         this.owner = cm;
     }
-    
+
+    @Override
+    public void load() {
+        
+    }
+     
     public void updateLogic() {
         
     }
