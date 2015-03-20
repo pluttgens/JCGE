@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public final class ScriptManager <T>{
+public final class ScriptManager <T extends Manager> implements Manager<T, Script>{
     
     private final T owner;
     
@@ -35,6 +35,7 @@ public final class ScriptManager <T>{
         this.scriptsL.stream().forEach(s -> s.init(this));
     }
 
+    @Override
     public void load() {
         this.scriptsU.stream().forEach(s -> s.load());   
         this.scriptsL.stream().map(s ->{s.load(); return s;}).forEach(s ->s.execute());
@@ -42,6 +43,7 @@ public final class ScriptManager <T>{
         this.scriptsL.stream().close();
     }
     
+    @Override
     public void update() {
         this.scriptsU.stream().forEach(s -> s.execute());   
     }  
