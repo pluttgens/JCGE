@@ -19,4 +19,7 @@ public abstract class UpdateScript<T extends Displayable>  extends AbstractScrip
     public final boolean isConsumed() {
         return false;
     }
+    
+    
+    public abstract void execute();
 }

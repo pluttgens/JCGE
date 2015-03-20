@@ -34,7 +34,7 @@ public final class ScriptManager<T extends Displayable> implements Manager<T, Sc
         this.scriptsLoad.stream().map(s -> {
             s.load();
             return s;
-        }).forEach(s -> s.execute());
+        }).forEach(s -> s.executeOnce());
 
         this.scriptsLoad.stream().close();
     }

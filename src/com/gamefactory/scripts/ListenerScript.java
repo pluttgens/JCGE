@@ -14,12 +14,7 @@ import com.gamefactory.utils.events.Event;
  */
 public abstract class ListenerScript<T extends Displayable> extends AbstractScript<T> {
 
-    @Override
-    public final void execute() {
-        onEvent();
-    }
-
-    public abstract void onEvent();
+    public abstract void onEvent(Event e);
 
     @Override
     public final boolean isConsumed() {

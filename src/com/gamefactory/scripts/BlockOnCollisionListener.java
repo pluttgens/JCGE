@@ -6,18 +6,28 @@
 package com.gamefactory.scripts;
 
 import com.gamefactory.components.Position;
+import com.gamefactory.displayable.ComponentManager;
+import com.gamefactory.displayable.ScriptManager;
+import com.gamefactory.utils.events.Event;
 
-public class BlockOnCollisionListener extends ComponentListener<Position, Void> {
+public class BlockOnCollisionListener extends ListenerScript<ComponentManager> {
+    
+    private Position position;
     
     @Override
-    public void init(Position p) {
-        super.init(p);
+    public void init(ScriptManager sm) {
+        super.init(sm);
     }
 
     @Override
-    public void onEvent(Void event) {
-        owner.setxVelocity(0);
-        owner.setyVelocity(0);
+    public void onEvent(Event event) {
+        position.setxVelocity(0);
+        position.setyVelocity(0);
     }   
+
+    @Override
+    public void load() {
+        this.position = (Position)owner.getOwner().getComponent(Position.class);
+    }
     
 }
