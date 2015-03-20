@@ -11,7 +11,7 @@ import com.gamefactory.game.Displayable;
  *
  * @author scalpa
  */
-public abstract class ListenerScript extends AbstractScript<Displayable> {
+public abstract class ListenerScript <T extends Displayable> extends AbstractScript<T> {
 
     @Override
     public final void execute() {

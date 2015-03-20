@@ -6,7 +6,7 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.callbacks.game.Callbacks;
-import com.gamefactory.listeners.ComponentListener;
+import com.gamefactory.scripts.ComponentListener;
 import com.gamefactory.scripts.LoadingScript;
 import com.gamefactory.scripts.UpdateScript;
 import com.gamefactory.utils.events.Notifier;
