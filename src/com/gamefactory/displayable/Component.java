@@ -24,18 +24,18 @@ public abstract class Component implements Callbacks<ComponentManager>/**
  * implements Observer, Subject *
  */
 {
-    
+
     protected ComponentManager owner;
-    
+
     private final Notifier notifier;
-    
+
     private final List<Listener<Component, Void>> listeners;
-    
+
     public Component() {
         this.notifier = new Notifier(this);
         this.listeners = new ArrayList<>();
     }
-    
+
     @Override
     public final void init(ComponentManager cm) {
         this.owner = cm;
@@ -43,15 +43,11 @@ public abstract class Component implements Callbacks<ComponentManager>/**
 
     @Override
     public void load() {
-        
+
     }
-     
-    public void updateLogic() {
-        
-    }
-    
-    public void updateComponent() {
-        
+
+    public void update() {
+
     }
 
     /**
@@ -80,7 +76,7 @@ public abstract class Component implements Callbacks<ComponentManager>/**
      * @since 1.0
      */
     public static class UpdatePriorityComparator implements Comparator<Component> {
-        
+
         @Override
         public int compare(Component c1, Component c2) {
             if (c1.getUpdatePriority() == c2.getUpdatePriority()) {
@@ -97,10 +93,9 @@ public abstract class Component implements Callbacks<ComponentManager>/**
     public Notifier getNotifier() {
         return this.notifier;
     }
-    
+
     public ComponentManager getComponentManager() {
         return this.owner;
     }
-    
-    
+
 }

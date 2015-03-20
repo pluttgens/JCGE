@@ -31,6 +31,7 @@ public final class ComponentManager implements Manager<GameObject, Component> {
     public void init(GameObject owner) {
         this.owner = owner;
         this.components = new ArrayList<>();
+        this.scriptManager = new ScriptManager<>();
         this.scriptManager.init(this);
     }
 
@@ -59,15 +60,15 @@ public final class ComponentManager implements Manager<GameObject, Component> {
     @Override
     public void load() {
         this.components.stream().forEach(c -> c.load());
-
+        this.scriptManager.load();
     }
 
     @Override
     public void update() {
-        this.components.stream().map(c -> {
-            c.updateLogic();
-            return c;
-        }).forEach(c -> c.updateComponent());
+        this.scriptManager.update();
+        this.components.stream().forEach(c
+                -> c.update()
+        );
     }
 
     public ScriptManager<ComponentManager> getScriptManager() {
@@ -170,12 +171,7 @@ public final class ComponentManager implements Manager<GameObject, Component> {
     @Override
     public void render(Graphics g) {
         Renderer renderer = (Renderer) getComponent("Renderer");
-        try {
-            renderer.getClass().getMethod("render", Graphics.class).invoke(renderer, g);
-
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        renderer.render(g);
     }
 
 }

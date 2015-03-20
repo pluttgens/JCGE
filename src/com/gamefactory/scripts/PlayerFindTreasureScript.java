@@ -39,12 +39,14 @@ public class PlayerFindTreasureScript extends UpdateScript<ComponentManager> {
         this.hero = (Position) this.owner.getOwner().getComponentFromGO("HERO", Position.class);
         this.tresure = (Position) this.owner.getOwner().getComponent(Position.class);
         this.renderer = (Renderer) this.owner.getOwner().getComponent(Renderer.class);
+        this.renderer.disable();
     }
 
     @Override
     public void execute() {
         if (hero.distanceWith(tresure) < 10) {
             renderer.setImage(image);
+            renderer.enable();
         }
     }
 

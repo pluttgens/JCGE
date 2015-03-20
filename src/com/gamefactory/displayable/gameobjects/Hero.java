@@ -17,9 +17,5 @@ public class Hero extends GameObject {
         this.getScriptManager().add(new AnimatorFourDirections(), new PlayerInputHandler());
     }
 
-    @Override
-    public void load() {
-
-    }
-
+  
 }

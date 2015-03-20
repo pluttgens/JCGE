@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.GameObject;
+import com.gamefactory.utils.events.Event;
 import java.awt.event.ComponentListener;
 import java.util.Iterator;
 import java.util.List;
@@ -22,11 +23,8 @@ public class Collider extends Component {
      */
     private Position position;
 
-    private List<ComponentListener> onCollisionListeners;
-
     public Collider() {
     }
-
 
     @Override
     public void load() {
@@ -36,7 +34,7 @@ public class Collider extends Component {
     }
 
     @Override
-    public void updateComponent() {
+    public void update() {
         //ArrayList<GameObject> gameObjects = owner.getScene().getGameObjects();
         Iterator<GameObject> it = this.owner.getScene().iterateOverGO();
         while (it.hasNext()) {
@@ -57,11 +55,6 @@ public class Collider extends Component {
         }
     }
 
-    public void render(Graphics g) {
-        g.setColor(Color.red);
-        g.drawRect((int) position.getX(), (int) position.getY(), width, height);
-    }
-
     public int getWidth() {
         return width;
     }
@@ -79,9 +72,6 @@ public class Collider extends Component {
     }
 
     public void onEnterCollision(Collider c) {
-        Iterator<ComponentListener> it = this.onCollisionListeners.iterator();
-        while (it.hasNext()) {
-            it.next().onEvent(c);
-        }
+        this.getComponentManager().getScriptManager().fireEvent(new Event(this, null, c));
     }
 }

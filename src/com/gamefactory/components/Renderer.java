@@ -11,48 +11,55 @@ public class Renderer extends Component {
      * Position de l'image à afficher
      */
     private Position position;
-    
+
     /**
      * Collider à afficher (Rectangle)
      */
     private Collider collider;
-    
+
     /**
      * Image affichée par le component
      */
     private BufferedImage image;
 
+    private boolean isActived = true;
+
     @Override
     public void load() {
         position = (Position) owner.getComponent(Position.class);
         try {
-        	collider = (Collider) owner.getComponent(Collider.class);
-        }
-        catch ( java.lang.IllegalStateException e) {
-        	//rien
+            collider = (Collider) owner.getComponent(Collider.class);
+        } catch (java.lang.IllegalStateException e) {
+            //rien
         }
     }
 
     public void render(Graphics g) {
-        g.drawImage(image, (int) position.getX(), (int) position.getY(), null);
-        
-        if(collider != null)
-        	collider.render(g);
+        if (isActived) {
+            g.drawImage(image, (int) position.getX(), (int) position.getY(), null);
+        }
     }
 
     /**
-     * 
+     *
      * @return l'image actuellement affichée par le component
      */
     public BufferedImage getImage() {
         return image;
     }
     
+    public void enable() {
+        this.isActived = true;
+    }
     
+    public void disable() {
+        this.isActived = false;
+    }
+
     /**
      * Permet de changer l'image actuellement affichée par le component
-     * 
-     * @param image 
+     *
+     * @param image
      */
     public void setImage(BufferedImage image) {
         this.image = image;
@@ -61,7 +68,7 @@ public class Renderer extends Component {
     }
 
     /**
-     * 
+     *
      * @return la position de l'image
      */
     public Position getPosition() {

@@ -32,7 +32,7 @@ public class Scene implements Displayable<DisplayableManager> {
     private Map<String, GameObject> gameObjects = new HashMap<>();
     private Landscape Landscape = new Landscape();
     private Camera camera;
-    private List<LoadingScript> scripts;
+    private ScriptManager<Scene> scriptManager;
 
     public Scene() {
     }
@@ -40,8 +40,8 @@ public class Scene implements Displayable<DisplayableManager> {
     @Override
     public void init(DisplayableManager owner) {
         this.camera = new Camera();
-        this.scripts = new ArrayList<>();
-        
+        this.scriptManager = new ScriptManager<>();
+
         GameObject hero = new Hero();
         Treasure treasure = new Treasure();
         Obstacle obstacle = new Obstacle();
@@ -50,31 +50,28 @@ public class Scene implements Displayable<DisplayableManager> {
         gameObjects.put(treasure.id, treasure);
         gameObjects.put(obstacle.id, obstacle);
 
-        this.scripts.add(new InitialPosition());
+        this.scriptManager.init(this);
+        this.scriptManager.add(new InitialPosition());
         
         this.Landscape.init(this);
         this.camera.init(this);
         
-        this.scripts.stream().forEach(s -> s.init(this));
         this.gameObjects.values().stream().forEach(go -> go.init(this));
-                
+
     }
-    
-    
 
     @Override
     public void load() {
         this.Landscape.load();
         this.camera.load();
-        this.gameObjects.values().stream().forEach(new Loadable.ConsumerImpl());
-        this.scripts.stream().forEach(s -> s.executeOnce());
+        this.scriptManager.load();
+        this.gameObjects.values().stream().forEach(go -> go.load());
     }
-    
-    
 
     @Override
     public void update() {
         this.camera.update();
+        
         Iterator<GameObject> it = gameObjects.values().iterator();
         while (it.hasNext()) {
             GameObject next = it.next();
@@ -125,7 +122,5 @@ public class Scene implements Displayable<DisplayableManager> {
     public Camera getCamera() {
         return camera;
     }
-    
-    
 
 }

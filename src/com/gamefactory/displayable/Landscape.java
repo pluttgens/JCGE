@@ -34,6 +34,7 @@ public class Landscape implements Displayable<Scene> {
     @Override
     public void init(Scene owner) {
         this.owner = owner;
+        this.renderedArea = new Rectangle();
         this.tiles = new ArrayList<>();
         
     }
