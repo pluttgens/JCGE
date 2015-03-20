@@ -1,8 +1,6 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.components.Renderer;
-import com.gamefactory.game.Displayable;
-import com.gamefactory.scripts.UpdateScript;
 import java.awt.Graphics;
 import java.lang.reflect.InvocationTargetException;
 
@@ -23,15 +21,17 @@ import java.util.logging.Logger;
  *
  * @since 1.0
  */
-public final class ComponentManager implements Manager<GameObject, Component>{
-    
-    private  GameObject owner;
-    private  List<Component> components;
-    
+public final class ComponentManager implements Manager<GameObject, Component> {
+
+    private GameObject owner;
+    private List<Component> components;
+    private ScriptManager<ComponentManager> scriptManager;
+
     @Override
     public void init(GameObject owner) {
         this.owner = owner;
         this.components = new ArrayList<>();
+        this.scriptManager.init(this);
     }
 
     /**
@@ -39,34 +39,39 @@ public final class ComponentManager implements Manager<GameObject, Component>{
      *
      * - Pascal Luttgens.
      *
-     * @param components Les components.
-     * @param scripts    Les scripts.
+     * @param components Les components
      *
      * @since 1.0
      */
     @Override
-    public void add(Component ... components) {
-        
+    public void add(Component... components) {
+
         this.components.addAll(Arrays.asList(components));
-        
+
         this.components.sort(new Component.UpdatePriorityComparator());
         this.components.stream().forEach(c -> c.init(this));
-        
+
     }
 
     /**
      * Initialise tous les components
      */
+    @Override
     public void load() {
         this.components.stream().forEach(c -> c.load());
-        
+
     }
-    
+
+    @Override
     public void update() {
         this.components.stream().map(c -> {
             c.updateLogic();
             return c;
         }).forEach(c -> c.updateComponent());
+    }
+
+    public ScriptManager<ComponentManager> getScriptManager() {
+        return this.scriptManager;
     }
 
 // A modifier.
@@ -89,7 +94,7 @@ public final class ComponentManager implements Manager<GameObject, Component>{
         }
         throw new IllegalStateException("Component manquant : " + componentName);
     }
-    
+
     public Component getComponent(Class<? extends Component> componentClass) {
         Iterator<Component> it = components.iterator();
         while (it.hasNext()) {
@@ -145,7 +150,7 @@ public final class ComponentManager implements Manager<GameObject, Component>{
         }
         return false;
     }
-    
+
     public Component getComponentFromGO(String id, Class<? extends Component> componentClass) {
         return this.owner.getOwner().getGameObject(id).getComponentManager().getComponent(componentClass);
     }
@@ -157,7 +162,7 @@ public final class ComponentManager implements Manager<GameObject, Component>{
     public Scene getScene() {
         return this.owner.getOwner();
     }
-    
+
     public GameObject getOwner() {
         return owner;
     }
@@ -173,9 +178,4 @@ public final class ComponentManager implements Manager<GameObject, Component>{
         }
     }
 
-    @Override
-    public GameObject getGameObject(String id) {
-        return this.owner.getOwner().getGameObject(id);
-    }
-    
 }

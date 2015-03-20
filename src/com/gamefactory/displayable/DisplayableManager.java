@@ -43,11 +43,6 @@ public class DisplayableManager implements Manager<Displayable, Scene> {
     }
 
     @Override
-    public GameObject getGameObject(String id) {
-         return this.owner.getGameObject(id);
-    }
-
-    @Override
     public void add(Scene... u) {
       
         activeScenes.addAll(Arrays.asList(u));

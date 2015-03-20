@@ -23,11 +23,13 @@ public class Treasure extends GameObject {
 
     public Treasure() {
         super();
+        this.componentManager.add(new Position(), new Renderer(), new Sound());
+        this.getScriptManager().add(new TreasureSoundScript());
     }
 
     @Override
     public void load() {
-        this.componentManager.init(Component.build(Position.class, new TreasureSoundScript(), null), Component.build(Renderer.class, scripts, listeners),/* new TreasureSoundScript(),*/Component.build(Sound.class, ArrayBuilder.asArray(new TreasureSoundScript()) ,null));
+        
     }
 
 }

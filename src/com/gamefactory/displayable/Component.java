@@ -55,20 +55,6 @@ public abstract class Component implements Callbacks<ComponentManager>/**
         this.owner = cm;
     }
     
-    
-    public static final Component build(Class<? extends Component> clazz, Script<Component>[] scripts, ComponentListener[] listeners) {
-        Component c = null;
-        try {
-            c = clazz.newInstance();
-            if (listeners != null) {
-                c.addListeners(listeners);
-            }
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(Component.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return c;
-    }
-    
     public void updateLogic() {
         
     }
@@ -124,5 +110,6 @@ public abstract class Component implements Callbacks<ComponentManager>/**
     public ComponentManager getComponentManager() {
         return this.owner;
     }
+    
     
 }

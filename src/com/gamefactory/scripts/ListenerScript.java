@@ -5,19 +5,24 @@
  */
 package com.gamefactory.scripts;
 
-import com.gamefactory.displayable.Manager;
 import com.gamefactory.game.Displayable;
 
 /**
  *
- * @param <T>
+ * @author scalpa
  */
-public abstract class UpdateScript<T extends Displayable>  extends AbstractScript<T> {
-    
-    
-    
+public abstract class ListenerScript extends AbstractScript<Displayable> {
+
+    @Override
+    public final void execute() {
+        onEvent();
+    }
+
+    public abstract void onEvent();
+
     @Override
     public final boolean isConsumed() {
         return false;
     }
+
 }

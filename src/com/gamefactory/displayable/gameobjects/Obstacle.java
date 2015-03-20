@@ -18,11 +18,11 @@ public class Obstacle extends GameObject {
 
     public Obstacle() {
         super();
+        this.componentManager.add(new Position(), new Renderer(), new Collider());
     }
 
     @Override
     public void load() {
-        this.componentManager.init(new Position(), new Renderer(), new Collider());
     }
    
     
