@@ -11,14 +11,7 @@ public abstract class LoadingScript<T extends Displayable> extends AbstractScrip
 
     private boolean isConsumed = false;
 
-
-    @Override
-    public final void execute() {
-        isConsumed = true;
-        executeOnce();
-    }
-
-    protected abstract void executeOnce();
+    public abstract void executeOnce();
 
     @Override
     public boolean isConsumed() {

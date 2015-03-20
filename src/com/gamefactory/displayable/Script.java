@@ -9,7 +9,6 @@ import com.gamefactory.callbacks.game.Callbacks;
 
 public interface Script extends Callbacks<ScriptManager> {
     
-    void execute();
     
     boolean isConsumed();
 }

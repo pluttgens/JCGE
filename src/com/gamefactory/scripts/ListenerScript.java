@@ -6,6 +6,7 @@
 package com.gamefactory.scripts;
 
 import com.gamefactory.game.Displayable;
+import com.gamefactory.utils.events.Event;
 
 /**
  *
@@ -13,12 +14,7 @@ import com.gamefactory.game.Displayable;
  */
 public abstract class ListenerScript<T extends Displayable> extends AbstractScript<T> {
 
-    @Override
-    public final void execute() {
-        onEvent();
-    }
-
-    public abstract void onEvent();
+    public abstract void onEvent(Event e);
 
     @Override
     public final boolean isConsumed() {
