@@ -5,14 +5,13 @@
  */
 package com.gamefactory.scripts;
 
-import com.gamefactory.displayable.Component;
-import com.gamefactory.displayable.Script;
+import com.gamefactory.displayable.Manager;
 
 /**
  *
- * @author scalpa
+ * @param <T>
  */
-public abstract class UpdateScript  extends AbstractScript {
+public abstract class UpdateScript<T extends Manager>  extends AbstractScript<T> {
     
     
     

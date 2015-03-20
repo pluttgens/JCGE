@@ -42,14 +42,14 @@ public abstract class GameObject implements Displayable<Scene> {
     protected Scene owner;
 
     public GameObject() {
-        this.componentManager = new ComponentManager(this);
+        this.componentManager = new ComponentManager();
         this.isActive = true;
         this.id = this.getClass().getSimpleName().toUpperCase();;
         this.notifier = new Notifier(this);
     }
 
     protected GameObject(String id) {
-        this.componentManager = new ComponentManager(this);
+        this.componentManager = new ComponentManager();
         this.isActive = true;
         this.id = id.toUpperCase();
         this.notifier = new Notifier(this);
@@ -104,6 +104,7 @@ public abstract class GameObject implements Displayable<Scene> {
     @Override
     public void init(Scene owner) {
         this.owner = owner;
+        this.componentManager.init(this);
     }
 
     @Override

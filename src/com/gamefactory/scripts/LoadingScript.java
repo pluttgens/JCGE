@@ -5,9 +5,9 @@
  */
 package com.gamefactory.scripts;
 
-import com.gamefactory.displayable.Script;
+import com.gamefactory.displayable.Manager;
 
-public abstract class LoadingScript extends AbstractScript {
+public abstract class LoadingScript<T extends Manager> extends AbstractScript<T> {
 
     private boolean isConsumed = false;
 
