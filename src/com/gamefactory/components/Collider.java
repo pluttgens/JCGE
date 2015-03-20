@@ -4,10 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import com.gamefactory.displayable.Component;
-import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.GameObject;
-import com.gamefactory.listeners.BlockOnCollisionListener;
-import com.gamefactory.listeners.ComponentListener;
+import java.awt.event.ComponentListener;
 import java.util.Iterator;
 import java.util.List;
 

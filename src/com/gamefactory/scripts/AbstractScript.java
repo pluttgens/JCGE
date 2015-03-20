@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.gamefactory.scripts;
-import com.gamefactory.displayable.Manager;
 import com.gamefactory.displayable.Script;
 import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.game.Displayable;

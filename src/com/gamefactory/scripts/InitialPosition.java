@@ -14,7 +14,7 @@ import static java.util.concurrent.ThreadLocalRandom.current;
  *
  * @author Adrien
  */
-public class InitialPosition extends LoadingScript {
+public class InitialPosition extends LoadingScript<Scene> {
 
 
     @Override
