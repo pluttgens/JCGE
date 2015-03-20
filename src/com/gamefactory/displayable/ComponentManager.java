@@ -158,7 +158,7 @@ public final class ComponentManager implements Manager<GameObject, Component>{
         return this.owner.getOwner();
     }
     
-    public GameObject getGameObject() {
+    public GameObject getOwner() {
         return owner;
     }
 
@@ -171,6 +171,11 @@ public final class ComponentManager implements Manager<GameObject, Component>{
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public GameObject getGameObject(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }
