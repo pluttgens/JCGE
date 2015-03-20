@@ -4,6 +4,7 @@ import com.gamefactory.game.Displayable;
 import com.gamefactory.scripts.ListenerScript;
 import com.gamefactory.scripts.LoadingScript;
 import com.gamefactory.scripts.UpdateScript;
+import com.gamefactory.utils.events.Event;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,5 +69,9 @@ public final class ScriptManager<T extends Displayable> implements Manager<T, Sc
     @Override
     public void init(T t) {
         this.owner = t;
+    }
+    
+    public void fireEvent(Event e) {
+        this.scriptsList.stream().forEach(s -> s.onEvent(e));
     }
 }

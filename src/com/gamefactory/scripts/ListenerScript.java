@@ -6,6 +6,7 @@
 package com.gamefactory.scripts;
 
 import com.gamefactory.game.Displayable;
+import com.gamefactory.utils.events.Event;
 
 /**
  *

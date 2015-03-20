@@ -16,9 +16,10 @@ import java.util.concurrent.TimeUnit;
  *
  * @author scalpa
  */
-public class TreasureSoundScript extends ListenerScript<ComponentManager> {
+public class TreasureSoundScript extends UpdateScript<ComponentManager> {
 
-    private Position position;
+    private Position treasurePosition;
+    private Position heroPosition;
     private Sound sound;
     private Timer timer;
 
@@ -30,7 +31,9 @@ public class TreasureSoundScript extends ListenerScript<ComponentManager> {
 
     @Override
     public void load() {
-        this.position = 
+        this.treasurePosition = (Position) this.owner.getOwner().getComponent(Position.class);
+        this.heroPosition = (Position) this.owner.getOwner().getComponentFromGO("HERO", Position.class);
+        timer.start();
     }
 
     
@@ -38,7 +41,7 @@ public class TreasureSoundScript extends ListenerScript<ComponentManager> {
     private int volume = -80;
 
     @Override
-    public void execute(Position p) {
+    public void execute() {
         long time = timer.getElapsedTime(TimeUnit.SECONDS);
         if (time >= 2) {
             // les bornes vont de - 80 a 6 pour ce son
