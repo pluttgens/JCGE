@@ -2,10 +2,9 @@ package com.gamefactory.displayable;
 
 import com.gamefactory.scripts.LoadingScript;
 import com.gamefactory.scripts.UpdateScript;
+import java.awt.Graphics;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public final class ScriptManager <T extends Manager> implements Manager<T, Script>{
@@ -50,5 +49,25 @@ public final class ScriptManager <T extends Manager> implements Manager<T, Scrip
     
     public T getOwner() {
         return owner;
+    }
+
+    @Override
+    public GameObject getGameObject(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void add(Script... u) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void render(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void init(T t) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
