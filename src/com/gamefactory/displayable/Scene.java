@@ -26,7 +26,7 @@ import java.util.function.Consumer;
  *
  * @since 1.0
  */
-public class Scene implements Manager<DisplayableManager> {
+public class Scene implements Displayable<DisplayableManager> {
 
     private DisplayableManager owner;
     private Map<String, GameObject> gameObjects = new HashMap<>();

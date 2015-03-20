@@ -6,13 +6,17 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
+import java.awt.Graphics;
 
 /**
  *
  * @author scalpa
  */
-public interface Manager<T extends Displayable> extends Displayable<T> {
+public interface Manager<T extends Displayable, U> extends Displayable<T> {
     
     GameObject getGameObject(String id);
+
+    void add(U ... u);
+    
     
 }

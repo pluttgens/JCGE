@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public final class ScriptManager <T extends Manager> implements Manager<T>{
+public final class ScriptManager <T extends Manager, Script> implements Manager<T>{
     
     private final T owner;
     
