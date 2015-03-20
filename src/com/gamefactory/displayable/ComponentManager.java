@@ -23,12 +23,13 @@ import java.util.logging.Logger;
  *
  * @since 1.0
  */
-public final class ComponentManager implements Manager<GameObject>{
+public final class ComponentManager implements Manager<GameObject, Component>{
     
-    private final GameObject owner;
-    private final List<Component> components;
+    private  GameObject owner;
+    private  List<Component> components;
     
-    public ComponentManager(GameObject owner) {
+    @Override
+    public void init(GameObject owner) {
         this.owner = owner;
         this.components = new ArrayList<>();
     }
@@ -43,7 +44,8 @@ public final class ComponentManager implements Manager<GameObject>{
      *
      * @since 1.0
      */
-    public void init(Component ... components) {
+    @Override
+    public void add(Component ... components) {
         
         this.components.addAll(Arrays.asList(components));
         
@@ -156,7 +158,7 @@ public final class ComponentManager implements Manager<GameObject>{
         return this.owner.getOwner();
     }
     
-    public GameObject getGameObject() {
+    public GameObject getOwner() {
         return owner;
     }
 
@@ -169,6 +171,11 @@ public final class ComponentManager implements Manager<GameObject>{
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public GameObject getGameObject(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

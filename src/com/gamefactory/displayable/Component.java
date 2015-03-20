@@ -50,6 +50,7 @@ public abstract class Component implements Callbacks<ComponentManager>/**
     }
 
     
+    @Override
     public final void init(ComponentManager cm) {
         this.owner = cm;
     }
