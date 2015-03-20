@@ -60,7 +60,6 @@ public final class ScriptManager <T extends Manager> implements Manager<T, Scrip
 
     @Override
     public void render(Graphics g) {
-        
     }
 
     @Override

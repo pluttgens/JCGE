@@ -17,5 +17,5 @@ public interface Manager<T extends Displayable, U> extends Displayable<T> {
     GameObject getGameObject(String id);
 
     void add(U ... u);
-    
+
 }
