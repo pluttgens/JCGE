@@ -175,7 +175,7 @@ public final class ComponentManager implements Manager<GameObject, Component>{
 
     @Override
     public GameObject getGameObject(String id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.owner.getOwner().getGameObject(id);
     }
     
 }

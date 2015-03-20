@@ -2,6 +2,7 @@ package com.gamefactory.displayable;
 
 import com.gamefactory.scripts.LoadingScript;
 import com.gamefactory.scripts.UpdateScript;
+import java.awt.Graphics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public final class ScriptManager <T extends Manager> implements Manager<T, Script>{
     
-    private final T owner;
+    private  T owner;
     
     private final List<UpdateScript> scriptsU;
 
@@ -22,18 +23,7 @@ public final class ScriptManager <T extends Manager> implements Manager<T, Scrip
         this.scriptsL = new ArrayList<>();
     }
 
-    public void init(Script ... scripts){
-        for(Script s : scripts){
-            if ( s instanceof UpdateScript){
-                this.scriptsU.add((UpdateScript) s);
-            }
-            else{
-                this.scriptsL.add((LoadingScript) s);
-            }
-        }
-        this.scriptsU.stream().forEach(s -> s.init(this));
-        this.scriptsL.stream().forEach(s -> s.init(this));
-    }
+   
 
     @Override
     public void load() {
@@ -50,5 +40,35 @@ public final class ScriptManager <T extends Manager> implements Manager<T, Scrip
     
     public T getOwner() {
         return owner;
+    }
+
+    @Override
+    public GameObject getGameObject(String id) {
+        return this.owner.getGameObject(id);
+    }
+
+    @Override
+    public void add(Script... script) {
+      for(Script s : script){
+            if ( s instanceof UpdateScript){
+                this.scriptsU.add((UpdateScript) s);
+            }
+            else{
+                this.scriptsL.add((LoadingScript) s);
+            }
+        }
+        this.scriptsU.stream().forEach(s -> s.init(this));
+        this.scriptsL.stream().forEach(s -> s.init(this));
+    }
+
+    @Override
+    public void render(Graphics g) {
+        
+         
+    }
+
+    @Override
+    public void init(T t) {
+        this.owner = t;
     }
 }
