@@ -4,9 +4,6 @@ import com.gamefactory.game.Displayable;
 import com.gamefactory.utils.events.Notifier;
 
 import java.awt.Graphics;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Superclass représentant tous les objets du jeu.
@@ -109,10 +106,9 @@ public abstract class GameObject implements Displayable<Scene> {
 
     @Override
     public void load() {
-        
+
     }
-    
-    
+
     /**
      * Vérifie que le GameObject est actif avant de procéder à l'update.
      *
@@ -181,6 +177,10 @@ public abstract class GameObject implements Displayable<Scene> {
 
     public boolean isInCameraField() {
         return true;
+    }
+
+    public ScriptManager<ComponentManager> getScriptManager() {
+        return this.componentManager.getScriptManager();
     }
 
 }

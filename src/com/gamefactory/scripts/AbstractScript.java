@@ -7,12 +7,13 @@ package com.gamefactory.scripts;
 import com.gamefactory.displayable.Manager;
 import com.gamefactory.displayable.Script;
 import com.gamefactory.displayable.ScriptManager;
+import com.gamefactory.game.Displayable;
 /**
  *
  * @author rakotoar
  * @param <T>
  */
-public abstract class AbstractScript<T extends Manager> implements Script{
+public abstract class AbstractScript<T extends Displayable> implements Script{
    
     protected ScriptManager<T> owner;
    

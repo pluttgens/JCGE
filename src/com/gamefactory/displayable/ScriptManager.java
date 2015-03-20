@@ -1,5 +1,6 @@
 package com.gamefactory.displayable;
 
+import com.gamefactory.game.Displayable;
 import com.gamefactory.scripts.LoadingScript;
 import com.gamefactory.scripts.UpdateScript;
 import java.awt.Graphics;
@@ -7,7 +8,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ScriptManager <T extends Manager> implements Manager<T, Script>{
+public final class ScriptManager <T extends Displayable> implements Manager<T, Script>{
     
     private  T owner;
     
@@ -40,10 +41,6 @@ public final class ScriptManager <T extends Manager> implements Manager<T, Scrip
         return owner;
     }
 
-    @Override
-    public GameObject getGameObject(String id) {
-        return this.owner.getGameObject(id);
-    }
 
     @Override
     public void add(Script... script) {
