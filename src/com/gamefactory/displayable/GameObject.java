@@ -106,7 +106,7 @@ public abstract class GameObject implements Displayable<Scene> {
 
     @Override
     public void load() {
-
+        this.componentManager.load();
     }
 
     /**

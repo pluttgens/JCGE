@@ -34,7 +34,7 @@ public class Collider extends Component {
     }
 
     @Override
-    public void updateComponent() {
+    public void update() {
         //ArrayList<GameObject> gameObjects = owner.getScene().getGameObjects();
         Iterator<GameObject> it = this.owner.getScene().iterateOverGO();
         while (it.hasNext()) {
@@ -53,11 +53,6 @@ public class Collider extends Component {
                 }
             }
         }
-    }
-
-    public void render(Graphics g) {
-        g.setColor(Color.red);
-        g.drawRect((int) position.getX(), (int) position.getY(), width, height);
     }
 
     public int getWidth() {

@@ -2,7 +2,8 @@ package com.gamefactory.game;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
 import com.gamefactory.audioengine.AudioEngine;
-import com.gamefactory.displayable.Scene;
+import com.gamefactory.displayable.DisplayableManager;
+import com.gamefactory.displayable.gameobjects.EmptyGameObject;
 import com.gamefactory.services.ServiceLocator;
 
 import java.awt.Canvas;
@@ -82,10 +83,12 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         ServiceLocator.provideService("audio", new AudioEngine());
-        this.displayable = new Scene();
-        this.displayable.load();
+        DisplayableManager displayableManager = new DisplayableManager();
+        displayableManager.init(new EmptyGameObject());
+        displayableManager.load();
+        this.displayable = displayableManager;
     }
-    
+
     /**
      * Démarre le processus du jeu.
      */
@@ -146,12 +149,11 @@ public class Game extends Canvas implements Runnable {
         stop();
     }
 
-    
     public void loadGame() {
         displayable.load();
     }
 
-	/**
+    /**
      * Met à jour tous les élément de la scene
      */
     public void update() {

@@ -11,6 +11,7 @@ import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.Script;
+import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.services.ServiceLocator;
 
 import java.awt.Image;
@@ -36,12 +37,29 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
     private Position previousPosition;
     private Renderer renderer;
 
+    @Override
+    public void init(ScriptManager owner) {
+        super.init(owner);
+        this.animationsDown = new ArrayList<>();
+        this.animationsLeft = new ArrayList<>();
+        this.animationsRight = new ArrayList<>();
+        this.animationsUp = new ArrayList<>();
+        
+        loadAnimations();
+    }
+
     
 
+    
     @Override
     public void load() {
         this.currentPosition = (Position) this.owner.getOwner().getComponent(Position.class);
         this.renderer = (Renderer) this.owner.getOwner().getComponent(Renderer.class);
+        this.previousPosition = this.currentPosition.deepClone();
+        BufferedImage image = this.animationsDown.get(1);
+        this.currentPosition.setHeight(image.getHeight());
+        this.currentPosition.setWidth(image.getWidth());
+        this.renderer.setImage(image);
     }
     
     

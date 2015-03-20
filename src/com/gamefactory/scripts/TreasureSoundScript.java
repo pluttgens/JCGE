@@ -31,6 +31,7 @@ public class TreasureSoundScript extends UpdateScript<ComponentManager> {
 
     @Override
     public void load() {
+        this.sound = (Sound) this.owner.getOwner().getComponent(Sound.class);
         this.treasurePosition = (Position) this.owner.getOwner().getComponent(Position.class);
         this.heroPosition = (Position) this.owner.getOwner().getComponentFromGO("HERO", Position.class);
         timer.start();
