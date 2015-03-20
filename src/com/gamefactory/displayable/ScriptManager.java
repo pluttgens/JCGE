@@ -5,13 +5,11 @@ import com.gamefactory.scripts.UpdateScript;
 import java.awt.Graphics;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public final class ScriptManager <T extends Manager> implements Manager<T, Script>{
     
-    private final T owner;
+    private  T owner;
     
     private final List<UpdateScript> scriptsU;
 
@@ -23,18 +21,7 @@ public final class ScriptManager <T extends Manager> implements Manager<T, Scrip
         this.scriptsL = new ArrayList<>();
     }
 
-    public void init(Script ... scripts){
-        for(Script s : scripts){
-            if ( s instanceof UpdateScript){
-                this.scriptsU.add((UpdateScript) s);
-            }
-            else{
-                this.scriptsL.add((LoadingScript) s);
-            }
-        }
-        this.scriptsU.stream().forEach(s -> s.init(this));
-        this.scriptsL.stream().forEach(s -> s.init(this));
-    }
+   
 
     @Override
     public void load() {
@@ -55,16 +42,28 @@ public final class ScriptManager <T extends Manager> implements Manager<T, Scrip
 
     @Override
     public GameObject getGameObject(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.owner.getGameObject(id);
+    }
+
+    @Override
+    public void add(Script... script) {
+      for(Script s : script){
+            if ( s instanceof UpdateScript){
+                this.scriptsU.add((UpdateScript) s);
+            }
+            else{
+                this.scriptsL.add((LoadingScript) s);
+            }
+        }
+        this.scriptsU.stream().forEach(s -> s.init(this));
     }
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void init(T t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.owner = t;
     }
 }

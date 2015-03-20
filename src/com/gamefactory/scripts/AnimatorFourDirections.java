@@ -25,7 +25,7 @@ import javax.imageio.ImageIO;
  *
  * @author scalpa
  */
-public class AnimatorFourDirections extends UpdateScript {
+public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
 
     private ArrayList<BufferedImage> animationsLeft;
     private ArrayList<BufferedImage> animationsRight;
@@ -40,8 +40,8 @@ public class AnimatorFourDirections extends UpdateScript {
 
     @Override
     public void load() {
-        this.currentPosition = (Position) this.owner.getComponent(Position.class);
-        this.renderer = (Renderer) this.owner.getComponent(Renderer.class);
+        this.currentPosition = (Position) this.owner.getOwner().getComponent(Position.class);
+        this.renderer = (Renderer) this.owner.getOwner().getComponent(Renderer.class);
     }
     
     

@@ -1,16 +1,15 @@
 package com.gamefactory.displayable;
 
-import com.gamefactory.callbacks.Initiable;
-import com.gamefactory.callbacks.Loadable;
 import com.gamefactory.game.Displayable;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class DisplayableManager implements Manager<Displayable, Scene> {
 
-    private DisplayableManager owner;
+    private DisplayableManager owner = null;
     
     private List<Scene> cachedScenes;
 
@@ -28,29 +27,36 @@ public class DisplayableManager implements Manager<Displayable, Scene> {
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(Scene s:activeScenes){
+        s.render(g);
+        }
+        
     }
 
     
     
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         for(Scene s:activeScenes){
+        s.update();
+        }
     }
 
     @Override
     public GameObject getGameObject(String id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+         return this.owner.getGameObject(id);
     }
 
     @Override
     public void add(Scene... u) {
-        throw new UnsupportedOperationException("Not supported yet.");
+      
+        activeScenes.addAll(Arrays.asList(u));
+        
     }
 
     @Override
     public void init(Displayable t) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
     
     
