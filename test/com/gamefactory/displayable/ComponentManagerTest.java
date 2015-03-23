@@ -26,7 +26,7 @@ public class ComponentManagerTest {
         assertTrue("Le component 'Position' a bien été ajouté ! ( CLASS_CHECK )", cm.checkForComponent(Position.class));
         assertTrue("Le component 'RigidBody' a bien été ajouté ! ( STRING_CHECK )", cm.checkForComponent("RigidBody"));
         assertTrue("Le component 'RigidBody' a bien été ajouté ! ( CLASS_CHECK )", cm.checkForComponent(RigidBody.class));
-
+        cm.load();
     }
 
 }

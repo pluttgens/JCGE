@@ -4,6 +4,7 @@ import com.gamefactory.assets.assetmanager.AssetManager;
 import com.gamefactory.audioengine.AudioEngine;
 import com.gamefactory.displayable.DisplayableManager;
 import com.gamefactory.displayable.gameobjects.EmptyGameObject;
+import com.gamefactory.displayable.scenes.MainScene;
 import com.gamefactory.services.ServiceLocator;
 
 import java.awt.Canvas;
@@ -83,7 +84,14 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         ServiceLocator.provideService("audio", new AudioEngine());
-        DisplayableManager displayableManager = new DisplayableManager();
+        DisplayableManager displayableManager = new DisplayableManager(){
+
+            @Override
+            protected void init() {
+                this.add(new MainScene());
+            }
+            
+        };
         displayableManager.init(new EmptyGameObject());
         displayableManager.load();
         this.displayable = displayableManager;

@@ -7,13 +7,11 @@ package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
 import com.gamefactory.game.Game;
-import com.gamefactory.scripts.GameObjectCameraScript;
 import com.gamefactory.utils.timer.Timer;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.concurrent.TimeUnit;
 
 /**
  * La camera représente ce que le joueur peut voir du paysage à travers la

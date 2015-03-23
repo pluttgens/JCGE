@@ -2,14 +2,11 @@ package com.gamefactory.displayable;
 
 import com.gamefactory.components.Renderer;
 import java.awt.Graphics;
-import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Le Component Manager encapsule le comportement des components au sein d'un

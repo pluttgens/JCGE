@@ -6,7 +6,6 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
-import java.awt.Graphics;
 
 /**
  *
