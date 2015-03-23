@@ -1,75 +1,47 @@
 package com.gamefactory.components;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 import com.gamefactory.displayable.Component;
-import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.GameObject;
-import com.gamefactory.listeners.BlockOnCollisionListener;
-import com.gamefactory.listeners.ComponentListener;
+import com.gamefactory.utils.events.Event;
+import java.awt.Rectangle;
 import java.util.Iterator;
-import java.util.List;
 
 public class Collider extends Component {
-
-    /**
-     * Taille de rectangle
-     */
-    private int width;
-    private int height;
 
     /**
      * Position du GameObject
      */
     private Position position;
 
-    private List<ComponentListener> onCollisionListeners;
-
     public Collider() {
     }
 
-
     @Override
-    public void onLoad() {
+    public void load() {
         this.position = (Position) this.owner.getComponent(Position.class);
-        this.width = position.getWidth();
-        this.height = position.getHeight();
     }
 
     @Override
-    public void updateComponent() {
+    public void update() {
         //ArrayList<GameObject> gameObjects = owner.getScene().getGameObjects();
         Iterator<GameObject> it = this.owner.getScene().iterateOverGO();
         while (it.hasNext()) {
             GameObject go = it.next();
-            if (go.getComponentManager().checkForComponent("Collider") /*
-                     * &&
-                     * (this.owner.getGameObject().getId().equals(cm.getGameObject().getId()))
-                     */) {
-                Collider col2 = (Collider) it.next().getComponentManager().getComponent("Collider");
-                if (this.getX() < col2.getX() + col2.getWidth()
-                        && this.getX() + this.getWidth() > col2.getX()
-                        && this.getY() < col2.getY() + col2.getHeight()
-                        && this.getHeight() + this.getY() > col2.getY()) {
+            if (go.getComponentManager().checkForComponent(Collider.class)) {
+                Collider col2 = (Collider) it.next().getComponentManager().getComponent(Collider.class);
+                if (this.getHitbox().intersects(col2.getHitbox())) {
                     onEnterCollision(col2);
-                    col2.onEnterCollision(this);
                 }
             }
         }
     }
 
-    public void render(Graphics g) {
-        g.setColor(Color.red);
-        g.drawRect((int) position.getX(), (int) position.getY(), width, height);
-    }
-
     public int getWidth() {
-        return width;
+        return position.getWidth();
     }
 
     public int getHeight() {
-        return height;
+        return position.getHeight();
     }
 
     public int getX() {
@@ -81,9 +53,10 @@ public class Collider extends Component {
     }
 
     public void onEnterCollision(Collider c) {
-        Iterator<ComponentListener> it = this.onCollisionListeners.iterator();
-        while (it.hasNext()) {
-            it.next().onEvent(c);
-        }
+        this.getComponentManager().getScriptManager().fireEvent(new Event(this, null, c));
+    }
+
+    public Rectangle getHitbox() {
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 }

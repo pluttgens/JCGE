@@ -6,16 +6,19 @@
 package com.gamefactory.scripts;
 
 import com.gamefactory.game.Displayable;
+import com.gamefactory.utils.events.Event;
 
-public abstract class LoadingScript<T extends Displayable> extends AbstractScript<T> {
+/**
+ *
+ * @author scalpa
+ */
+public abstract class ListenerScript<T extends Displayable> extends AbstractScript<T> {
 
-    private boolean isConsumed = false;
-
-    public abstract void executeOnce();
+    public abstract void onEvent(Event e);
 
     @Override
-    public boolean isConsumed() {
-        return this.isConsumed;
+    public final boolean isConsumed() {
+        return false;
     }
 
 }

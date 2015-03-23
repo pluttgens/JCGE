@@ -6,9 +6,8 @@
 package com.gamefactory.scripts;
 
 import com.gamefactory.components.Position;
-import com.gamefactory.displayable.Component;
-import com.gamefactory.displayable.Script;
 import com.gamefactory.displayable.ComponentManager;
+import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.game.Game;
 import com.gamefactory.services.ServiceLocator;
 import java.awt.event.KeyEvent;
@@ -18,7 +17,7 @@ import java.awt.event.KeyListener;
  *
  * @author scalpa
  */
-public class PlayerInputHandler extends UpdateScript<Component> implements KeyListener {
+public class PlayerInputHandler extends UpdateScript<ComponentManager> implements KeyListener {
 
     private final static int NB_KEYS = Short.MAX_VALUE;
 
@@ -27,12 +26,9 @@ public class PlayerInputHandler extends UpdateScript<Component> implements KeyLi
 
 
     @Override
-    public void init(Component c) {
-        super.init(c);
+    public void init(ScriptManager script) {
+        super.init(script);
         this.keys = new boolean[NB_KEYS];
-        this.position = (Position) owner.getComponentManager().getComponent(Position.class);
-        this.position.setX(Game.WIDTH / 2 - 20);
-        this.position.setY(Game.HEIGHT / 2 - 20);
         ServiceLocator.getGameWindow().getFrame().addKeyListener(this);
         ServiceLocator.getGameWindow().getCanvas().addKeyListener(this);
     }
@@ -40,6 +36,15 @@ public class PlayerInputHandler extends UpdateScript<Component> implements KeyLi
     private boolean isDirectionalArrow(int key) {
         return (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_DOWN || key == KeyEvent.VK_UP);
     }
+
+    @Override
+    public void load() {
+        this.position = (Position) owner.getOwner().getComponent(Position.class);
+        this.position.setX(Game.WIDTH / 2 - 20);
+        this.position.setY(Game.HEIGHT / 2 - 20);
+    }
+    
+    
 
     private void resetDirectionalArrow() {
         this.keys[KeyEvent.VK_LEFT] = false;

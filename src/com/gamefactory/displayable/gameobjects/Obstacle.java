@@ -9,6 +9,8 @@ import com.gamefactory.components.Collider;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.GameObject;
+import com.gamefactory.displayable.Scene;
+import com.gamefactory.scripts.ObstacleScript;
 
 /**
  *
@@ -16,14 +18,11 @@ import com.gamefactory.displayable.GameObject;
  */
 public class Obstacle extends GameObject {
 
-    public Obstacle() {
-        super();
-    }
-
     @Override
-    public void load() {
-        this.componentManager.init(new Position(), new Renderer(), new Collider());
-    }
-   
+    public void init(Scene owner) {
+        super.init(owner);
+        this.componentManager.add(new Position(), new Renderer(), new Collider());
+         this.getScriptManager().add(new ObstacleScript());
+    }   
     
 }

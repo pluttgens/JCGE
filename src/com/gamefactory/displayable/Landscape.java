@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gamefactory.game.Displayable;
-import com.gamefactory.graphicengine.Coord2D;
 import com.gamefactory.graphicengine.Tile;
-import com.gamefactory.graphicengine.TileSheet;
-import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Arrays;
 
 /**
  * Un landscape représente le décor d'une scène.
@@ -23,7 +21,6 @@ import java.awt.Rectangle;
 public class Landscape implements Displayable<Scene> {
 
     private Scene owner;
-    
     private int width;
     private int height;
 
@@ -31,15 +28,19 @@ public class Landscape implements Displayable<Scene> {
 
     private List<Tile> tiles;
 
+    public Landscape() {        
+        this.renderedArea = new Rectangle();
+        this.tiles = new ArrayList<>();
+    }
+    
+
     @Override
     public void init(Scene owner) {
         this.owner = owner;
-        this.tiles = new ArrayList<>();
+        this.width = 4000;
+        this.height = 4000;
         
     }
-
-
-    
 
     public List<Tile> getTiles() {
         return tiles;
@@ -64,13 +65,22 @@ public class Landscape implements Displayable<Scene> {
 
     @Override
     public void load() {
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Point(200,200)));
-
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Point(232, 200)));
-
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Point(200, 232)));
-
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Point(232, 232)));
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Rectangle getRenderedArea() {
+        return renderedArea;
+    }
+
+    public void addTiles(Tile ... tiles) {
+        this.tiles.addAll(Arrays.asList(tiles));
+    }
+    
 }

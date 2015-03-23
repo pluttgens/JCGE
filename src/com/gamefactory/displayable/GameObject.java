@@ -4,9 +4,6 @@ import com.gamefactory.game.Displayable;
 import com.gamefactory.utils.events.Notifier;
 
 import java.awt.Graphics;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Superclass représentant tous les objets du jeu.
@@ -42,14 +39,14 @@ public abstract class GameObject implements Displayable<Scene> {
     protected Scene owner;
 
     public GameObject() {
-        this.componentManager = new ComponentManager(this);
+        this.componentManager = new ComponentManager();
         this.isActive = true;
         this.id = this.getClass().getSimpleName().toUpperCase();;
         this.notifier = new Notifier(this);
     }
 
     protected GameObject(String id) {
-        this.componentManager = new ComponentManager(this);
+        this.componentManager = new ComponentManager();
         this.isActive = true;
         this.id = id.toUpperCase();
         this.notifier = new Notifier(this);
@@ -104,14 +101,14 @@ public abstract class GameObject implements Displayable<Scene> {
     @Override
     public void init(Scene owner) {
         this.owner = owner;
+        this.componentManager.init(this);
     }
 
     @Override
     public void load() {
-        
+        this.componentManager.load();
     }
-    
-    
+
     /**
      * Vérifie que le GameObject est actif avant de procéder à l'update.
      *
@@ -157,13 +154,7 @@ public abstract class GameObject implements Displayable<Scene> {
      * @param g
      */
     protected void renderObject(Graphics g) {
-        Component renderer = componentManager.getComponent("Renderer");
-        try {
-            renderer.getClass().getMethod("render", Graphics.class).invoke(renderer, g);
-
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        componentManager.render(g);
     }
 
     /**
@@ -186,6 +177,10 @@ public abstract class GameObject implements Displayable<Scene> {
 
     public boolean isInCameraField() {
         return true;
+    }
+
+    public ScriptManager<ComponentManager> getScriptManager() {
+        return this.componentManager.getScriptManager();
     }
 
 }

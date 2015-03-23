@@ -5,10 +5,14 @@
  */
 package com.gamefactory.displayable;
 
-import com.gamefactory.callbacks.game.Callbacks;
+import com.gamefactory.game.Displayable;
 
-public interface Script extends Callbacks<ScriptManager> {
-    
-    
-    boolean isConsumed();
+/**
+ *
+ * @author scalpa
+ */
+public interface Manager<T extends Displayable, U> extends Displayable<T> {
+
+    void add(U... u);
+
 }

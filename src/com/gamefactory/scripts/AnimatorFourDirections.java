@@ -11,6 +11,7 @@ import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.Script;
+import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.services.ServiceLocator;
 
 import java.awt.Image;
@@ -37,8 +38,28 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
     private Renderer renderer;
 
     @Override
-    public void init(ComponentManager cm) {
+    public void init(ScriptManager owner) {
         super.init(owner);
+        this.animationsDown = new ArrayList<>();
+        this.animationsLeft = new ArrayList<>();
+        this.animationsRight = new ArrayList<>();
+        this.animationsUp = new ArrayList<>();
+        
+        loadAnimations();
+    }
+
+    
+
+    
+    @Override
+    public void load() {
+        this.currentPosition = (Position) this.owner.getOwner().getComponent(Position.class);
+        this.renderer = (Renderer) this.owner.getOwner().getComponent(Renderer.class);
+        this.previousPosition = this.currentPosition.deepClone();
+        BufferedImage image = this.animationsDown.get(1);
+        this.currentPosition.setHeight(image.getHeight());
+        this.currentPosition.setWidth(image.getWidth());
+        this.renderer.setImage(image);
     }
     
     
@@ -91,8 +112,8 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
 
     @Override
     public void execute() {
-        if (this.previousPosition.distanceWith(this.owner) > 3) {
-            Position.Orientation orientation = this.owner.getOrientation();
+        if (this.previousPosition.distanceWith(this.currentPosition) > 3) {
+            Position.Orientation orientation = this.currentPosition.getOrientation();
             BufferedImage current = this.renderer.getImage();
             switch (orientation) {
                 case DOWN:
@@ -108,7 +129,7 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
                     this.renderer.setImage(getNextImage(current, this.animationsRight));
                     break;
             }
-            this.previousPosition = this.owner.deepClone();
+            this.previousPosition = this.currentPosition.deepClone();
         }
     }
 
