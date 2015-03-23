@@ -32,19 +32,12 @@ public class Camera implements Displayable<Scene> {
     private int y;
     private Timer timer;
 
-    public Camera() {
-    }
-
-    
-    
     @Override
     public void init(Scene owner) {
         this.owner = owner;
         this.timer = new Timer();
     }
 
-    
-    
     @Override
     public void load() {
         this.x = 0;
@@ -54,11 +47,7 @@ public class Camera implements Displayable<Scene> {
 
     @Override
     public void update() {
-        if (timer.getElapsedTime(TimeUnit.SECONDS) >= 2) {
-            this.x -= 50;
-            this.owner.getLandscape().setRenderedArea(new Rectangle(new Point(x, y), new Dimension(Game.WIDTH, Game.HEIGHT)));
-            timer.resetTimer();
-        }
+        this.owner.getLandscape().setRenderedArea(new Rectangle(new Point(x, y), new Dimension(Game.WIDTH, Game.HEIGHT)));
     }
 
     @Override
@@ -90,6 +79,4 @@ public class Camera implements Displayable<Scene> {
         this.owner = owner;
     }
 
-    
-    
 }

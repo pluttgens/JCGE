@@ -29,8 +29,8 @@ public class GameObjectCameraScript extends UpdateScript<ComponentManager> {
 
     @Override
     public void execute() {
-        c.setX((int) (focus.getX() - (Game.HEIGHT / 2)));
-        c.setY((int) (focus.getY() - (Game.WIDTH / 2)));
+        c.setX((int) (focus.getX() - (Game.WIDTH / 2)));
+        c.setY((int) (focus.getY() - (Game.HEIGHT / 2)));
     }
 
 }
