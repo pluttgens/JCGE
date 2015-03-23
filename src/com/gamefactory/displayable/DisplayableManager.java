@@ -7,13 +7,18 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DisplayableManager implements Manager<Displayable, Scene> {
+public abstract class DisplayableManager implements Manager<Displayable, Scene> {
 
-    private DisplayableManager owner = null;
+    private Displayable owner = null;
 
     private List<Scene> cachedScenes;
 
     private List<Scene> activeScenes;
+
+    public DisplayableManager() {
+        this.cachedScenes = new LinkedList<>();
+        this.activeScenes = new ArrayList<>();
+    }
 
     @Override
     public void load() {
@@ -43,12 +48,12 @@ public class DisplayableManager implements Manager<Displayable, Scene> {
     }
 
     @Override
-    public void init(Displayable t) {
+    public void init(Displayable owner) {
         this.owner = owner;
-        this.cachedScenes = new LinkedList<>();
-        this.activeScenes = new ArrayList<>();
-        activeScenes.add(new Scene());
+        this.init();
         this.activeScenes.stream().forEach(s -> s.init(this));
     }
+
+    protected abstract void init();
 
 }

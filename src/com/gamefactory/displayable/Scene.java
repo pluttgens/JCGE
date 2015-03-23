@@ -1,21 +1,13 @@
 package com.gamefactory.displayable;
 
-import com.gamefactory.callbacks.Initiable;
-import com.gamefactory.callbacks.Loadable;
-import com.gamefactory.displayable.gameobjects.Hero;
-import com.gamefactory.displayable.gameobjects.Obstacle;
-import com.gamefactory.displayable.gameobjects.Treasure;
 import com.gamefactory.game.Displayable;
 import com.gamefactory.scripts.InitialPosition;
-import com.gamefactory.scripts.LoadingScript;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  *
@@ -26,39 +18,32 @@ import java.util.function.Consumer;
  *
  * @since 1.0
  */
-public class Scene implements Displayable<DisplayableManager> {
+public abstract class Scene implements Displayable<DisplayableManager> {
 
     private DisplayableManager owner;
-    private Map<String, GameObject> gameObjects = new HashMap<>();
-    private Landscape Landscape = new Landscape();
+    private Map<String, GameObject> gameObjects;
+    private Landscape Landscape;
     private Camera camera;
     private ScriptManager<Scene> scriptManager;
 
     public Scene() {
+        this.camera = new Camera();
+        this.Landscape = new Landscape();
+        this.gameObjects = new HashMap<>();
+        this.scriptManager = new ScriptManager<>();       
+
     }
 
     @Override
     public void init(DisplayableManager owner) {
-        this.camera = new Camera();
-        this.scriptManager = new ScriptManager<>();
-
-        GameObject hero = new Hero();
-        Treasure treasure = new Treasure();
-        Obstacle obstacle = new Obstacle();
-
-        gameObjects.put(hero.id, hero);
-        gameObjects.put(treasure.id, treasure);
-        gameObjects.put(obstacle.id, obstacle);
-
         this.scriptManager.init(this);
-        this.scriptManager.add(new InitialPosition());
-        
         this.Landscape.init(this);
         this.camera.init(this);
-        
+        this.init();
         this.gameObjects.values().stream().forEach(go -> go.init(this));
-
     }
+    
+    protected abstract void init();
 
     @Override
     public void load() {
@@ -71,7 +56,7 @@ public class Scene implements Displayable<DisplayableManager> {
     @Override
     public void update() {
         this.camera.update();
-        
+
         Iterator<GameObject> it = gameObjects.values().iterator();
         while (it.hasNext()) {
             GameObject next = it.next();
@@ -123,4 +108,11 @@ public class Scene implements Displayable<DisplayableManager> {
         return camera;
     }
 
+    public void addGameObject(String id, GameObject go) {
+        this.gameObjects.put(id, go);
+    }
+
+    public void addScript(Script... scripts) {
+        this.scriptManager.add(scripts);
+    }
 }
