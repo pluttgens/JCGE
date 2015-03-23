@@ -36,7 +36,7 @@ public class Renderer extends Component {
 
     public void render(Graphics g) {
         if (isActived) {
-            g.drawImage(image, (int) position.getX(), (int) position.getY(), null);
+            g.drawImage(image, (int) position.getX() - this.owner.getScene().getCamera().getX(), (int) position.getY() - this.owner.getScene().getCamera().getY(), null);
         }
     }
 

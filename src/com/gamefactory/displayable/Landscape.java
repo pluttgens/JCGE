@@ -36,11 +36,10 @@ public class Landscape implements Displayable<Scene> {
         this.owner = owner;
         this.renderedArea = new Rectangle();
         this.tiles = new ArrayList<>();
-        
+        this.width = 4000;
+        this.height = 4000;
     }
-
-
-    
+  
 
     public List<Tile> getTiles() {
         return tiles;
@@ -74,4 +73,18 @@ public class Landscape implements Displayable<Scene> {
         tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Point(232, 232)));
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Rectangle getRenderedArea() {
+        return renderedArea;
+    }
+
+    
+    
 }
