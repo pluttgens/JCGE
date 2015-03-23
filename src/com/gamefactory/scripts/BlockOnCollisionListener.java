@@ -21,6 +21,7 @@ public class BlockOnCollisionListener extends ListenerScript<ComponentManager> {
 
     @Override
     public void onEvent(Event event) {
+        System.out.println("collision");
         position.setxVelocity(0);
         position.setyVelocity(0);
     }   
