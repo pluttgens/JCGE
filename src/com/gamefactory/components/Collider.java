@@ -35,21 +35,16 @@ public class Collider extends Component {
 
     @Override
     public void update() {
-        //ArrayList<GameObject> gameObjects = owner.getScene().getGameObjects();
         Iterator<GameObject> it = this.owner.getScene().iterateOverGO();
         while (it.hasNext()) {
             GameObject go = it.next();
-            if (go.getComponentManager().checkForComponent("Collider") /*
-                     * &&
-                     * (this.owner.getGameObject().getId().equals(cm.getGameObject().getId()))
-                     */) {
+            if (go.getComponentManager().checkForComponent("Collider") ) {
                 Collider col2 = (Collider) it.next().getComponentManager().getComponent("Collider");
                 if (this.getX() < col2.getX() + col2.getWidth()
                         && this.getX() + this.getWidth() > col2.getX()
                         && this.getY() < col2.getY() + col2.getHeight()
                         && this.getHeight() + this.getY() > col2.getY()) {
                     onEnterCollision(col2);
-                    col2.onEnterCollision(this);
                 }
             }
         }
