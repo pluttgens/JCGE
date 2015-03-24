@@ -39,6 +39,10 @@ public class InitialPosition extends LoadingScript<Scene> {
         Position p1 = (Position) this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("OBSTACLE")).findFirst().get().getComponentManager().getComponent(Position.class);
         p1.setX(300);
         p1.setY(300);
+        
+        Position p2 = (Position) this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("SPEEDPOTION")).findFirst().get().getComponentManager().getComponent(Position.class);
+        p2.setX(350);
+        p2.setY(350);
     }
 
 }
