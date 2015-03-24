@@ -26,8 +26,11 @@ public class Collider extends Component {
         Iterator<GameObject> it = this.owner.getScene().iterateOverGO();
         while (it.hasNext()) {
             GameObject go = it.next();
+            String s1 = go.getId();
+            String s2 = this.owner.getOwner().getId();
+            if(s2.equals(s1)) break;
             if (go.getComponentManager().checkForComponent(Collider.class)) {
-                Collider col2 = (Collider) it.next().getComponentManager().getComponent(Collider.class);
+                Collider col2 = (Collider) go.getComponentManager().getComponent(Collider.class);
                 if (this.getHitbox().intersects(col2.getHitbox())) {
                     onEnterCollision(col2);
                 }
