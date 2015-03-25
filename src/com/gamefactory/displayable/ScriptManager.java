@@ -17,7 +17,7 @@ public final class ScriptManager<T extends Displayable> implements Manager<T, Sc
 
     private List<LoadingScript> scriptsLoad;
 
-    private  List<ListenerScript> scriptsList;
+    private List<ListenerScript> scriptsList;
 
     @Override
     public void init(T owner) {
@@ -25,8 +25,7 @@ public final class ScriptManager<T extends Displayable> implements Manager<T, Sc
         this.scriptsUpdat = new ArrayList<>();
         this.scriptsLoad = new ArrayList<>();
         this.scriptsList = new ArrayList<>();
-        
-        
+
     }
 
     @Override
@@ -58,7 +57,7 @@ public final class ScriptManager<T extends Displayable> implements Manager<T, Sc
                 this.scriptsUpdat.add((UpdateScript) s);
             } else if (s instanceof LoadingScript) {
                 this.scriptsLoad.add((LoadingScript) s);
-            } else if (s instanceof ListenerScript){
+            } else if (s instanceof ListenerScript) {
                 this.scriptsList.add((ListenerScript) s);
             }
         }
@@ -70,8 +69,12 @@ public final class ScriptManager<T extends Displayable> implements Manager<T, Sc
     @Override
     public void render(Graphics g) {
     }
-    
+
     public void fireEvent(Event e) {
-        this.scriptsList.stream().forEach(s -> s.onEvent(e));
+        this.scriptsList.stream().forEach(s -> {
+            if (!e.isConsumed()) {
+                s.onEvent(e);
+            }
+        });
     }
 }

@@ -23,6 +23,7 @@ public class BlockOnCollisionListener extends ListenerScript<ComponentManager> {
 
     @Override
     public void onEvent(Event event) {
+        
         Collider c = (Collider)event.getMessage();
         int cH = c.getHeight();
         int cW = c.getWidth();
