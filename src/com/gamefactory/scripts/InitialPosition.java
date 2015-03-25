@@ -8,7 +8,6 @@ package com.gamefactory.scripts;
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.game.Game;
-import static java.util.concurrent.ThreadLocalRandom.current;
 
 /**
  *

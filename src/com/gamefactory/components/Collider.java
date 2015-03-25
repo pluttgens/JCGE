@@ -8,6 +8,8 @@ import java.util.Iterator;
 
 public class Collider extends Component {
 
+    public final static String COLLISION_EVENT  = "COLLISION_EVENT";
+    
     /**
      * Position du GameObject
      */
@@ -55,7 +57,7 @@ public class Collider extends Component {
     }
 
     public void onEnterCollision(Collider c) {
-        this.getComponentManager().getScriptManager().fireEvent(new Event(this, null, c));
+        this.getComponentManager().getScriptManager().fireEvent(new Event(this, COLLISION_EVENT, c));
     }
 
     public Rectangle getHitbox() {

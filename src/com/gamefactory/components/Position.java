@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 /**
  * Component permettant de gérer la position d'une unité et ses déplacements
@@ -98,7 +99,7 @@ public class Position extends Component {
      * @return
      */
     public Integer getxVelocity() {
-        return xVelocity.values().stream().reduce(Integer::sum).get();
+        return xVelocity.values().stream().reduce(Integer::sum).orElseGet(() -> 0);
     }
 
     /**
@@ -118,9 +119,11 @@ public class Position extends Component {
 
     public void addxVelocity(String key, Integer velocity, Integer time) {
         xVelocity.put(key, velocity);
-        ses.schedule(() -> {
-            xVelocity.remove(key);
-        }, time, TimeUnit.SECONDS);
+        if (time != null) {
+            ses.schedule(() -> {
+                xVelocity.remove(key);
+            }, time, TimeUnit.SECONDS);
+        }
     }
 
     /**
@@ -130,7 +133,7 @@ public class Position extends Component {
      * @return
      */
     public Integer getyVelocity() {
-        return yVelocity.values().stream().reduce(Integer::sum).get();
+        return yVelocity.values().stream().reduce(Integer::sum).orElseGet(() -> 0);
     }
 
     /**
@@ -150,9 +153,11 @@ public class Position extends Component {
 
     public void addyVelocity(String key, Integer velocity, Integer time) {
         yVelocity.put(key, velocity);
-        ses.schedule(() -> {
-            yVelocity.remove(key);
-        }, time, TimeUnit.SECONDS);
+        if (time != null) {
+            ses.schedule(() -> {
+                yVelocity.remove(key);
+            }, time, TimeUnit.SECONDS);
+        }
     }
 
     /**
