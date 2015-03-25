@@ -1,7 +1,7 @@
 package com.gamefactory.components;
 
 import com.gamefactory.displayable.Component;
-import com.gamefactory.game.Game;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -30,8 +30,8 @@ public class Position extends Component {
     private float x;
     private float y;
 
-    private float xVelocity;
-    private float yVelocity;
+    private ArrayList<Integer> xVelocity;
+    private ArrayList<Integer> yVelocity;
 
     private Orientation orientation;
 
@@ -41,8 +41,8 @@ public class Position extends Component {
     public Position() {
         this.x = 0;
         this.y = 520;
-        this.xVelocity = 0;
-        this.yVelocity = 0;
+        this.xVelocity = new ArrayList<Integer>();
+        this.yVelocity = new ArrayList<Integer>();
         this.height = 0;
         this.width = 0;
         this.orientation = Orientation.DOWN;
@@ -90,8 +90,8 @@ public class Position extends Component {
      *
      * @return
      */
-    public float getxVelocity() {
-        return xVelocity;
+    public Integer getxVelocity() {
+        return xVelocity.stream().reduce(Integer::sum).get();
     }
 
     /**
@@ -100,7 +100,7 @@ public class Position extends Component {
      *
      * @param xVelocity
      */
-    public void setxVelocity(float xVelocity) {
+    public void setxVelocity(ArrayList<Integer> xVelocity) {
         this.xVelocity = xVelocity;
     }
 
@@ -110,8 +110,8 @@ public class Position extends Component {
      *
      * @return
      */
-    public float getyVelocity() {
-        return yVelocity;
+    public Integer getyVelocity() {
+        return yVelocity.stream().reduce(Integer::sum).get();
     }
 
     /**
@@ -120,7 +120,7 @@ public class Position extends Component {
      *
      * @param yVelocity
      */
-    public void setyVelocity(float yVelocity) {
+    public void setyVelocity(ArrayList<Integer> yVelocity) {
         this.yVelocity = yVelocity;
     }
 
