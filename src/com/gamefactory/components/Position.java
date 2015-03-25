@@ -2,7 +2,12 @@ package com.gamefactory.components;
 
 import com.gamefactory.displayable.Component;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Component permettant de gérer la position d'une unité et ses déplacements
@@ -30,8 +35,10 @@ public class Position extends Component {
     private float x;
     private float y;
 
-    private ArrayList<Integer> xVelocity;
-    private ArrayList<Integer> yVelocity;
+    private HashMap<String, Integer> xVelocity;
+    private HashMap<String, Integer> yVelocity;
+
+    private ScheduledExecutorService ses = Executors.newScheduledThreadPool(10);
 
     private Orientation orientation;
 
@@ -41,8 +48,8 @@ public class Position extends Component {
     public Position() {
         this.x = 0;
         this.y = 520;
-        this.xVelocity = new ArrayList<Integer>();
-        this.yVelocity = new ArrayList<Integer>();
+        this.xVelocity = new HashMap<>();
+        this.yVelocity = new HashMap<>();
         this.height = 0;
         this.width = 0;
         this.orientation = Orientation.DOWN;
@@ -91,7 +98,7 @@ public class Position extends Component {
      * @return
      */
     public Integer getxVelocity() {
-        return xVelocity.stream().reduce(Integer::sum).get();
+        return xVelocity.values().stream().reduce(Integer::sum).get();
     }
 
     /**
@@ -100,8 +107,20 @@ public class Position extends Component {
      *
      * @param xVelocity
      */
-    public void setxVelocity(ArrayList<Integer> xVelocity) {
+    public void setxVelocity(HashMap<String, Integer> xVelocity) {
         this.xVelocity = xVelocity;
+    }
+
+    public void setxVelocity(String key, Integer xVelocity) {
+        this.xVelocity.clear();
+        this.xVelocity.put(key, xVelocity);
+    }
+
+    public void addxVelocity(String key, Integer velocity, Integer time) {
+        xVelocity.put(key, velocity);
+        ses.schedule(() -> {
+            xVelocity.remove(key);
+        }, time, TimeUnit.SECONDS);
     }
 
     /**
@@ -111,7 +130,7 @@ public class Position extends Component {
      * @return
      */
     public Integer getyVelocity() {
-        return yVelocity.stream().reduce(Integer::sum).get();
+        return yVelocity.values().stream().reduce(Integer::sum).get();
     }
 
     /**
@@ -120,8 +139,20 @@ public class Position extends Component {
      *
      * @param yVelocity
      */
-    public void setyVelocity(ArrayList<Integer> yVelocity) {
+    public void setyVelocity(HashMap<String, Integer> yVelocity) {
         this.yVelocity = yVelocity;
+    }
+
+    public void setyVelocity(String key, Integer yVelocity) {
+        this.yVelocity.clear();
+        this.yVelocity.put(key, yVelocity);
+    }
+
+    public void addyVelocity(String key, Integer velocity, Integer time) {
+        yVelocity.put(key, velocity);
+        ses.schedule(() -> {
+            yVelocity.remove(key);
+        }, time, TimeUnit.SECONDS);
     }
 
     /**
@@ -184,8 +215,8 @@ public class Position extends Component {
 
     @Override
     public void update() {
-        this.x += (this.x + this.xVelocity > 0 && this.x + this.xVelocity < this.owner.getScene().getLandscape().getWidth() - this.width) ? this.xVelocity : 0;
-        this.y += (this.y + this.yVelocity > 0 && this.y + this.yVelocity < this.owner.getScene().getLandscape().getHeight() - this.height - Position.WINDOW_BORDER_SIZE) ? this.yVelocity : 0;
+        this.x += (this.x + this.getxVelocity() > 0 && this.x + this.getxVelocity() < this.owner.getScene().getLandscape().getWidth() - this.width) ? this.getxVelocity() : 0;
+        this.y += (this.y + this.getyVelocity() > 0 && this.y + this.getyVelocity() < this.owner.getScene().getLandscape().getHeight() - this.height - Position.WINDOW_BORDER_SIZE) ? this.getyVelocity() : 0;
     }
 
     @Override
@@ -210,8 +241,8 @@ public class Position extends Component {
         int hash = 5;
         hash = 43 * hash + Float.floatToIntBits(this.x);
         hash = 43 * hash + Float.floatToIntBits(this.y);
-        hash = 43 * hash + Float.floatToIntBits(this.xVelocity);
-        hash = 43 * hash + Float.floatToIntBits(this.yVelocity);
+        hash = 43 * hash + (this.getxVelocity());
+        hash = 43 * hash + (this.getyVelocity());
         hash = 43 * hash + Objects.hashCode(this.orientation);
         hash = 43 * hash + this.height;
         hash = 43 * hash + this.width;
@@ -233,10 +264,10 @@ public class Position extends Component {
         if (Float.floatToIntBits(this.y) != Float.floatToIntBits(other.y)) {
             return false;
         }
-        if (Float.floatToIntBits(this.xVelocity) != Float.floatToIntBits(other.xVelocity)) {
+        if ((this.getxVelocity()) != Float.floatToIntBits(other.getxVelocity())) {
             return false;
         }
-        if (Float.floatToIntBits(this.yVelocity) != Float.floatToIntBits(other.yVelocity)) {
+        if ((this.getyVelocity()) != Float.floatToIntBits(other.getyVelocity())) {
             return false;
         }
         if (this.orientation != other.orientation) {
