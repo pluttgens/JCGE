@@ -7,6 +7,9 @@ package com.gamefactory.scripts;
 
 import com.gamefactory.displayable.Landscape;
 import com.gamefactory.displayable.Scene;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -15,10 +18,15 @@ import com.gamefactory.displayable.Scene;
 public class LandscapeHorizontalScript extends LoadingScript<Scene> {
     
     private Landscape landscapeHorizontal;
+    private BufferedImage image;
     
     @Override
     public void executeOnce() {
-        
+        try {
+            image = ImageIO.read(new File("landscapeHorizontal.png"));
+        } catch (Exception e) {
+            System.out.println("e");
+        }
     }
     
     @Override

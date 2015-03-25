@@ -6,12 +6,9 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
-import com.gamefactory.graphicengine.Tile;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -20,24 +17,54 @@ import java.util.List;
 public class LandscapeHorizontal implements Displayable<Scene> {
     
     private Scene owner;
+    private BufferedImage image;
     private int width;
     private int height;
+    private int x;
+    private int y;
 
     private Rectangle renderedArea;
 
-    private ;
-
-    public LandscapeHorizontal() {        
-        this.renderedArea = new Rectangle();
+    public LandscapeHorizontal() {
+        
     }
     
+    public void draw(Graphics window) {
+        window.drawImage(image, getX(), getY(), image.getWidth(), image.getHeight(), null);
+ 
+        // Move the x position left for next time
+        this.x -= 5;
+ 
+        // Check to see if the image has gone off stage left
+        if (this.x <= -1 * image.getWidth()) {
+ 
+            // If it has, line it back up so that its left edge is
+            // lined up to the right side of the other background image
+            this.x = this.x + image.getWidth() * 2;
+        }
+    }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+    
+    public int getX() {
+        return this.x;
+    }
+    
+    public int getY() {
+        return this.y;
+    }
+    
+    public int getImageWidth() {
+        return image.getWidth();
+    }
+    
     @Override
     public void init(Scene owner) {
         this.owner = owner;
         this.width = 4000;
         this.height = 4000;
-        
     }
 
     @Override
