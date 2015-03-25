@@ -77,34 +77,34 @@ public class PlayerInputHandler extends UpdateScript<ComponentManager> implement
     public void execute() {
         if (this.keys[KeyEvent.VK_LEFT]) {
             position.setOrientation(Position.Orientation.LEFT);
-            position.setxVelocity(-1f);
+            position.addxVelocity(VELOCITY_KEY, -1, null);
         } else {
             if (position.getxVelocity() < 0) {
-                position.setxVelocity(0);
+                position.addxVelocity(VELOCITY_KEY, 0, null);
             }
         }
         if (this.keys[KeyEvent.VK_RIGHT]) {
             position.setOrientation(Position.Orientation.RIGHT);
-            position.setxVelocity(1f);
+            position.addxVelocity(VELOCITY_KEY, 1, null);
         } else {
             if (position.getxVelocity() > 0) {
-                position.setxVelocity(0);
+                position.addxVelocity(VELOCITY_KEY, 0, null);
             }
         }
         if (this.keys[KeyEvent.VK_UP]) {
             position.setOrientation(Position.Orientation.UP);
-            position.setyVelocity(-1f);
+            position.addyVelocity(VELOCITY_KEY, -1, null);
         } else {
             if (position.getyVelocity() < 0) {
-                position.setyVelocity(0);
+                position.addyVelocity(VELOCITY_KEY, 0, null);
             }
         }
         if (this.keys[KeyEvent.VK_DOWN]) {
             position.setOrientation(Position.Orientation.DOWN);
-            position.setyVelocity(1f);
+            position.addyVelocity(VELOCITY_KEY, 1, null);
         } else {
             if (position.getyVelocity() > 0) {
-                position.setyVelocity(0);
+                position.addyVelocity(VELOCITY_KEY, 0, null);
             }
         }
     }

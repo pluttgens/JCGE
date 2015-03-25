@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
  */
 public class SpeedPotionScript extends UpdateScript<ComponentManager> {
     
+    private final static String VELOCITY_KEY = SpeedPotionScript.class.getSimpleName();
     private Position hero;
     private Position speedPotion;
     private Renderer renderer;
@@ -47,8 +48,8 @@ public class SpeedPotionScript extends UpdateScript<ComponentManager> {
     public void execute() {
         if (hero.distanceWith(speedPotion) < 10) {
             renderer.disable();
-            hero.setxVelocity(1000);
-            hero.setyVelocity(1000);
+            hero.addxVelocity(VELOCITY_KEY, 50, 5);
+            hero.addyVelocity(VELOCITY_KEY, 50, 5);
         }
     }
     

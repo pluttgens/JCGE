@@ -5,7 +5,6 @@
  */
 package com.gamefactory.scripts;
 
-import com.gamefactory.displayable.Scene;
 import com.gamefactory.displayable.Script;
 
 /**
