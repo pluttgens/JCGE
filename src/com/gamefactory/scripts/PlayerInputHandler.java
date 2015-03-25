@@ -20,7 +20,8 @@ import java.awt.event.KeyListener;
 public class PlayerInputHandler extends UpdateScript<ComponentManager> implements KeyListener {
 
     private final static int NB_KEYS = Short.MAX_VALUE;
-
+    private final static String VELOCITY_KEY = PlayerInputHandler.class.getSimpleName();
+    
     private Position position;
     private boolean[] keys;
 
