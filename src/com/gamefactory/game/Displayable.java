@@ -1,5 +1,6 @@
 package com.gamefactory.game;
 
+import com.gamefactory.callbacks.game.Callbacks;
 import java.awt.Graphics;
 
 /**
@@ -12,9 +13,7 @@ import java.awt.Graphics;
  * 
  * @since 1.0
  */
-public interface Displayable {
-    
-    void init();
+public interface Displayable<T extends Displayable> extends Callbacks<T> {
     
     void update();
 

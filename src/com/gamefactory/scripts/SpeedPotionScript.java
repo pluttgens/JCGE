@@ -15,39 +15,42 @@ import java.awt.image.BufferedImage;
 
 /**
  *
- * @author scalpa
+ * @author ngo
  */
-public class PlayerFindTreasureScript extends UpdateScript<ComponentManager> {
-
+public class SpeedPotionScript extends UpdateScript<ComponentManager> {
+    
+    private final static String VELOCITY_KEY = SpeedPotionScript.class.getSimpleName();
     private Position hero;
-    private Position tresure;
+    private Position speedPotion;
     private Renderer renderer;
     private BufferedImage image;
-
-    public PlayerFindTreasureScript() {
-
+    
+    public SpeedPotionScript() {
+    
     }
-
+    
     @Override
     public void init(ScriptManager script) {
         super.init(script);
-        this.image = ((ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "treasure.png")).getBufferedImage();
+        this.image = ((ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "SpeedPotion.png")).getBufferedImage();
     }
-
+    
     @Override
     public void load() {
         this.hero = (Position) this.owner.getOwner().getComponentFromGO("HERO", Position.class);
-        this.tresure = (Position) this.owner.getOwner().getComponent(Position.class);
+        this.speedPotion = (Position) this.owner.getOwner().getComponent(Position.class);
         this.renderer = (Renderer) this.owner.getOwner().getComponent(Renderer.class);
-        this.renderer.disable();
+        this.renderer.setImage(image);
+        this.renderer.enable();
     }
-
+    
     @Override
     public void execute() {
-        if (hero.distanceWith(tresure) < 10) {
-            renderer.setImage(image);
-            renderer.enable();
+        if (hero.distanceWith(speedPotion) < 10) {
+            renderer.disable();
+            hero.addxVelocityModifiers(VELOCITY_KEY, 50, 5);
+            hero.addyVelocityModifiers(VELOCITY_KEY, 50, 5);
         }
     }
-
+    
 }

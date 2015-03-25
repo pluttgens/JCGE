@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.displayable;
+package com.gamefactory.network;
 
-import com.gamefactory.callbacks.game.Callbacks;
-
-public interface Script extends Callbacks<ScriptManager> {
+/**
+ *
+ * @author ngo
+ */
+public class Player {
     
-    
-    boolean isConsumed();
 }

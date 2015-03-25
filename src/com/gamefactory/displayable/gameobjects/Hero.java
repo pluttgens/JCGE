@@ -1,20 +1,23 @@
 package com.gamefactory.displayable.gameobjects;
 
+import com.gamefactory.components.Collider;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
-import com.gamefactory.scripts.PlayerInputHandler;
 import com.gamefactory.displayable.GameObject;
+import com.gamefactory.displayable.Scene;
 import com.gamefactory.scripts.AnimatorFourDirections;
+import com.gamefactory.scripts.BlockOnCollisionListener;
+import com.gamefactory.scripts.GameObjectCameraScript;
+import com.gamefactory.scripts.PlayerInputHandler;
 
 public class Hero extends GameObject {
 
-    public Hero() {
-        super();
-    }
-
     @Override
-    public void init() {
-        componentManager.init(new Position(), new Renderer(), new AnimatorFourDirections(), new PlayerInputHandler());
+    public void init(Scene owner) {
+        super.init(owner);
+        this.componentManager.add(new Position(), new Renderer(), new Collider());
+        this.getScriptManager().add(new AnimatorFourDirections(), new PlayerInputHandler(), new GameObjectCameraScript(),new BlockOnCollisionListener());
     }
 
+  
 }

@@ -5,10 +5,11 @@
  */
 package com.gamefactory.displayable;
 
+import com.gamefactory.callbacks.game.Callbacks;
 import com.gamefactory.utils.events.Notifier;
-import com.gamefactory.utils.events.Observer;
-import com.gamefactory.utils.events.Subject;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Un component encapsule une fonctionalitÃ© d'un game object.
@@ -19,23 +20,30 @@ import java.util.Comparator;
  *
  * @since 1.0
  */
-public abstract class Component /**implements Observer, Subject **/{
+public abstract class Component implements Callbacks<ComponentManager>/**
+ * implements Observer, Subject *
+ */
+{
 
     protected ComponentManager owner;
 
     private final Notifier notifier;
 
+    private final List<Listener<Component, Void>> listeners;
+
     public Component() {
         this.notifier = new Notifier(this);
+        this.listeners = new ArrayList<>();
     }
 
-    /**
-     * Initialise le component encapsulant 
-     * une fonctionnalité d'un game object
-     * @param owner
-     */
-    public void init(ComponentManager owner) {
-        this.owner = owner;
+    @Override
+    public final void init(ComponentManager cm) {
+        this.owner = cm;
+    }
+
+    @Override
+    public void load() {
+
     }
 
     public void update() {
@@ -84,6 +92,10 @@ public abstract class Component /**implements Observer, Subject **/{
     //@Override
     public Notifier getNotifier() {
         return this.notifier;
+    }
+
+    public ComponentManager getComponentManager() {
+        return this.owner;
     }
 
 }

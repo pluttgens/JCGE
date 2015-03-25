@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.displayable;
+package com.gamefactory.utils.builders;
 
 /**
  *
  * @author scalpa
  */
-public class GameObjectManager {
-    
+public class ArrayBuilder {
+    public static final <T> T[] asArray(T ... t) {
+        T[] ret = t;
+        return ret;
+    }
 }

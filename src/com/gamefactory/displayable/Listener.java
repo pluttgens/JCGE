@@ -7,8 +7,12 @@ package com.gamefactory.displayable;
 
 import com.gamefactory.callbacks.game.Callbacks;
 
-public interface Script extends Callbacks<ScriptManager> {
+/**
+ *
+ * @author scalpa
+ */
+public interface Listener<T, U> extends Callbacks<T> {
     
+    void onEvent(U u);
     
-    boolean isConsumed();
 }
