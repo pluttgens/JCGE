@@ -23,7 +23,7 @@ public class ObstacleScript extends LoadingScript<ComponentManager>{
     
     @Override
     public void executeOnce() {
-        BufferedImage image = ((ImageAsset)ServiceLocator.getAssetManager().getAsset("image","stone.png")).getBufferedImage();
+        BufferedImage image = ((ImageAsset)ServiceLocator.getAssetManager().getAsset("image","wall.png")).getBufferedImage();
         
         ren.setImage(image);
         Position p = (Position) this.owner.getOwner().getComponent(Position.class);
