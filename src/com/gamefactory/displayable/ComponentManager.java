@@ -1,8 +1,10 @@
 package com.gamefactory.displayable;
 
-import com.gamefactory.utils.events.Notifier;
-import com.gamefactory.utils.events.Subject;
+import com.gamefactory.components.Renderer;
+import java.awt.Graphics;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,16 +18,18 @@ import java.util.List;
  *
  * @since 1.0
  */
-public final class ComponentManager  {
+public final class ComponentManager implements Manager<GameObject, Component> {
 
-    private final GameObject owner;
-    private final List<Component> components;
-    private final List<Script> scripts;
+    private GameObject owner;
+    private List<Component> components;
+    private ScriptManager<ComponentManager> scriptManager;
 
-    public ComponentManager(GameObject owner) {
+    @Override
+    public void init(GameObject owner) {
         this.owner = owner;
         this.components = new ArrayList<>();
-        this.scripts = new ArrayList<>();
+        this.scriptManager = new ScriptManager<>();
+        this.scriptManager.init(this);
     }
 
     /**
@@ -33,45 +37,39 @@ public final class ComponentManager  {
      *
      * - Pascal Luttgens.
      *
-     * @param components Les components.
+     * @param components Les components
      *
      * @since 1.0
      */
-    public void init(Component... components) {
-        for (Component component : components) {
-            if (component instanceof Script) {
-                this.scripts.add((Script) component);
-            } else {
-                this.components.add(component);
-            }
-        }
+    @Override
+    public void add(Component... components) {
+
+        this.components.addAll(Arrays.asList(components));
+
         this.components.sort(new Component.UpdatePriorityComparator());
+        this.components.stream().forEach(c -> c.init(this));
+
     }
 
     /**
      * Initialise tous les components
      */
-    public void initComponents() {
-        Iterator<Component> itComponent = this.components.iterator();
-        while (itComponent.hasNext()) {
-            itComponent.next().init(this);
-        }
-
-        Iterator<Script> itScript = this.scripts.iterator();
-        while (itScript.hasNext()) {
-            itScript.next().init(this);
-        }
-        System.out.println(this.owner.id + " : " + this.components.toString() + "   " + this.scripts.toString());
-
+    @Override
+    public void load() {
+        this.components.stream().forEach(c -> c.load());
+        this.scriptManager.load();
     }
 
+    @Override
     public void update() {
-        for (Script script : this.scripts) {
-            script.update();
-        }
-        for (Component component : this.components) {
-            component.update();
-        }
+        this.scriptManager.update();
+        this.components.stream().forEach(c
+                -> c.update()
+        );
+    }
+
+    public ScriptManager<ComponentManager> getScriptManager() {
+        return this.scriptManager;
     }
 
 // A modifier.
@@ -152,7 +150,25 @@ public final class ComponentManager  {
     }
 
     public Component getComponentFromGO(String id, Class<? extends Component> componentClass) {
-        return this.owner.getScene().getGameObject(id).getComponentManager().getComponent(componentClass);
+        return this.owner.getOwner().getGameObject(id).getComponentManager().getComponent(componentClass);
+    }
+
+    /**
+     * Retourne la Scène
+     *
+     */
+    public Scene getScene() {
+        return this.owner.getOwner();
+    }
+
+    public GameObject getOwner() {
+        return owner;
+    }
+
+    @Override
+    public void render(Graphics g) {
+        Renderer renderer = (Renderer) getComponent("Renderer");
+        renderer.render(g);
     }
 
 }

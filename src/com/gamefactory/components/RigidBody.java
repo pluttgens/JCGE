@@ -16,10 +16,6 @@ public class RigidBody extends Component {
 
     private float gravity = 0;
 
-    @Override
-    public void init(ComponentManager owner) {
-        super.init(owner);
-    }
 
     /**
      * Recupere la gravite du personnage
@@ -35,11 +31,6 @@ public class RigidBody extends Component {
      */
     public void setGravity(float gravity) {
         this.gravity = gravity;
-    }
-
-    @Override
-    public void update() {
-
     }
 
 }

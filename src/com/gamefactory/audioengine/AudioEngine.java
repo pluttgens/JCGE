@@ -129,7 +129,7 @@ public class AudioEngine implements Service {
     }
 
     /**
-     * Arrête le son du jeu
+     * Arrete le son du jeu
      * @param name
      * @param id
      */

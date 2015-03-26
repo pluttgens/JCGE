@@ -13,20 +13,20 @@ import java.util.EventObject;
  */
 public class Event extends EventObject {
 
+    private boolean consumed;
     private final String event;
     private final Object message;
     
     
     public Event(Object source, String event) {
-        super(source);
-        this.event = event;
-        this.message = null;
+        this(source, event, null);
     }
     
     public Event(Object source, String event, Object message) {
         super(source);
         this.event = event;
         this.message = message;
+        this.consumed = false;
     }
     
     
@@ -40,5 +40,13 @@ public class Event extends EventObject {
     
     public boolean hasMessage() {
         return this.message != null;
+    }
+    
+    public void consume() {
+        this.consumed = true;
+    }
+    
+    public boolean isConsumed() {
+        return this.consumed;
     }
 }

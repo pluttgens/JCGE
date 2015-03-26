@@ -5,23 +5,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gamefactory.game.Displayable;
-import com.gamefactory.graphicengine.Coord2D;
 import com.gamefactory.graphicengine.Tile;
-import com.gamefactory.graphicengine.TileSheet;
+import java.awt.Rectangle;
+import java.util.Arrays;
 
-public class Landscape implements Displayable {
+/**
+ * Un landscape représente le décor d'une scène.
+ *
+ * @author Pascal Luttgens
+ *
+ * @version 2.0
+ *
+ * @since 1.0
+ */
+public class Landscape implements Displayable<Scene> {
+
+    private Scene owner;
+    private int width;
+    private int height;
+
+    private Rectangle renderedArea;
 
     private List<Tile> tiles;
 
-    public Landscape() {
-        tiles = new ArrayList<Tile>();
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(0, 0)));
+    public Landscape() {        
+        this.renderedArea = new Rectangle();
+        this.tiles = new ArrayList<>();
+    }
+    
 
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Coord2D(32, 32)));
-
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(0), new Coord2D(0, 32)));
-
-        tiles.add(new Tile(new TileSheet("tileset.png").loadTile(1), new Coord2D(32, 0)));
+    @Override
+    public void init(Scene owner) {
+        this.owner = owner;
+        this.width = 4000;
+        this.height = 4000;
+        
     }
 
     public List<Tile> getTiles() {
@@ -32,15 +50,37 @@ public class Landscape implements Displayable {
     public void update() {
     }
 
+    public void setRenderedArea(Rectangle rectangle) {
+        this.renderedArea.setBounds(rectangle);
+    }
+
     @Override
     public void render(Graphics g) {
         for (Tile tile : tiles) {
-            g.drawImage(tile.getImage(), tile.getX(), tile.getY(), null);
+            if (tile.isInside(renderedArea))  {
+                g.drawImage(tile.getImage(), (int) (tile.getX() - renderedArea.getX()), (int) (tile.getY() - renderedArea.getY()), null);
+            }
         }
     }
 
     @Override
-    public void init() {
+    public void load() {
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Rectangle getRenderedArea() {
+        return renderedArea;
+    }
+
+    public void addTiles(Tile ... tiles) {
+        this.tiles.addAll(Arrays.asList(tiles));
+    }
+    
 }
