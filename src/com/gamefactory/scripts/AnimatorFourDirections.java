@@ -112,6 +112,7 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
 
     @Override
     public void execute() {
+        //a changer
         if (this.previousPosition.distanceWith(this.currentPosition) > 3) {
             Position.Orientation orientation = this.currentPosition.getOrientation();
             BufferedImage current = this.renderer.getImage();

@@ -15,6 +15,8 @@ import java.awt.Point;
  */
 public class ProjectileMotionScript extends UpdateScript<ComponentManager> {
 
+    private final static String VELOCITY_KEY = ProjectileMotionScript.class.getSimpleName();
+    
     private Point destination;
     private Position position;
     private int velocity;
@@ -22,17 +24,17 @@ public class ProjectileMotionScript extends UpdateScript<ComponentManager> {
     @Override
     public void execute() {
         if (Math.abs(position.getX() - destination.getX()) > velocity) {
-            this.position.setxVelocity(position.getX() > destination.getX() ? -velocity : velocity);
+            this.position.setxVelocityDefault(position.getX() > destination.getX() ? -velocity : velocity);
         } else if (position.getX() != destination.getX()) {
-            position.setxVelocity(0);
-            position.setX((float) destination.getX());
+            position.setxVelocityDefault(0);
+            position.setX((int) destination.getX());
         }
 
         if (Math.abs(position.getY() - destination.getY()) > velocity) {
-            this.position.setyVelocity(position.getY() > destination.getY() ? -velocity : velocity);
+            this.position.setyVelocityDefault(position.getY() > destination.getY() ? -velocity : velocity);
         } else if (position.getY() != destination.getY()) {
-            position.setyVelocity(0);
-            position.setY((float) destination.getY());
+            position.setxVelocityDefault(0);
+            position.setY((int) destination.getY());
         }
     }
 

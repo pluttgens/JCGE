@@ -46,8 +46,8 @@ public class TreasureSoundScript extends UpdateScript<ComponentManager> {
         long time = timer.getElapsedTime(TimeUnit.SECONDS);
         if (time >= 2) {
             // les bornes vont de - 80 a 6 pour ce son
-            sound.getAudioEngine().playSound("test1.wav", null, volume);
-            volume += 10;
+           //sound.getAudioEngine().playSound("test1.wav", null, volume);
+            //volume += 10;
             timer.resetTimer();
         }
     }

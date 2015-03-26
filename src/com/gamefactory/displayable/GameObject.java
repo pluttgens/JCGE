@@ -41,7 +41,7 @@ public abstract class GameObject implements Displayable<Scene> {
     public GameObject() {
         this.componentManager = new ComponentManager();
         this.isActive = true;
-        this.id = this.getClass().getSimpleName().toUpperCase();;
+        this.id = this.getClass().getSimpleName().toUpperCase();
         this.notifier = new Notifier(this);
     }
 
