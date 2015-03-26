@@ -48,8 +48,8 @@ public class SpeedPotionScript extends UpdateScript<ComponentManager> {
     public void execute() {
         if (hero.distanceWith(speedPotion) < 10) {
             renderer.disable();
-            hero.addxVelocity(VELOCITY_KEY, 50, 5);
-            hero.addyVelocity(VELOCITY_KEY, 50, 5);
+            hero.addxVelocityModifiers(VELOCITY_KEY, 50, 5);
+            hero.addyVelocityModifiers(VELOCITY_KEY, 50, 5);
         }
     }
     

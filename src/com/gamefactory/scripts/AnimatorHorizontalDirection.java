@@ -8,9 +8,7 @@ package com.gamefactory.scripts;
 import com.gamefactory.assets.types.ImageAsset;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
-import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.ComponentManager;
-import com.gamefactory.displayable.Script;
 import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.services.ServiceLocator;
 
@@ -24,14 +22,12 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author scalpa
+ * @author ngo
  */
-public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
-
+public class AnimatorHorizontalDirection extends UpdateScript<ComponentManager> {
+    
     private ArrayList<BufferedImage> animationsLeft;
     private ArrayList<BufferedImage> animationsRight;
-    private ArrayList<BufferedImage> animationsUp;
-    private ArrayList<BufferedImage> animationsDown;
 
     private Position currentPosition;
     private Position previousPosition;
@@ -40,29 +36,22 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
     @Override
     public void init(ScriptManager owner) {
         super.init(owner);
-        this.animationsDown = new ArrayList<>();
         this.animationsLeft = new ArrayList<>();
         this.animationsRight = new ArrayList<>();
-        this.animationsUp = new ArrayList<>();
         
         loadAnimations();
     }
 
-    
-
-    
     @Override
     public void load() {
         this.currentPosition = (Position) this.owner.getOwner().getComponent(Position.class);
         this.renderer = (Renderer) this.owner.getOwner().getComponent(Renderer.class);
         this.previousPosition = this.currentPosition.deepClone();
-        BufferedImage image = this.animationsDown.get(1);
+        BufferedImage image = this.animationsRight.get(1);
         this.currentPosition.setHeight(image.getHeight());
         this.currentPosition.setWidth(image.getWidth());
         this.renderer.setImage(image);
     }
-    
-    
 
     public void loadAnimations() {
         try {
@@ -85,26 +74,6 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
             animationsRight.add(e3.getBufferedImage());
             ImageAsset e4 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "est/4E.png");
             animationsRight.add(e4.getBufferedImage());
-
-            //Nord
-            ImageAsset n1 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "nord/1N.png");
-            animationsUp.add(n1.getBufferedImage());
-            ImageAsset n2 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "nord/2N.png");
-            animationsUp.add(n2.getBufferedImage());
-            ImageAsset n3 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "nord/3N.png");
-            animationsUp.add(n3.getBufferedImage());
-            ImageAsset n4 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "nord/4N.png");
-            animationsUp.add(n4.getBufferedImage());
-
-            //Sud
-            ImageAsset s1 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "sud/1S.png");
-            animationsDown.add(s1.getBufferedImage());
-            ImageAsset s2 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "sud/2S.png");
-            animationsDown.add(s2.getBufferedImage());
-            ImageAsset s3 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "sud/3S.png");
-            animationsDown.add(s3.getBufferedImage());
-            ImageAsset s4 = (ImageAsset) ServiceLocator.getAssetManager().getAsset("image", "sud/4S.png");
-            animationsDown.add(s4.getBufferedImage());
         } catch (IOException iOException) {
             iOException.printStackTrace();
         }
@@ -112,17 +81,10 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
 
     @Override
     public void execute() {
-        //a changer
         if (this.previousPosition.distanceWith(this.currentPosition) > 3) {
             Position.Orientation orientation = this.currentPosition.getOrientation();
             BufferedImage current = this.renderer.getImage();
             switch (orientation) {
-                case DOWN:
-                    this.renderer.setImage(getNextImage(current, this.animationsDown));
-                    break;
-                case UP:
-                    this.renderer.setImage(getNextImage(current, this.animationsUp));
-                    break;
                 case LEFT:
                     this.renderer.setImage(getNextImage(current, this.animationsLeft));
                     break;
