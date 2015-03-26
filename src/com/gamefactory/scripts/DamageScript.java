@@ -41,7 +41,6 @@ public class DamageScript extends UpdateScript<ComponentManager> {
         this.hero = (Position) this.owner.getOwner().getComponentFromGO("HERO", Position.class);
         this.projectile = (Position) this.owner.getOwner().getComponent(Position.class);
         this.renderer = (Renderer) this.owner.getOwner().getComponent(Renderer.class);
-        this.renderer.disable();
     }
 
     @Override
@@ -49,7 +48,7 @@ public class DamageScript extends UpdateScript<ComponentManager> {
         renderer.setImage(image);
         if(hero.distanceWith(projectile) < 10) {
             healthPoint.sub(1);
-            renderer.enable();
+            renderer.disable();
         }
     }
     
