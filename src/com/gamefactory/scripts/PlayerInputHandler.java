@@ -35,7 +35,7 @@ public class PlayerInputHandler extends UpdateScript<ComponentManager> implement
     public void init(ScriptManager script) {
         super.init(script);
         this.keys = new boolean[NB_KEYS];
-        this.setVelocity(1);
+        this.setVelocity(100);
         ServiceLocator.getGameWindow().getFrame().addKeyListener(this);
         ServiceLocator.getGameWindow().getCanvas().addKeyListener(this);
     }

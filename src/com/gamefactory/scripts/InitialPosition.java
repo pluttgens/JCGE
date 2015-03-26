@@ -45,8 +45,8 @@ public class InitialPosition extends LoadingScript<Scene> {
 
         List<Position> positionNorthWall = this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("OBSTACLE")).map((GameObject t) -> (Position) t.getComponentManager().getComponent(Position.class)).collect(Collectors.toList());
         for (int i = 0; i < positionNorthWall.size(); i++) {
-            positionNorthWall.get(i).setX((i + 2) * 33);
-            positionNorthWall.get(i).setY(100);
+            positionNorthWall.get(i).setX(0);
+            positionNorthWall.get(i).setY(150);
         }
     }
 

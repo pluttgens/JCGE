@@ -35,28 +35,28 @@ public class BlockOnCollisionListener extends ListenerScript<ComponentManager> {
          * if(Math.abs(position.getX()-cX)-cW < 1){ position.setxVelocity(0); }
          */
 
-        if (Math.abs(position.getX() - cX) - cW < 1
-                && !(Math.abs(Math.abs(position.getY() - cY) - cH) < 2)
-                && !(Math.abs(Math.abs(position.getY() - cY) - position.getHeight())
-                < 3)) {
-            if (cX > position.getX()) {
-                position.setX(position.getX() - 1);
-            }
-            if (cX < position.getX()) {
-                position.setX(position.getY() + 1);
-            }
-        } else if (Math.abs(position.getY() - cY) - cH < 1
-                && !(Math.abs(Math.abs(position.getX() - cX) - cW) < 10)) {
-            if (cY
-                    > position.getY()) {
-                position.setY(position.getY() - 1);
-            }
-            if (cY
-                    < position.getY()) {
-                position.setY(position.getY() + 1);
-            }
-
-        }
+        /*  if (Math.abs(position.getX() - cX) - cW < 1
+         * && !(Math.abs(Math.abs(position.getY() - cY) - cH) < 2)
+         * && !(Math.abs(Math.abs(position.getY() - cY) - position.getHeight())
+         * < 3)) {
+         * if (cX > position.getX()) {
+         * position.setX(position.getX() - 1);
+         * }
+         * if (cX < position.getX()) {
+         * position.setX(position.getY() + 1);
+         * }
+         * } else if (Math.abs(position.getY() - cY) - cH < 1
+         * && !(Math.abs(Math.abs(position.getX() - cX) - cW) < 10)) {
+         * if (cY
+         * > position.getY()) {
+         * position.setY(position.getY() - 1);
+         * }
+         * if (cY
+         * < position.getY()) {
+         * position.setY(position.getY() + 1);
+         * }
+         * 
+         * }*/
         /*
          * if(cX > position.getX() && Math.abs(position.getX()-cX)-cW < 1){
          * position.setX(position.getX() -1); }
