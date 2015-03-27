@@ -270,15 +270,16 @@ public class Position extends Component {
 
     @Override
     public void update() {
-
+        
         if (!this.hasCollisionHappened) {
             List<Point> line = line(x, y, this.x + this.getxVelocity(), this.y + this.getyVelocity());
             if (this.owner.checkForComponent(Collider.class)) {
                 Point p = Collider.checkForCollisionAsMoving(this.getComponentManager().getScene(), this.getComponentManager().getOwner(), line);
                 if (p != null) {
                     int i = line.indexOf(p);
-                    if (i > 0) {
+                    if (i > 0) {   
                         p = line.get(i - 1);
+                        //System.out.println("x2:" + p.x + " y2:" + p.y);
                         this.x = (int) p.getX();
                         this.y = (int) p.getY();
                     }
