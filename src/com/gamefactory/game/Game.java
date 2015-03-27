@@ -21,6 +21,8 @@ import java.util.logging.Logger;
  */
 public class Game extends Canvas implements Runnable {
 
+    public final static int WINDOW_BORDER_SIZE = 20;
+    
     /**
      * Longueur de la fenêtre.
      */
