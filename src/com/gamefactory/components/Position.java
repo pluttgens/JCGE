@@ -35,11 +35,13 @@ public class Position extends Component {
 
     private boolean hasCollisionHappened;
 
+    private int defaultVelocity;
+    
     private int x;
     private int y;
 
-    private int xVelocityDefault;
-    private int yVelocityDefault;
+    private int xMainVelocity;
+    private int yMainVelocity;
 
     private HashMap<String, Integer> xVelocityModifiers;
     private HashMap<String, Integer> yVelocityModifiers;
@@ -98,32 +100,40 @@ public class Position extends Component {
         this.y = y;
     }
 
-    public int getxVelocityDefault() {
-        return xVelocityDefault;
+    public int getDefaultVelocity() {
+        return defaultVelocity;
+    }
+    
+    public void setDefaultVelocity(int defaultVelocity) {
+        this.defaultVelocity = defaultVelocity;
+    }
+    
+    public int getxMainVelocity() {
+        return xMainVelocity;
     }
 
-    public void setxVelocityDefault(int xVelocityDefault) {
-        this.xVelocityDefault = xVelocityDefault;
+    public void setxMainVelocity(int xVelocityDefault) {
+        this.xMainVelocity = xVelocityDefault;
     }
 
-    public int getyVelocityDefault() {
-        return yVelocityDefault;
+    public int getyMainVelocity() {
+        return yMainVelocity;
     }
 
-    public void setyVelocityDefault(int yVelocityDefault) {
-        this.yVelocityDefault = yVelocityDefault;
+    public void setyMainVelocity(int yVelocityDefault) {
+        this.yMainVelocity = yVelocityDefault;
     }
 
     public int getxVelocity() {
-        return getxVelocityDefault() != 0
-                ? getxVelocityDefault() + (getxVelocityDefault() > 0
+        return getxMainVelocity() != 0
+                ? getxMainVelocity() + (getxMainVelocity() > 0
                         ? getxVelocityModifiers() : -getxVelocityModifiers()) : 0;
 
     }
 
     public int getyVelocity() {
-        return getyVelocityDefault() != 0
-                ? getyVelocityDefault() + (getyVelocityDefault() > 0
+        return getyMainVelocity() != 0
+                ? getyMainVelocity() + (getyMainVelocity() > 0
                         ? getyVelocityModifiers() : -getyVelocityModifiers()) : 0;
 
     }
@@ -303,8 +313,8 @@ public class Position extends Component {
         int hash = 3;
         hash = 79 * hash + this.x;
         hash = 79 * hash + this.y;
-        hash = 79 * hash + this.xVelocityDefault;
-        hash = 79 * hash + this.yVelocityDefault;
+        hash = 79 * hash + this.xMainVelocity;
+        hash = 79 * hash + this.yMainVelocity;
         hash = 79 * hash + Objects.hashCode(this.xVelocityModifiers);
         hash = 79 * hash + Objects.hashCode(this.yVelocityModifiers);
         hash = 79 * hash + Objects.hashCode(this.ses);
@@ -329,10 +339,10 @@ public class Position extends Component {
         if (this.y != other.y) {
             return false;
         }
-        if (this.xVelocityDefault != other.xVelocityDefault) {
+        if (this.xMainVelocity != other.xMainVelocity) {
             return false;
         }
-        if (this.yVelocityDefault != other.yVelocityDefault) {
+        if (this.yMainVelocity != other.yMainVelocity) {
             return false;
         }
         if (!Objects.equals(this.xVelocityModifiers, other.xVelocityModifiers)) {

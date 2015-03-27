@@ -24,16 +24,16 @@ public class ProjectileMotionScript extends UpdateScript<ComponentManager> {
     @Override
     public void execute() {
         if (Math.abs(position.getX() - destination.getX()) > velocity) {
-            this.position.setxVelocityDefault(position.getX() > destination.getX() ? -velocity : velocity);
+            this.position.setxMainVelocity(position.getX() > destination.getX() ? -velocity : velocity);
         } else if (position.getX() != destination.getX()) {
-            position.setxVelocityDefault(0);
+            position.setxMainVelocity(0);
             position.setX((int) destination.getX());
         }
 
         if (Math.abs(position.getY() - destination.getY()) > velocity) {
-            this.position.setyVelocityDefault(position.getY() > destination.getY() ? -velocity : velocity);
+            this.position.setyMainVelocity(position.getY() > destination.getY() ? -velocity : velocity);
         } else if (position.getY() != destination.getY()) {
-            position.setxVelocityDefault(0);
+            position.setxMainVelocity(0);
             position.setY((int) destination.getY());
         }
     }

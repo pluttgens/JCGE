@@ -52,6 +52,9 @@ public class Tile {
     }
 
     public boolean isInside(Rectangle rectangle) {
-        return rectangle.contains(coord);
+        return rectangle.contains(coord)
+                || rectangle.contains(coord.getX() + TileEngine.TILE_WIDTH, coord.getY())
+                || rectangle.contains(coord.getX(), coord.getY() + TileEngine.TILE_HEIGHT)
+                || rectangle.contains(coord.getX() + TileEngine.TILE_WIDTH, coord.getY() + TileEngine.TILE_HEIGHT);
     }
 }
