@@ -25,23 +25,26 @@ public class MainScene extends Scene {
     public void init() {
         GameObject hero = new Hero();
         Treasure treasure = new Treasure();
-        Obstacle obstacle = new Obstacle();
         SpeedPotion speedPotion = new SpeedPotion();
         ArrayList<Obstacle> northWall = new ArrayList();
+        Obstacle o=new Obstacle();
+        Obstacle o1=new Obstacle();
         
         this.addGameObject(hero.getId(), hero);
         this.addGameObject(treasure.getId(), treasure);
-        this.addGameObject(obstacle.getId(), obstacle);
         this.addGameObject(speedPotion.getId(), speedPotion);
+        this.addGameObject(o.getId(), o);
+        this.addGameObject(o1.getId(), o1);
         
-        for (int i =0 ; i < 10 ; i++){
+        /*for (int i = 0 ; i < 10 ; i++){
             Obstacle o = new Obstacle();
             northWall.add(o);
-        }
-        
+            this.addGameObject(o.getId(), o);
+        }*/
 
         this.addScript(new InitialPosition(), new LandscapeScript());
     }
+    
 
     
 
