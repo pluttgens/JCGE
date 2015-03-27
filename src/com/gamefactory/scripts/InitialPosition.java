@@ -6,13 +6,8 @@
 package com.gamefactory.scripts;
 
 import com.gamefactory.components.Position;
-import com.gamefactory.displayable.GameObject;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.game.Game;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  *
@@ -45,16 +40,5 @@ public class InitialPosition extends LoadingScript<Scene> {
         p2.setX(500);
         p2.setY(500);
 
-        /*List<GameObject> gos = this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("OBSTACLE")).collect(Collectors.tolist());
-        List<Position> positionNorthWall = this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("OBSTACLE")).map((GameObject t) -> (Position) t.getComponentManager().getComponent(Position.class)).collect(Collectors.toList());
-        for (int i = 0; i < positionNorthWall.size(); i++) {
-            positionNorthWall.get(i).setX(i * 33);
-            positionNorthWall.get(i).setY(0);
-        }*/
-        
-        Position p3 = (Position) this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("OBSTACLE")).findFirst().get().getComponentManager().getComponent(Position.class);
-        p3.setX(33);
-        p3.setY(0);
     }
-
 }
