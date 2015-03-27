@@ -85,7 +85,7 @@ public class Collider extends Component {
                     }
                     if (go.getComponentManager().checkForComponent(Collider.class)) {
                         Collider c = (Collider) go.getComponentManager().getComponent(Collider.class);
-                        if (c.getHitbox().contains(p)) {
+                        if (c.getHitbox().intersects(testedCollider.getHitbox())) {
                             testedCollider.onEnterCollision(c);
                             return true;
                         }
