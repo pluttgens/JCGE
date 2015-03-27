@@ -5,11 +5,16 @@
  */
 package com.gamefactory.scripts;
 
+import com.gamefactory.assets.assetmanager.TypeLoader;
+import com.gamefactory.assets.types.TileMapAsset;
 import com.gamefactory.displayable.Landscape;
 import com.gamefactory.displayable.Scene;
+import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.graphicengine.Tile;
 import com.gamefactory.graphicengine.TileSheet;
+import com.gamefactory.services.ServiceLocator;
 import java.awt.Point;
+import java.util.Collections;
 
 /**
  *
@@ -18,20 +23,26 @@ import java.awt.Point;
 public class LandscapeScript extends LoadingScript<Scene> {
 
     private Landscape landscape;
+    private String path;
 
+    public void setPath(String path) {
+        this.path = path;
+    }
+    
+    
+    @Override
+    public void init(ScriptManager owner) {
+        super.init(owner);
+        
+    }
+
+    
     @Override
     public void executeOnce() {
-        landscape.addTiles(new Tile(new TileSheet("tileset.png").loadTile(1), new Point(200, 200)));
-
-        landscape.addTiles(new Tile(new TileSheet("tileset.png").loadTile(0), new Point(232, 200)));
-
-        landscape.addTiles(new Tile(new TileSheet("tileset.png").loadTile(0), new Point(200, 232)));
-
-        landscape.addTiles(new Tile(new TileSheet("tileset.png").loadTile(1), new Point(232, 232)));
-        
-        landscape.addTiles(new Tile(new TileSheet("tileset.png").loadTile(2), new Point(168, 200)));
-
-        landscape.addTiles(new Tile(new TileSheet("tileset.png").loadTile(3), new Point(168, 232)));
+        TileMapAsset tma = (TileMapAsset) ServiceLocator.getAssetManager().getAsset(TypeLoader.TILEMAP, "FullTileSet.txt" );
+        this.landscape.addTiles(tma.getTiles());
+        this.landscape.setHeight(tma.getHeight());
+        this.landscape.setWidth(tma.getWidth());
     }
 
     @Override
