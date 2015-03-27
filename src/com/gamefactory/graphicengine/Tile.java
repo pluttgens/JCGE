@@ -1,17 +1,18 @@
 package com.gamefactory.graphicengine;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Tile {
 
-    private final BufferedImage im;
+    private final TileSheet tileSheet;
+    private int tile;
     private Point coord;
 
-    public Tile(BufferedImage i, Point coord) {
-        this.im = i;
+    public Tile(TileSheet ts, int tile, Point coord) {
+        this.tileSheet = ts;
+        this.tile = tile;
         this.coord = coord;
     }
 
@@ -47,11 +48,18 @@ public class Tile {
      *
      * @return
      */
-    public BufferedImage getImage() {
-        return im;
+    public TileSheet getTileSheet() {
+        return tileSheet;
     }
 
+    public BufferedImage getImage() {
+        return tileSheet.loadTile(tile);
+    }
+    
     public boolean isInside(Rectangle rectangle) {
-        return rectangle.contains(coord);
+        return rectangle.contains(coord)
+                || rectangle.contains(coord.getX() + TileEngine.TILE_WIDTH, coord.getY())
+                || rectangle.contains(coord.getX(), coord.getY() + TileEngine.TILE_HEIGHT)
+                || rectangle.contains(coord.getX() + TileEngine.TILE_WIDTH, coord.getY() + TileEngine.TILE_HEIGHT);
     }
 }

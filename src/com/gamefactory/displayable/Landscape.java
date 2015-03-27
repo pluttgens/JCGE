@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gamefactory.game.Displayable;
+import com.gamefactory.game.Game;
 import com.gamefactory.graphicengine.Tile;
 import java.awt.Rectangle;
 import java.util.Arrays;
@@ -28,18 +29,17 @@ public class Landscape implements Displayable<Scene> {
 
     private List<Tile> tiles;
 
-    public Landscape() {        
+    public Landscape() {
         this.renderedArea = new Rectangle();
         this.tiles = new ArrayList<>();
     }
-    
 
     @Override
     public void init(Scene owner) {
         this.owner = owner;
-        this.width = 4000;
-        this.height = 4000;
-        
+        this.width = Game.WIDTH;
+        this.height = Game.HEIGHT;
+
     }
 
     public List<Tile> getTiles() {
@@ -50,6 +50,14 @@ public class Landscape implements Displayable<Scene> {
     public void update() {
     }
 
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
     public void setRenderedArea(Rectangle rectangle) {
         this.renderedArea.setBounds(rectangle);
     }
@@ -57,7 +65,7 @@ public class Landscape implements Displayable<Scene> {
     @Override
     public void render(Graphics g) {
         for (Tile tile : tiles) {
-            if (tile.isInside(renderedArea))  {
+            if (tile.isInside(renderedArea)) {
                 g.drawImage(tile.getImage(), (int) (tile.getX() - renderedArea.getX()), (int) (tile.getY() - renderedArea.getY()), null);
             }
         }
@@ -79,8 +87,12 @@ public class Landscape implements Displayable<Scene> {
         return renderedArea;
     }
 
-    public void addTiles(Tile ... tiles) {
+    public void addTiles(Tile... tiles) {
         this.tiles.addAll(Arrays.asList(tiles));
     }
-    
+
+    public void addTiles(List<Tile> tiles) {
+        this.tiles.addAll(tiles);
+    }
+
 }

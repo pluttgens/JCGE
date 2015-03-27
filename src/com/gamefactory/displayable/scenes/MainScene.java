@@ -35,17 +35,7 @@ public class MainScene extends Scene {
         this.addGameObject(speedPotion.getId(), speedPotion);
         this.addGameObject(o.getId(), o);
         this.addGameObject(o1.getId(), o1);
-        
-        /*for (int i = 0 ; i < 10 ; i++){
-            Obstacle o = new Obstacle();
-            northWall.add(o);
-            this.addGameObject(o.getId(), o);
-        }*/
 
         this.addScript(new InitialPosition(), new LandscapeScript());
     }
-    
-
-    
-
 }

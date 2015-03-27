@@ -63,7 +63,7 @@ public class Collider extends Component {
     }
 
     public void onEnterCollision(Collider c) {
-        this.getComponentManager().getScriptManager().fireEvent(new Event(this, COLLISION_EVENT, c));
+        // this.getComponentManager().getScriptManager().fireEvent(new Event(this, COLLISION_EVENT, c));
     }
 
     public Rectangle getHitbox() {
@@ -77,10 +77,10 @@ public class Collider extends Component {
 
         Collider testedCollider = (Collider) testedGo.getComponentManager().getComponent(Collider.class);
 
-        Point ret =  points.stream().filter(p -> scene.getGameObjects().stream().filter(go -> !go.getId().equals(testedGo.getId())).
+        Point ret = points.stream().filter(p -> scene.getGameObjects().stream().filter(go -> !go.getId().equals(testedGo.getId())).
                 filter(go -> {
-                    if ((p.getX() < 0 || p.getX() > scene.getLandscape().getWidth() - ((Position) testedGo.getComponentManager().getComponent(Position.class)).getWidth())
-                    || (p.getY() < 0 || p.getY() > scene.getLandscape().getHeight() - ((Position) testedGo.getComponentManager().getComponent(Position.class)).getHeight() - Game.WINDOW_BORDER_SIZE)) {
+                    if ((p.getX() < 0 || p.getX() + testedCollider.getWidth() >= scene.getLandscape().getWidth())
+                    || (p.getY() < 0 || p.getY() + testedCollider.getHeight() >= scene.getLandscape().getHeight() - Game.WINDOW_BORDER_SIZE)) {
                         return true;
                     }
                     if (go.getComponentManager().checkForComponent(Collider.class)) {
