@@ -83,7 +83,7 @@ public class PlayerInputHandlerProjectile extends UpdateScript<ComponentManager>
         }
         else {
             if (position.getxVelocity() < 0) {
-                position.setxVelocityDefault(0);
+                position.setxMainVelocity(0);
             }
         }
     }
