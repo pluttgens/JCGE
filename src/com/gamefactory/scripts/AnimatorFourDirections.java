@@ -47,9 +47,6 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
         
         loadAnimations();
     }
-
-    
-
     
     @Override
     public void load() {

@@ -7,11 +7,12 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import javafx.util.Pair;
 
 /**
- *
- *
  * @author Pascal Luttgens
  *
  * @version 1.0
@@ -22,6 +23,7 @@ public abstract class Scene implements Displayable<DisplayableManager> {
 
     private DisplayableManager owner;
     private Map<String, GameObject> gameObjects;
+    private List<Pair<String, GameObject>> gameObjects1;
     private Landscape Landscape;
     private Camera camera;
     private ScriptManager<Scene> scriptManager;
@@ -30,8 +32,8 @@ public abstract class Scene implements Displayable<DisplayableManager> {
         this.camera = new Camera();
         this.Landscape = new Landscape();
         this.gameObjects = new HashMap<>();
-        this.scriptManager = new ScriptManager<>();       
-
+        this.scriptManager = new ScriptManager<>();
+        this.gameObjects1 = new ArrayList<>();
     }
 
     @Override
@@ -62,7 +64,6 @@ public abstract class Scene implements Displayable<DisplayableManager> {
             GameObject next = it.next();
             next.update();
         }
-
     }
 
     @Override
@@ -100,16 +101,36 @@ public abstract class Scene implements Displayable<DisplayableManager> {
         return this.gameObjects.values().iterator();
     }
 
+    
+    public void addGameObject(String id, GameObject go) {
+        this.gameObjects.put(id, go);
+    }
+    
+    //Gameobjects dans la liste
+    
+    public void addGameObject1(String id, GameObject go){
+        Pair<String, GameObject> p = new Pair(id,go); 
+        this.gameObjects1.add(p);
+    }
+    
+    public ArrayList<GameObject> getGameObjects1() {
+        ArrayList<GameObject> p = new ArrayList();
+        for( int i = 0 ; i < gameObjects1.size() ; i ++){
+            p.add(gameObjects1.get(i).getValue());
+        }
+        return p;
+    }
+
+    public ListIterator<GameObject> iterateOverGO1() {
+        return this.getGameObjects1().listIterator();
+    }
+ 
     public Landscape getLandscape() {
         return this.Landscape;
     }
 
     public Camera getCamera() {
         return camera;
-    }
-
-    public void addGameObject(String id, GameObject go) {
-        this.gameObjects.put(id, go);
     }
 
     public void addScript(Script... scripts) {
