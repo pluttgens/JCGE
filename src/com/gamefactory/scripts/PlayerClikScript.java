@@ -25,7 +25,6 @@ public class PlayerClikScript extends UpdateScript<ComponentManager> implements 
     private int velocity;
     private Position position;
     private List<Point> line1;
-    private Point point;
     private int i = 0;
     
     public void setVelocity(int velocity) {
@@ -49,12 +48,18 @@ public class PlayerClikScript extends UpdateScript<ComponentManager> implements 
 
     @Override
     public void mouseClicked(MouseEvent e) {  
-        //line1 = null;
+        Point p1 = e.getPoint();
+        
+        int x = (int)p1.getX() + this.owner.getOwner().getScene().getCamera().getX();
+        int y = (int)p1.getY() + this.owner.getOwner().getScene().getCamera().getY();
+        
+        line1 = null;
         i=0;
+        
         int buttonDown = e.getButton();
         if(buttonDown == MouseEvent.BUTTON3) {
-            this.line1 = line(position.getX(),position.getY(),e.getX(),e.getY());
-        
+            this.line1 = line(position.getX(),position.getY(),x,y);
+            
         // a gauche - a gauche en haut - a gauche en bas
         if(e.getX() < position.getX() && e.getY() == position.getY() || e.getX() < position.getX() && e.getY() < position.getY() || e.getX() < position.getX() && e.getY() > position.getY()){
             position.setOrientation(Position.Orientation.LEFT);
@@ -73,8 +78,7 @@ public class PlayerClikScript extends UpdateScript<ComponentManager> implements 
         //en bas
         if(e.getX() == position.getX() && e.getY() < position.getY()){
             position.setOrientation(Position.Orientation.UP);
-        }
-            
+        }        
     }
     }
     
@@ -90,14 +94,14 @@ public class PlayerClikScript extends UpdateScript<ComponentManager> implements 
                 i = i + velocity;
             }
             else{
-                i =0;
+                i = 0;
                 line1=null;
             }
         }
     }
 
     
-    public List<Point> line(int x, int y, int x2, int y2) {
+    /*public List<Point> line(int x, int y, int x2, int y2) {
         ArrayList<Point> line = new ArrayList<>();
         int w;
         int h;
@@ -119,10 +123,10 @@ public class PlayerClikScript extends UpdateScript<ComponentManager> implements 
         while(w != 0 || h != 0);
         System.out.println("Position finale héro x=" + x + " y=" + y);        
         return line;
-    }
+    }*/
     
     
-    /*
+    
     public List<Point> line(int x, int y, int x2, int y2) {
         ArrayList<Point> line = new ArrayList<>();
         int w = x2 - x;
@@ -170,7 +174,7 @@ public class PlayerClikScript extends UpdateScript<ComponentManager> implements 
         }
         return line;
     }
-    */
+    
 
     @Override
     public void mousePressed(MouseEvent e) {

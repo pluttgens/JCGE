@@ -1,5 +1,6 @@
 package com.gamefactory.displayable;
 
+import com.gamefactory.displayable.gameobjects.EmptyGameObject;
 import com.gamefactory.game.Displayable;
 import com.gamefactory.scripts.InitialPosition;
 
@@ -22,8 +23,7 @@ import javafx.util.Pair;
 public abstract class Scene implements Displayable<DisplayableManager> {
 
     private DisplayableManager owner;
-    private Map<String, GameObject> gameObjects;
-    private List<Pair<String, GameObject>> gameObjects1;
+    private List<Pair<String, GameObject>> gameObjects;
     private Landscape Landscape;
     private Camera camera;
     private ScriptManager<Scene> scriptManager;
@@ -31,9 +31,8 @@ public abstract class Scene implements Displayable<DisplayableManager> {
     public Scene() {
         this.camera = new Camera();
         this.Landscape = new Landscape();
-        this.gameObjects = new HashMap<>();
         this.scriptManager = new ScriptManager<>();
-        this.gameObjects1 = new ArrayList<>();
+        this.gameObjects = new ArrayList<>();
     }
 
     @Override
@@ -42,7 +41,7 @@ public abstract class Scene implements Displayable<DisplayableManager> {
         this.Landscape.init(this);
         this.camera.init(this);
         this.init();
-        this.gameObjects.values().stream().forEach(go -> go.init(this));
+        this.getGameObjects().stream().forEach(go -> go.init(this));
     }
     
     protected abstract void init();
@@ -52,14 +51,14 @@ public abstract class Scene implements Displayable<DisplayableManager> {
         this.Landscape.load();
         this.camera.load();
         this.scriptManager.load();
-        this.gameObjects.values().stream().forEach(go -> go.load());
+        this.getGameObjects().stream().forEach(go -> go.init(this));
     }
 
     @Override
     public void update() {
         this.camera.update();
 
-        Iterator<GameObject> it = gameObjects.values().iterator();
+        Iterator<GameObject> it = this.iterateOverGO();
         while (it.hasNext()) {
             GameObject next = it.next();
             next.update();
@@ -69,7 +68,7 @@ public abstract class Scene implements Displayable<DisplayableManager> {
     @Override
     public void render(Graphics g) {
         camera.render(g);
-        Iterator<GameObject> it = gameObjects.values().iterator();
+        Iterator<GameObject> it = this.iterateOverGO();
         while (it.hasNext()) {
             GameObject next = it.next();
             next.render(g);
@@ -84,7 +83,11 @@ public abstract class Scene implements Displayable<DisplayableManager> {
      * @return Le GameObject
      */
     public GameObject getGameObject(String id) {
-        GameObject ret = this.gameObjects.get(id);
+        GameObject ret = new EmptyGameObject();
+        for (int i = 0 ; i < gameObjects.size() ; i++){
+            if (gameObjects.get(i).getKey().equals(id));
+                ret = gameObjects.get(i).getValue();
+        }
         return ret;
     }
 
@@ -93,7 +96,7 @@ public abstract class Scene implements Displayable<DisplayableManager> {
      *
      * @return L'ensemble des GameObjects
      */
-    public ArrayList<GameObject> getGameObjects() {
+    /*public ArrayList<GameObject> getGameObjects() {
         return new ArrayList(gameObjects.values());
     }
 
@@ -104,25 +107,25 @@ public abstract class Scene implements Displayable<DisplayableManager> {
     
     public void addGameObject(String id, GameObject go) {
         this.gameObjects.put(id, go);
-    }
+    }*/
     
     //Gameobjects dans la liste
     
-    public void addGameObject1(String id, GameObject go){
+    public void addGameObject(String id, GameObject go){
         Pair<String, GameObject> p = new Pair(id,go); 
-        this.gameObjects1.add(p);
+        this.gameObjects.add(p);
     }
     
-    public ArrayList<GameObject> getGameObjects1() {
+    public ArrayList<GameObject> getGameObjects() {
         ArrayList<GameObject> p = new ArrayList();
-        for( int i = 0 ; i < gameObjects1.size() ; i ++){
-            p.add(gameObjects1.get(i).getValue());
+        for( int i = 0 ; i < gameObjects.size() ; i ++){
+            p.add(gameObjects.get(i).getValue());
         }
         return p;
     }
 
-    public ListIterator<GameObject> iterateOverGO1() {
-        return this.getGameObjects1().listIterator();
+    public ListIterator<GameObject> iterateOverGO() {
+        return this.getGameObjects().listIterator();
     }
  
     public Landscape getLandscape() {
