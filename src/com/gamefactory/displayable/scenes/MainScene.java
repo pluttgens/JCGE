@@ -30,11 +30,11 @@ public class MainScene extends Scene {
         Obstacle o=new Obstacle();
         Obstacle o1=new Obstacle();
         
-        this.addGameObject(hero.getId(), hero);
-        this.addGameObject(treasure.getId(), treasure);
-        this.addGameObject(speedPotion.getId(), speedPotion);
-        this.addGameObject(o.getId(), o);
-        this.addGameObject(o1.getId(), o1);
+        this.addGameObject1(hero.getId(), hero);
+        this.addGameObject1(treasure.getId(), treasure);
+        this.addGameObject1(speedPotion.getId(), speedPotion);
+        this.addGameObject1(o.getId(), o);
+        this.addGameObject1(o1.getId(), o1);
         
         /*for (int i = 0 ; i < 10 ; i++){
             Obstacle o = new Obstacle();
