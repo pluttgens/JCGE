@@ -8,6 +8,7 @@ import com.gamefactory.displayable.Scene;
 import com.gamefactory.scripts.AnimatorFourDirections;
 import com.gamefactory.scripts.BlockOnCollisionListener;
 import com.gamefactory.scripts.GameObjectCameraScript;
+import com.gamefactory.scripts.PlayerClikScript;
 import com.gamefactory.scripts.PlayerInputHandler;
 
 public class Hero extends GameObject {
@@ -16,7 +17,7 @@ public class Hero extends GameObject {
     public void init(Scene owner) {
         super.init(owner);
         this.componentManager.add(new Position(), new Renderer(), new Collider());
-        this.getScriptManager().add(new AnimatorFourDirections(), new PlayerInputHandler(), new GameObjectCameraScript(),new BlockOnCollisionListener());
+        this.getScriptManager().add(new AnimatorFourDirections(), new PlayerInputHandler(),new PlayerClikScript(), new GameObjectCameraScript(),new BlockOnCollisionListener());
     }
 
   
