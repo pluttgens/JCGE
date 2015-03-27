@@ -9,10 +9,8 @@ import com.gamefactory.components.Position;
 import com.gamefactory.displayable.GameObject;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.game.Game;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  *
@@ -46,9 +44,9 @@ public class InitialPosition extends LoadingScript<Scene> {
         p2.setY(500);
 
         List<Position> positionNorthWall = this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("OBSTACLE")).map((GameObject t) -> (Position) t.getComponentManager().getComponent(Position.class)).collect(Collectors.toList());
-        for (int i = 0; i < 10; i++) {
-            positionNorthWall.get(i).setX(i * 33);
-            positionNorthWall.get(i).setY(0);
+        for (int i = 0; i < positionNorthWall.size(); i++) {
+            positionNorthWall.get(i).setX(0);
+            positionNorthWall.get(i).setY(150);
         }
     }
 
