@@ -269,7 +269,7 @@ public class Position extends Component {
     }
 
     @Override
-    public void update() {
+    public void  update() {
         
         if (!this.hasCollisionHappened) {
             List<Point> line = line(x, y, this.x + this.getxVelocity(), this.y + this.getyVelocity());
@@ -279,15 +279,19 @@ public class Position extends Component {
                     int i = line.indexOf(p);
                     if (i > 0) {   
                         p = line.get(i - 1);
-                        //System.out.println("x2:" + p.x + " y2:" + p.y);
                         this.x = (int) p.getX();
                         this.y = (int) p.getY();
+                    }
+                    else if(!this.owner.getOwner().getId().equals("OBSTACLE")){
+                        this.x = this.x - 1;
+                        this.y = this.y - 1;
                     }
                 } else {
                     this.x += this.getxVelocity();
                     this.y += this.getyVelocity();
                 }
             }
+
         }
         this.hasCollisionHappened = false;
     }

@@ -13,7 +13,6 @@ import com.gamefactory.displayable.gameobjects.SpeedPotion;
 import com.gamefactory.displayable.gameobjects.Treasure;
 import com.gamefactory.scripts.InitialPosition;
 import com.gamefactory.scripts.LandscapeScript;
-import java.util.ArrayList;
 
 /**
  *
@@ -26,7 +25,6 @@ public class MainScene extends Scene {
         GameObject hero = new Hero();
         Treasure treasure = new Treasure();
         SpeedPotion speedPotion = new SpeedPotion();
-        ArrayList<Obstacle> northWall = new ArrayList();
         Obstacle o=new Obstacle();
         Obstacle o1=new Obstacle();
         
@@ -35,6 +33,7 @@ public class MainScene extends Scene {
         this.addGameObject(speedPotion.getId(), speedPotion);
         this.addGameObject(o.getId(), o);
         this.addGameObject(o1.getId(), o1);
+
 
         this.addScript(new InitialPosition(), new LandscapeScript());
     }
