@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamefactory.scripts;
 
+import com.gamefactory.assets.assetmanager.TypeLoader;
+import com.gamefactory.assets.types.ObjectPropertiesAsset;
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.game.Game;
+import com.gamefactory.services.ServiceLocator;
 
 /**
  *
@@ -29,8 +27,17 @@ public class InitialPosition extends LoadingScript<Scene> {
         });
 
         Position p = (Position) this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("HERO")).findFirst().get().getComponentManager().getComponent(Position.class);
-        p.setX(200);
-        p.setY(200);
+        p.initFromObjectProperties((ObjectPropertiesAsset) ServiceLocator.getAssetManager().getAsset(TypeLoader.OBJECTPROPERTIES, "hero.json"));
+       // p.setDestination(new Point(300,300));
+
+        p = (Position) this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("HEROCLIC")).findFirst().get().getComponentManager().getComponent(Position.class);
+        p.setX(250);
+        p.setY(250);
+        p.setDefaultVelocity(5);
+        p.setOffsetX(10);
+        p.setOffsetY(2);
+        p.setWidth(35);
+        p.setHeight(50);
 
         Position p1 = (Position) this.owner.getOwner().getGameObjects().stream().filter(go -> go.getId().equals("OBSTACLE")).findFirst().get().getComponentManager().getComponent(Position.class);
         p1.setX(300);

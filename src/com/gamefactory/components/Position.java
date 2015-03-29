@@ -1,15 +1,18 @@
 package com.gamefactory.components;
 
+import com.gamefactory.assets.types.ObjectPropertiesAsset;
 import com.gamefactory.displayable.Component;
 import java.awt.Point;
-import java.util.ArrayList;
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import static javafx.scene.paint.Color.color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Component permettant de gérer la position d'une unité et ses déplacements
@@ -23,7 +26,6 @@ import static javafx.scene.paint.Color.color;
  */
 public class Position extends Component {
 
-
     public enum Orientation {
 
         UP,
@@ -36,7 +38,7 @@ public class Position extends Component {
     private boolean hasCollisionHappened;
 
     private int defaultVelocity;
-    
+
     private int x;
     private int y;
 
@@ -50,8 +52,14 @@ public class Position extends Component {
 
     private Orientation orientation;
 
+    private int offsetX;
+    private int offsetY;
     private int height;
     private int width;
+
+    private Point destination;
+    private Point nextPosition;
+    private Point collisionPoint;
 
     public Position() {
         this.x = 0;
@@ -103,25 +111,25 @@ public class Position extends Component {
     public int getDefaultVelocity() {
         return defaultVelocity;
     }
-    
+
     public void setDefaultVelocity(int defaultVelocity) {
         this.defaultVelocity = defaultVelocity;
     }
-    
+
     public int getxMainVelocity() {
         return xMainVelocity;
     }
 
-    public void setxMainVelocity(int xVelocityDefault) {
-        this.xMainVelocity = xVelocityDefault;
+    public void setxMainVelocity(int xMainVelocity) {
+        this.xMainVelocity = xMainVelocity;
     }
 
     public int getyMainVelocity() {
         return yMainVelocity;
     }
 
-    public void setyMainVelocity(int yVelocityDefault) {
-        this.yMainVelocity = yVelocityDefault;
+    public void setyMainVelocity(int yMainVelocity) {
+        this.yMainVelocity = yMainVelocity;
     }
 
     public int getxVelocity() {
@@ -206,6 +214,22 @@ public class Position extends Component {
         }
     }
 
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public void setOffsetX(int offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
+    }
+
     /**
      * Recupere la hauteur du GameObject
      *
@@ -270,26 +294,55 @@ public class Position extends Component {
 
     @Override
     public void update() {
-        
-        if (!this.hasCollisionHappened) {
-            List<Point> line = line(x, y, this.x + this.getxVelocity(), this.y + this.getyVelocity());
-            if (this.owner.checkForComponent(Collider.class)) {
-                Point p = Collider.checkForCollisionAsMoving(this.getComponentManager().getScene(), this.getComponentManager().getOwner(), line);
-                if (p != null) {
-                    int i = line.indexOf(p);
-                    if (i > 0) {   
-                        p = line.get(i - 1);
-                        //System.out.println("x2:" + p.x + " y2:" + p.y);
-                        this.x = (int) p.getX();
-                        this.y = (int) p.getY();
-                    }
-                } else {
-                    this.x += this.getxVelocity();
-                    this.y += this.getyVelocity();
-                }
-            }
+
+        if (collisionPoint != null) {
+            this.x = (int) this.collisionPoint.getX();
+            this.y = (int) this.collisionPoint.getY();
+            this.collisionPoint = null;
+        } else if (this.nextPosition != null) {
+            this.x = (int) this.nextPosition.getX();
+            this.y = (int) this.nextPosition.getY();
+            System.out.println(getxVelocity());
         }
-        this.hasCollisionHappened = false;
+    }
+
+    public Point getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Point destination) {
+        this.destination = destination;
+        if (this.destination.x > this.x) {
+            this.xMainVelocity = this.getDefaultVelocity();
+        } else if (this.destination.x < this.x) {
+            this.xMainVelocity = -this.getDefaultVelocity();
+        } else {
+            this.xMainVelocity = 0;
+        }
+
+        if (this.destination.y > this.y) {
+            this.yMainVelocity = this.getDefaultVelocity();
+        } else if (this.destination.y < this.y) {
+            this.yMainVelocity = -this.getDefaultVelocity();
+        } else {
+            this.yMainVelocity = 0;
+        }
+    }
+
+    public Point getNextPosition() {
+        return nextPosition;
+    }
+
+    public void setNextPosition(Point nextPosition) {
+        this.nextPosition = nextPosition;
+    }
+
+    public Point getCollisionPoint() {
+        return collisionPoint;
+    }
+
+    public void setCollisionPoint(Point collisionPoint) {
+        this.collisionPoint = collisionPoint;
     }
 
     @Override
@@ -367,51 +420,23 @@ public class Position extends Component {
         return true;
     }
 
-    public List<Point> line(int x, int y, int x2, int y2) {
-        ArrayList<Point> line = new ArrayList<>();
-        int w = x2 - x;
-        int h = y2 - y;
-        int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
-        if (w < 0) {
-            dx1 = -1;
-        } else if (w > 0) {
-            dx1 = 1;
-        }
-        if (h < 0) {
-            dy1 = -1;
-        } else if (h > 0) {
-            dy1 = 1;
-        }
-        if (w < 0) {
-            dx2 = -1;
-        } else if (w > 0) {
-            dx2 = 1;
-        }
-        int longest = Math.abs(w);
-        int shortest = Math.abs(h);
-        if (!(longest > shortest)) {
-            longest = Math.abs(h);
-            shortest = Math.abs(w);
-            if (h < 0) {
-                dy2 = -1;
-            } else if (h > 0) {
-                dy2 = 1;
-            }
-            dx2 = 0;
-        }
-        int numerator = longest >> 1;
-        for (int i = 0; i <= longest; i++) {
-            line.add(new Point(x, y));
-            numerator += shortest;
-            if (!(numerator < longest)) {
-                numerator -= longest;
-                x += dx1;
-                y += dy1;
-            } else {
-                x += dx2;
-                y += dy2;
+    public void initFromObjectProperties(ObjectPropertiesAsset propertiesAsset) {
+        Map<String, String> properties = propertiesAsset.retrieve(this.getClass().getSimpleName().toLowerCase());
+        System.out.println(Arrays.toString(this.getClass().getFields()));
+        for (Map.Entry<String, String> entrySet : properties.entrySet()) {
+            String key = entrySet.getKey();
+            String value = entrySet.getValue();
+
+            for (Field f : this.getClass().getDeclaredFields()) {
+                if (f.getName().equals(key)) {
+                    try {
+                        f.set(this, Integer.parseInt(value));
+                    } catch (IllegalArgumentException | IllegalAccessException ex) {
+                        Logger.getLogger(Position.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         }
-        return line;
     }
+
 }
