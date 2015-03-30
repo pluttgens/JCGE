@@ -8,9 +8,9 @@ import com.gamefactory.displayable.GameObject;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.scripts.AnimatorFourDirections;
 import com.gamefactory.scripts.GameObjectCameraScript;
-import com.gamefactory.scripts.PlayerInputHandler;
+import com.gamefactory.scripts.PlayerClikScript;
 
-public class Hero extends GameObject {
+public class HeroClic extends GameObject {
 
     @Override
     public void init(Scene owner) {
@@ -18,7 +18,7 @@ public class Hero extends GameObject {
 
         this.componentManager.add(new Position(), new Health(), new Renderer(), new Collider());
 
-        this.getScriptManager().add(new AnimatorFourDirections(), new PlayerInputHandler());
+        this.getScriptManager().add(new AnimatorFourDirections(), new PlayerClikScript(), new GameObjectCameraScript());
     }
 
 }

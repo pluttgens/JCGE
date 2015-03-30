@@ -54,8 +54,6 @@ public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
         this.renderer = (Renderer) this.owner.getOwner().getComponent(Renderer.class);
         this.previousPosition = this.currentPosition.deepClone();
         BufferedImage image = this.animationsDown.get(1);
-        this.currentPosition.setHeight(image.getHeight());
-        this.currentPosition.setWidth(image.getWidth());
         this.renderer.setImage(image);
     }
     

@@ -37,7 +37,7 @@ public class SpeedPotionScript extends UpdateScript<ComponentManager> {
     
     @Override
     public void load() {
-        this.hero = (Position) this.owner.getOwner().getComponentFromGO("HERO", Position.class);
+        this.hero = (Position) this.owner.getOwner().getComponentFromGO("HEROCLIC", Position.class);
         this.speedPotion = (Position) this.owner.getOwner().getComponent(Position.class);
         this.renderer = (Renderer) this.owner.getOwner().getComponent(Renderer.class);
         this.renderer.setImage(image);
@@ -48,8 +48,8 @@ public class SpeedPotionScript extends UpdateScript<ComponentManager> {
     public void execute() {
         if (hero.distanceWith(speedPotion) < 10) {
             renderer.disable();
-            hero.addxVelocityModifiers(VELOCITY_KEY, 50, 5);
-            hero.addyVelocityModifiers(VELOCITY_KEY, 50, 5);
+            hero.addxVelocityModifiers(VELOCITY_KEY, 10, 5);
+            hero.addyVelocityModifiers(VELOCITY_KEY, 10, 5);
         }
     }
     

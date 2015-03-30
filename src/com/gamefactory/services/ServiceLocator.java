@@ -29,7 +29,7 @@ import org.json.JSONObject;
 public class ServiceLocator {
 
     private final static Notifier notifier = new Notifier(new Object());
-    private final static JSONObject config = getJSONObjectFromFile(new File("config/config.cfg"));
+    private final static JSONObject config = getJSONObject(new File("config/config.cfg"));
     private final static HashMap<String, Service> services = new HashMap<>();
     private static AssetManager assetManager;
     private static GameWindow gameWindow;
@@ -85,7 +85,7 @@ public class ServiceLocator {
         return ServiceLocator.gameWindow;
     }
 
-    public static JSONObject getJSONObjectFromFile(File file) {
+    public static JSONObject getJSONObject(File file) {
         try (FileReader fr = new FileReader(file)) {
             String json = new String();
             while (fr.ready()) {
@@ -98,6 +98,13 @@ public class ServiceLocator {
             Logger.getLogger(ServiceLocator.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException(ex);
         }
+    }
+
+    public static JSONObject getJSONObject(String json) {
+        int index = json.indexOf("{");
+        json = json.substring(index);
+        return new JSONObject(json);
+
     }
 
     public static Notifier getNotifier() {
