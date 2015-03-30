@@ -12,11 +12,16 @@ import com.gamefactory.displayable.GameObject;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.scripts.ObstacleScript;
 
+
 /**
  *
  * @author scalpa
  */
 public class Obstacle extends GameObject {
+
+    public Obstacle(String id) {
+        super(id);
+    }
 
     @Override
     public void init(Scene owner) {
@@ -24,5 +29,6 @@ public class Obstacle extends GameObject {
         this.componentManager.add(new Position(), new Renderer(), new Collider());
          this.getScriptManager().add(new ObstacleScript());
     }   
+    
     
 }

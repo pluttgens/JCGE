@@ -302,7 +302,6 @@ public class Position extends Component {
         } else if (this.nextPosition != null) {
             this.x = (int) this.nextPosition.getX();
             this.y = (int) this.nextPosition.getY();
-            System.out.println(getxVelocity());
 
         }
     }

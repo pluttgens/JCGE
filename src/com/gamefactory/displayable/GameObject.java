@@ -25,7 +25,7 @@ public abstract class GameObject implements Displayable<Scene> {
      */
     protected final ComponentManager componentManager;
 
-    protected final String id;
+    protected String id;
 
     /**
      * Flag indiquant si le Game Object doit call update et render. Utile pour
