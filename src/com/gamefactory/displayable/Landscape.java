@@ -37,8 +37,6 @@ public class Landscape implements Displayable<Scene> {
     @Override
     public void init(Scene owner) {
         this.owner = owner;
-        this.width = Game.WIDTH;
-        this.height = Game.HEIGHT;
 
     }
 

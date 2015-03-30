@@ -21,23 +21,39 @@ import java.util.ArrayList;
  * @author scalpa
  */
 public class MainScene extends Scene {
-            
+         
     @Override
     public void init() {
         GameObject hero = new Hero();
         Treasure treasure = new Treasure();
         SpeedPotion speedPotion = new SpeedPotion();
-        Obstacle o=new Obstacle();
-        Obstacle o1=new Obstacle();
         HeroClic heroClic = new HeroClic();
         
         this.addGameObject(heroClic.getId(), heroClic);
         this.addGameObject(hero.getId(), hero);
         this.addGameObject(treasure.getId(), treasure);
         this.addGameObject(speedPotion.getId(), speedPotion);
-        this.addGameObject(o.getId(), o);
-        this.addGameObject(o1.getId(), o1);
 
-        this.addScript(new InitialPosition(), new LandscapeScript());
+        //Mur horizontal
+        for (int i = 0 ; i < 65 ; i++){
+            Obstacle oH = new Obstacle("OBSTACLEH" + i);
+            this.addGameObject(oH.getId(), oH);
+        }
+        
+        //Mur vertical
+        for (int i = 0 ; i < 45; i++){
+            Obstacle oV = new Obstacle("OBSTACLEV" + i);
+            this.addGameObject(oV.getId(), oV);
+        }
+        
+        //Mur obstacle
+        for (int i = 0 ; i < 20; i++){
+            Obstacle oO = new Obstacle("OBSTACLEO" + i);
+            this.addGameObject(oO.getId(), oO);
+        }
+       
+                
+
+        this.addScript(new LandscapeScript(), new InitialPosition());
     }
 }

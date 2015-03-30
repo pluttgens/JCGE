@@ -11,11 +11,7 @@ import com.gamefactory.assets.types.TileMapAsset;
 import com.gamefactory.displayable.Landscape;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.displayable.ScriptManager;
-import com.gamefactory.graphicengine.Tile;
-import com.gamefactory.graphicengine.TileSheet;
 import com.gamefactory.services.ServiceLocator;
-import java.awt.Point;
-import java.util.Collections;
 
 /**
  *
@@ -44,6 +40,7 @@ public class LandscapeScript extends LoadingScript<Scene> {
         this.landscape.addTiles(tma.getTiles());
         this.landscape.setHeight(tma.getHeight());
         this.landscape.setWidth(tma.getWidth());
+        System.out.println("Height:" + tma.getHeight());
     }
 
     @Override

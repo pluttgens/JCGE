@@ -28,7 +28,7 @@ public class TileMapAssetLoader implements TypeLoader {
         List<Tile> tiles = new ArrayList<>();
         TileSheet ts = new TileSheet(s.nextLine());
         int width = 1;
-        int height = 1;
+        int height = 0;
         int y = 0;
         while (s.hasNext()) {
             String line = s.nextLine();

@@ -292,7 +292,7 @@ public class Position extends Component {
         return (float) Math.hypot(this.x - position.x, this.y - position.y);
     }
 
-    @Override
+    @Override     
     public void update() {
 
         if (collisionPoint != null) {
@@ -302,7 +302,7 @@ public class Position extends Component {
         } else if (this.nextPosition != null) {
             this.x = (int) this.nextPosition.getX();
             this.y = (int) this.nextPosition.getY();
-            System.out.println(getxVelocity());
+
         }
     }
 
