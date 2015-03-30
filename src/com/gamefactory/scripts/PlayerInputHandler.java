@@ -10,6 +10,7 @@ import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.game.Game;
 import com.gamefactory.services.ServiceLocator;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -21,7 +22,7 @@ public class PlayerInputHandler extends UpdateScript<ComponentManager> implement
 
     private final static int NB_KEYS = Short.MAX_VALUE;
     private final static String VELOCITY_KEY = PlayerInputHandler.class.getSimpleName();
-    
+
     private Position position;
     private boolean[] keys;
 
@@ -40,12 +41,7 @@ public class PlayerInputHandler extends UpdateScript<ComponentManager> implement
     @Override
     public void load() {
         this.position = (Position) owner.getOwner().getComponent(Position.class);
-        this.position.setX(Game.WIDTH / 2 - 20);
-        this.position.setY(Game.HEIGHT / 2 - 20);
-        this.position.setDefaultVelocity(5);
     }
-    
-    
 
     private void resetDirectionalArrow() {
         this.keys[KeyEvent.VK_LEFT] = false;
@@ -77,34 +73,51 @@ public class PlayerInputHandler extends UpdateScript<ComponentManager> implement
     public void execute() {
         if (this.keys[KeyEvent.VK_LEFT]) {
             position.setOrientation(Position.Orientation.LEFT);
-            position.setxMainVelocity(-this.position.getDefaultVelocity());
+            position.setDestination(position.getDestination() == null
+                    ? new Point(position.getX() - position.getDefaultVelocity(), position.getY())
+                    : new Point(position.getDestination().x - position.getDefaultVelocity(), position.getDestination().y));
         } else {
             if (position.getxVelocity() < 0) {
-                position.setxMainVelocity(0);
+                position.setDestination(position.getDestination() == null
+                        ? new Point(position.getX(), position.getY())
+                        : new Point(position.getDestination().x, position.getDestination().y));
             }
         }
         if (this.keys[KeyEvent.VK_RIGHT]) {
             position.setOrientation(Position.Orientation.RIGHT);
-            position.setxMainVelocity(this.position.getDefaultVelocity());
+            position.setDestination(position.getDestination() == null
+                    ? new Point(position.getX() + position.getDefaultVelocity(), position.getY())
+                    : new Point(position.getDestination().x + position.getDefaultVelocity(), position.getDestination().y));
         } else {
             if (position.getxVelocity() > 0) {
-                position.setxMainVelocity(0);
+                position.setDestination(position.getDestination() == null
+                        ? new Point(position.getX(), position.getY())
+                        : new Point(position.getDestination().x, position.getDestination().y));
             }
         }
         if (this.keys[KeyEvent.VK_UP]) {
             position.setOrientation(Position.Orientation.UP);
-            position.setyMainVelocity(-this.position.getDefaultVelocity());
+            position.setDestination(position.getDestination() == null
+                    ? new Point(position.getX(), position.getY() - position.getDefaultVelocity())
+                    : new Point(position.getDestination().x, position.getDestination().y - position.getDefaultVelocity()));
         } else {
             if (position.getyVelocity() < 0) {
-                position.setyMainVelocity(0);
+                position.setDestination(position.getDestination() == null
+                        ? new Point(position.getX(), position.getY())
+                        : new Point(position.getDestination().x, position.getDestination().y));
             }
         }
         if (this.keys[KeyEvent.VK_DOWN]) {
             position.setOrientation(Position.Orientation.DOWN);
-            position.setyMainVelocity(this.position.getDefaultVelocity());
+            position.setDestination(position.getDestination() == null
+                    ? new Point(position.getX(), position.getY() + position.getDefaultVelocity())
+                    : new Point(position.getDestination().x, position.getDestination().y + position.getDefaultVelocity()));
+
         } else {
             if (position.getyVelocity() > 0) {
-                position.setyMainVelocity(0);
+                position.setDestination(position.getDestination() == null
+                        ? new Point(position.getX(), position.getY())
+                        : new Point(position.getDestination().x, position.getDestination().y));
             }
         }
     }

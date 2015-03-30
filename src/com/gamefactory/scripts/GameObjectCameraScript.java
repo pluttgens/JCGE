@@ -8,7 +8,6 @@ package com.gamefactory.scripts;
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.Camera;
 import com.gamefactory.displayable.ComponentManager;
-import com.gamefactory.displayable.Scene;
 import com.gamefactory.game.Game;
 
 /**
@@ -24,7 +23,7 @@ public class GameObjectCameraScript extends UpdateScript<ComponentManager> {
     @Override
     public void load() {
         this.c = this.owner.getOwner().getScene().getCamera();
-        this.focus = (Position) this.owner.getOwner().getComponentFromGO("HERO", Position.class);
+        this.focus = (Position) this.owner.getOwner().getComponent(Position.class);
     }
 
     @Override

@@ -47,11 +47,11 @@ public class Renderer extends Component {
     public BufferedImage getImage() {
         return image;
     }
-    
+
     public void enable() {
         this.isActived = true;
     }
-    
+
     public void disable() {
         this.isActived = false;
     }
@@ -63,8 +63,12 @@ public class Renderer extends Component {
      */
     public void setImage(BufferedImage image) {
         this.image = image;
-        this.position.setHeight(this.image.getHeight());
-        this.position.setWidth(this.image.getWidth());
+        if (position.getHeight() == 0) {
+            this.position.setHeight(this.image.getHeight());
+        }
+        if (position.getWidth() == 0) {
+            this.position.setWidth(this.image.getWidth());
+        }
     }
 
     /**

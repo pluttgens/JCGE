@@ -1,0 +1,11 @@
+{
+    "position":{
+        "x":	"200",
+		"y":	"200",
+        "offsetX": "10",
+		"offsetY": "2",
+		"width": "35",
+		"height": "50",
+		"defaultVelocity": "5"
+    }
+}

@@ -18,6 +18,7 @@ public interface TypeLoader {
     public final static String IMAGE = "image";
     public final static String AUDIO = "audio";
     public final static String TILEMAP = "tilemap";
+    public final static String OBJECTPROPERTIES = "objectproperties";
     
     public Asset LoadFromStream(AssetInputStreamProvider.InputStreamWithMime assetInputStream);
 

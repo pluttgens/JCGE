@@ -8,6 +8,7 @@ package com.gamefactory.displayable.scenes;
 import com.gamefactory.displayable.GameObject;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.displayable.gameobjects.Hero;
+import com.gamefactory.displayable.gameobjects.HeroClic;
 import com.gamefactory.displayable.gameobjects.Obstacle;
 import com.gamefactory.displayable.gameobjects.SpeedPotion;
 import com.gamefactory.displayable.gameobjects.Treasure;
@@ -27,7 +28,9 @@ public class MainScene extends Scene {
         SpeedPotion speedPotion = new SpeedPotion();
         Obstacle o=new Obstacle();
         Obstacle o1=new Obstacle();
+        HeroClic heroClic = new HeroClic();
         
+        this.addGameObject(heroClic.getId(), heroClic);
         this.addGameObject(hero.getId(), hero);
         this.addGameObject(treasure.getId(), treasure);
         this.addGameObject(speedPotion.getId(), speedPotion);
