@@ -14,6 +14,7 @@ import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONObject;
 
 /**
  *
@@ -21,22 +22,25 @@ import java.util.logging.Logger;
  */
 public class Game extends Canvas implements Runnable {
 
+    private final static String CONFIG_KEY = Game.class.getSimpleName().toLowerCase();
+    private final static JSONObject config = ServiceLocator.getConfig().getJSONObject(CONFIG_KEY);
+
     public final static int WINDOW_BORDER_SIZE = 20;
-    
+
     /**
      * Longueur de la fenêtre.
      */
-    public final static int WIDTH = 400;
+    public final static int WIDTH = config.getInt("width");
 
     /**
      * Hauteur de la fenêtre.
      */
-    public final static int HEIGHT = 600;
+    public final static int HEIGHT = config.getInt("height");
 
     /**
      * Nom du jeu.
      */
-    private String NAME;
+    private final static String NAME = config.getString("name");
 
     /**
      * Thread du jeu.
@@ -57,16 +61,11 @@ public class Game extends Canvas implements Runnable {
     private Displayable displayable;
 
     /**
-     * Construit un jeu à partir des dimensions de sa fenetre et de son nom.
-     *
-     * @param WIDTH  La longueur de la fenetre
-     * @param HEIGHT La hauteur de la fenetre
-     * @param NAME   Le nom du jeu
+     * Construit un jeu.
      *
      * @see #window()
      */
-    public Game(int WIDTH, int HEIGHT, String NAME) {
-        this.NAME = NAME;
+    public Game() {
         window();
     }
 
@@ -86,13 +85,13 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         ServiceLocator.provideService("audio", new AudioEngine());
-        DisplayableManager displayableManager = new DisplayableManager(){
+        DisplayableManager displayableManager = new DisplayableManager() {
 
             @Override
             protected void init() {
                 this.add(new MainScene());
             }
-            
+
         };
         displayableManager.init(new EmptyGameObject());
         displayableManager.load();
@@ -196,7 +195,7 @@ public class Game extends Canvas implements Runnable {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
         ServiceLocator.provideAssetManager(new AssetManager());
-        Game game = new Game(800, 600, "test");
+        Game game = new Game();
 
         /*
          * try {
