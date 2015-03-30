@@ -5,6 +5,7 @@
  */
 package com.gamefactory.scripts;
 
+import com.gamefactory.displayable.LoadingScript;
 import com.gamefactory.assets.assetmanager.TypeLoader;
 import com.gamefactory.assets.types.TileMapAsset;
 import com.gamefactory.displayable.Landscape;

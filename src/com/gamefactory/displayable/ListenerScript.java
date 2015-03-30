@@ -3,23 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
+package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
+import com.gamefactory.utils.events.Event;
 
 /**
  *
- * @param <T>
+ * @author scalpa
  */
-public abstract class UpdateScript<T extends Displayable>  extends AbstractScript<T> {
-    
-    
-    
+public abstract class ListenerScript<T extends Displayable> extends AbstractScript<T> {
+
+    public abstract void onEvent(Event e);
+
     @Override
     public final boolean isConsumed() {
         return false;
     }
-    
-    
-    public abstract void execute();
+
 }

@@ -6,6 +6,7 @@
 
 package com.gamefactory.scripts;
 
+import com.gamefactory.displayable.LoadingScript;
 import com.gamefactory.assets.types.ImageAsset;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;

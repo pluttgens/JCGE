@@ -5,6 +5,7 @@
  */
 package com.gamefactory.scripts;
 
+import com.gamefactory.displayable.ListenerScript;
 import com.gamefactory.components.Collider;
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.ComponentManager;

@@ -5,6 +5,7 @@
  */
 package com.gamefactory.scripts;
 
+import com.gamefactory.displayable.ListenerScript;
 import com.gamefactory.utils.events.Event;
 
 /**

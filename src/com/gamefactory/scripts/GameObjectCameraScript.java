@@ -5,6 +5,7 @@
  */
 package com.gamefactory.scripts;
 
+import com.gamefactory.displayable.UpdateScript;
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.Camera;
 import com.gamefactory.displayable.ComponentManager;

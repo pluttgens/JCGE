@@ -5,6 +5,7 @@
  */
 package com.gamefactory.scripts;
 
+import com.gamefactory.displayable.LoadingScript;
 import com.gamefactory.displayable.Landscape;
 import com.gamefactory.displayable.Scene;
 import java.awt.image.BufferedImage;

@@ -1,9 +1,6 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
-import com.gamefactory.scripts.ListenerScript;
-import com.gamefactory.scripts.LoadingScript;
-import com.gamefactory.scripts.UpdateScript;
 import com.gamefactory.utils.events.Event;
 import java.awt.Graphics;
 import java.util.ArrayList;

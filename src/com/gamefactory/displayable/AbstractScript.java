@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
+package com.gamefactory.displayable;
 import com.gamefactory.displayable.Script;
 import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.game.Displayable;
