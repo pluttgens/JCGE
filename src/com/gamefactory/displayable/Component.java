@@ -7,9 +7,7 @@ package com.gamefactory.displayable;
 
 import com.gamefactory.callbacks.game.Callbacks;
 import com.gamefactory.utils.events.Notifier;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * Un component encapsule une fonctionalité d'un game object.
@@ -29,11 +27,8 @@ public abstract class Component implements Callbacks<ComponentManager>/**
 
     private final Notifier notifier;
 
-    private final List<Listener<Component, Void>> listeners;
-
     public Component() {
         this.notifier = new Notifier(this);
-        this.listeners = new ArrayList<>();
     }
 
     @Override
