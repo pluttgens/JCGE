@@ -1,7 +1,6 @@
 package com.gamefactory.game;
 
-import com.gamefactory.callbacks.game.Callbacks;
-import java.awt.Graphics;
+import java.awt.*;
 
 /**
  * Interface définissant les deux méthodes à implémenter pour qu'un objet soit
@@ -13,8 +12,12 @@ import java.awt.Graphics;
  * 
  * @since 1.0
  */
-public interface Displayable<T extends Displayable> extends Callbacks<T> {
-    
+public interface Displayable<T extends Displayable> {
+
+    void init(T owner);
+
+    void load();
+
     void update();
 
     void render(Graphics g);

@@ -1,18 +1,11 @@
 package com.gamefactory.assets.types;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
-import com.sun.org.apache.bcel.internal.generic.F2D;
-import java.io.File;
-import java.io.IOException;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import javax.sound.sampled.*;
+import java.io.File;
 
 public class AudioAssetTest {
 

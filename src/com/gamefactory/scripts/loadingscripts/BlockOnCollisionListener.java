@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
+package com.gamefactory.scripts.loadingscripts;
 
-import com.gamefactory.displayable.ListenerScript;
 import com.gamefactory.components.Collider;
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.ScriptManager;
+import com.gamefactory.scripts.ListenerScript;
 import com.gamefactory.utils.events.Event;
 
 public class BlockOnCollisionListener extends ListenerScript<ComponentManager> {

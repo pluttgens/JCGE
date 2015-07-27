@@ -6,9 +6,9 @@ import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.GameObject;
 import com.gamefactory.displayable.Scene;
-import com.gamefactory.scripts.AnimatorFourDirections;
-import com.gamefactory.scripts.GameObjectCameraScript;
-import com.gamefactory.scripts.PlayerClikScript;
+import com.gamefactory.scripts.updatescripts.AnimatorFourDirections;
+import com.gamefactory.scripts.updatescripts.GameObjectCameraScript;
+import com.gamefactory.scripts.updatescripts.PlayerClikScript;
 
 public class HeroClic extends GameObject {
 

@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
+package com.gamefactory.scripts.updatescripts;
 
-import com.gamefactory.displayable.UpdateScript;
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.game.Game;
+import com.gamefactory.scripts.UpdateScript;
 import com.gamefactory.services.ServiceLocator;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 

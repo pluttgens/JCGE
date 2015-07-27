@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package com.gamefactory.displayable;
-import com.gamefactory.displayable.Script;
-import com.gamefactory.displayable.ScriptManager;
+
 import com.gamefactory.game.Displayable;
 /**
  *
@@ -13,8 +12,8 @@ import com.gamefactory.game.Displayable;
  * @param <T>
  */
 public abstract class AbstractScript<T extends Displayable> implements Script{
-   
-    protected ScriptManager<T> owner;
+
+    protected ScriptManager owner;
    
     @Override
     public void init(ScriptManager owner) {

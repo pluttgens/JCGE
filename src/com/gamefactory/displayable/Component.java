@@ -5,8 +5,10 @@
  */
 package com.gamefactory.displayable;
 
-import com.gamefactory.callbacks.game.Callbacks;
+import com.gamefactory.game.Displayable;
 import com.gamefactory.utils.events.Notifier;
+
+import java.awt.*;
 import java.util.Comparator;
 
 /**
@@ -18,14 +20,11 @@ import java.util.Comparator;
  *
  * @since 1.0
  */
-public abstract class Component implements Callbacks<ComponentManager>/**
- * implements Observer, Subject *
- */
+public abstract class Component implements Displayable<ComponentManager>
 {
 
-    protected ComponentManager owner;
-
     private final Notifier notifier;
+    protected ComponentManager owner;
 
     public Component() {
         this.notifier = new Notifier(this);
@@ -45,6 +44,11 @@ public abstract class Component implements Callbacks<ComponentManager>/**
 
     }
 
+    @Override
+    public void render(Graphics g) {
+
+    }
+
     /**
      * Retourne l'indice de priorité permettant de déterminer à quel moment la
      * méthode update du component va etre appelée par rapport aux autres
@@ -58,16 +62,22 @@ public abstract class Component implements Callbacks<ComponentManager>/**
         return 0;
     }
 
+    //@Override
+    public Notifier getNotifier() {
+        return this.notifier;
+    }
+
+    public ComponentManager getComponentManager() {
+        return this.owner;
+    }
+
     /**
      * Comparateur de component. Permet de déterminer l'ordre dans lequel les
      * components sont triés dans une liste afin d'être cohérent dans l'ordre
      * d'update.
      *
-     *
      * @author Pascal Luttgens
-     *
      * @version 1.0
-     *
      * @since 1.0
      */
     public static class UpdatePriorityComparator implements Comparator<Component> {
@@ -82,15 +92,6 @@ public abstract class Component implements Callbacks<ComponentManager>/**
                 return 1;
             }
         }
-    }
-
-    //@Override
-    public Notifier getNotifier() {
-        return this.notifier;
-    }
-
-    public ComponentManager getComponentManager() {
-        return this.owner;
     }
 
 }

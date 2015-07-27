@@ -5,7 +5,6 @@
  */
 package com.gamefactory.utils.events;
 
-import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
 

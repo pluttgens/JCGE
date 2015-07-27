@@ -1,13 +1,15 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
-import java.awt.Graphics;
+import com.gamefactory.game.Manager;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class DisplayableManager implements Manager<Displayable, Scene> {
+public abstract class SceneManager implements Manager<Displayable, Scene> {
 
     private Displayable owner = null;
 
@@ -15,7 +17,7 @@ public abstract class DisplayableManager implements Manager<Displayable, Scene> 
 
     private List<Scene> activeScenes;
 
-    public DisplayableManager() {
+    public SceneManager() {
         this.cachedScenes = new LinkedList<>();
         this.activeScenes = new ArrayList<>();
     }

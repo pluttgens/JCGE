@@ -6,7 +6,7 @@
 package com.gamefactory.assets.types;
 
 import com.gamefactory.assets.assetmanager.Asset;
-import java.util.Collection;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

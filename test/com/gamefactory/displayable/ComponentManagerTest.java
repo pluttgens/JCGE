@@ -5,11 +5,12 @@
  */
 package com.gamefactory.displayable;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.RigidBody;
 import com.gamefactory.displayable.gameobjects.EmptyGameObject;
+import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  *

@@ -3,11 +3,13 @@ package com.gamefactory.assets.types;
 import com.gamefactory.assets.assetmanager.Asset;
 import com.gamefactory.assets.assetmanager.AssetInputStreamProvider;
 import com.gamefactory.assets.assetmanager.AssetManager;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class AudioAssetLoaderTest {
     

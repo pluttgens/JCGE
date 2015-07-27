@@ -6,8 +6,8 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -44,12 +44,12 @@ public class LandscapeHorizontal implements Displayable<Scene> {
         }
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-    
     public int getX() {
         return this.x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
     }
     
     public int getY() {
@@ -71,13 +71,9 @@ public class LandscapeHorizontal implements Displayable<Scene> {
     public void update() {
     }
 
-    public void setRenderedArea(Rectangle rectangle) {
-        this.renderedArea.setBounds(rectangle);
-    }
-
     @Override
     public void render(Graphics g) {
-        
+
     }
 
     @Override
@@ -94,6 +90,10 @@ public class LandscapeHorizontal implements Displayable<Scene> {
 
     public Rectangle getRenderedArea() {
         return renderedArea;
+    }
+
+    public void setRenderedArea(Rectangle rectangle) {
+        this.renderedArea.setBounds(rectangle);
     }
     
 }

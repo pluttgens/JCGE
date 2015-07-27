@@ -6,7 +6,6 @@
 package com.gamefactory.displayable.gameobjects;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

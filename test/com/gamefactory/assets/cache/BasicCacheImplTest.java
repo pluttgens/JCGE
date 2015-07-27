@@ -7,10 +7,9 @@ package com.gamefactory.assets.cache;
 
 import com.gamefactory.assets.assetmanager.Asset;
 import com.gamefactory.assets.assetmanager.AssetKey;
-import com.gamefactory.assets.types.AudioAsset;
 import com.gamefactory.assets.types.ImageAsset;
-import javax.sound.sampled.AudioFormat;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**

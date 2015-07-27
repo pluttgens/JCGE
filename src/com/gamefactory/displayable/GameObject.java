@@ -3,7 +3,7 @@ package com.gamefactory.displayable;
 import com.gamefactory.game.Displayable;
 import com.gamefactory.utils.events.Notifier;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 /**
  * Superclass représentant tous les objets du jeu.
@@ -26,7 +26,7 @@ public abstract class GameObject implements Displayable<Scene> {
     protected final ComponentManager componentManager;
 
     protected String id;
-
+    protected Scene owner;
     /**
      * Flag indiquant si le Game Object doit call update et render. Utile pour
      * le pattern object pool qui consiste a avoir une liste d'objets
@@ -35,8 +35,6 @@ public abstract class GameObject implements Displayable<Scene> {
      * - Pascal Luttgens.
      */
     private boolean isActive;
-
-    protected Scene owner;
 
     public GameObject() {
         this.componentManager = new ComponentManager();
@@ -71,21 +69,21 @@ public abstract class GameObject implements Displayable<Scene> {
     }
 
     /**
-     * Initialise la scene
-     *
-     * @param scene
-     */
-    public void setOwner(Scene scene) {
-        this.owner = scene;
-    }
-
-    /**
      * Recupere la scene
      *
      * @return
      */
     public Scene getOwner() {
         return this.owner;
+    }
+
+    /**
+     * Initialise la scene
+     *
+     * @param scene
+     */
+    public void setOwner(Scene scene) {
+        this.owner = scene;
     }
 
     /**
@@ -179,7 +177,7 @@ public abstract class GameObject implements Displayable<Scene> {
         return true;
     }
 
-    public ScriptManager<ComponentManager> getScriptManager() {
+    public ScriptManager getScriptManager() {
         return this.componentManager.getScriptManager();
     }
 

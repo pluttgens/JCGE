@@ -1,10 +1,11 @@
 package com.gamefactory.assets.types;
 
 import com.gamefactory.assets.assetmanager.Asset;
-import java.util.Arrays;
-import java.util.Objects;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.DataLine;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * La classe AudioAsset représente le stockage d'une resource audio.

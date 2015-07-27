@@ -2,19 +2,17 @@ package com.gamefactory.game;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
 import com.gamefactory.audioengine.AudioEngine;
-import com.gamefactory.displayable.DisplayableManager;
+import com.gamefactory.displayable.Scene;
+import com.gamefactory.displayable.SceneManager;
 import com.gamefactory.displayable.gameobjects.EmptyGameObject;
-import com.gamefactory.displayable.scenes.MainScene;
 import com.gamefactory.services.ServiceLocator;
+import org.json.JSONObject;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.json.JSONObject;
 
 /**
  *
@@ -22,11 +20,9 @@ import org.json.JSONObject;
  */
 public class Game extends Canvas implements Runnable {
 
+    public final static int WINDOW_BORDER_SIZE = 20;
     private final static String CONFIG_KEY = Game.class.getSimpleName().toLowerCase();
     private final static JSONObject config = ServiceLocator.getConfig().getJSONObject(CONFIG_KEY);
-
-    public final static int WINDOW_BORDER_SIZE = 20;
-
     /**
      * Longueur de la fenêtre.
      */
@@ -55,7 +51,7 @@ public class Game extends Canvas implements Runnable {
     /**
      * Ensemble des scènes du jeu.
      *
-     * @see pcomgamefactory.displayable.Scene
+     * @see com.gamefactory.displayable.Scene
      * @see Displayable
      */
     private Displayable displayable;
@@ -67,6 +63,35 @@ public class Game extends Canvas implements Runnable {
      */
     public Game() {
         window();
+    }
+
+    public static void main(String[] args) throws IOException {
+        try {
+            Class.forName("com.gamefactory.components.Sound");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ServiceLocator.provideAssetManager(new AssetManager());
+        Game game = new Game();
+
+        /*
+         * try {
+         *
+         * AudioEngine ae = new AudioEngine(); ae.start(); Notifier n = new
+         * Notifier(); n.registerObserver(ae); n.notifyObservers(new
+         * AudioEvent(n, AudioEvent.Type.PLAY, "test1.wav"));
+         * n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY,
+         * "test2.wav")); Thread.sleep(500); n.notifyObservers(new AudioEvent(n,
+         * AudioEvent.Type.PLAY, "test1.wav")); Thread.sleep(10000);
+         * n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY,
+         * "test2.wav", "2")); n.notifyObservers(new AudioEvent(n,
+         * AudioEvent.Type.PLAY, "test1.wav")); n.notifyObservers(new
+         * AudioEvent(n, AudioEvent.Type.STOP, "test2.wav"));
+         * Thread.sleep(10000); n.notifyObservers(new AudioEvent(n,
+         * AudioEvent.Type.PLAY, "test2.wav")); } catch (InterruptedException
+         * ex) { Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null,
+         * ex); }
+         */
     }
 
     /**
@@ -85,17 +110,22 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         ServiceLocator.provideService("audio", new AudioEngine());
-        DisplayableManager displayableManager = new DisplayableManager() {
+        SceneManager sceneManager = new SceneManager() {
 
             @Override
             protected void init() {
-                this.add(new MainScene());
+                this.add(new Scene() {
+                    @Override
+                    protected void init() {
+
+                    }
+                });
             }
 
         };
-        displayableManager.init(new EmptyGameObject());
-        displayableManager.load();
-        this.displayable = displayableManager;
+        sceneManager.init(new EmptyGameObject());
+        sceneManager.load();
+        this.displayable = sceneManager;
     }
 
     /**
@@ -186,34 +216,5 @@ public class Game extends Canvas implements Runnable {
 
         g.dispose();
         bs.show();
-    }
-
-    public static void main(String[] args) throws IOException {
-        try {
-            Class.forName("com.gamefactory.components.Sound");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        ServiceLocator.provideAssetManager(new AssetManager());
-        Game game = new Game();
-
-        /*
-         * try {
-         *
-         * AudioEngine ae = new AudioEngine(); ae.start(); Notifier n = new
-         * Notifier(); n.registerObserver(ae); n.notifyObservers(new
-         * AudioEvent(n, AudioEvent.Type.PLAY, "test1.wav"));
-         * n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY,
-         * "test2.wav")); Thread.sleep(500); n.notifyObservers(new AudioEvent(n,
-         * AudioEvent.Type.PLAY, "test1.wav")); Thread.sleep(10000);
-         * n.notifyObservers(new AudioEvent(n, AudioEvent.Type.PLAY,
-         * "test2.wav", "2")); n.notifyObservers(new AudioEvent(n,
-         * AudioEvent.Type.PLAY, "test1.wav")); n.notifyObservers(new
-         * AudioEvent(n, AudioEvent.Type.STOP, "test2.wav"));
-         * Thread.sleep(10000); n.notifyObservers(new AudioEvent(n,
-         * AudioEvent.Type.PLAY, "test2.wav")); } catch (InterruptedException
-         * ex) { Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null,
-         * ex); }
-         */
     }
 }

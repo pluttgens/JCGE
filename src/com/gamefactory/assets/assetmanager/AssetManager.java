@@ -1,13 +1,14 @@
 package com.gamefactory.assets.assetmanager;
 
-import com.gamefactory.assets.providers.FileProvider;
 import com.gamefactory.assets.cache.BasicCacheImpl;
+import com.gamefactory.assets.providers.FileProvider;
 import com.gamefactory.services.ServiceLocator;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.json.JSONObject;
 
 /**
  * L'AssetManager est la facade de tout notre systeme de gestion d'asset. C'est
@@ -29,10 +30,9 @@ import org.json.JSONObject;
 public class AssetManager {
 
     private final Object lock = new Object();
-
-    private AssetInputStreamProvider provider;
     private final HashMap<String, TypeLoader> loaders;
     private final AssetCache cache;
+    private AssetInputStreamProvider provider;
 
     // Doit être vide.
     public AssetManager() {

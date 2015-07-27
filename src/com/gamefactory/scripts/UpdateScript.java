@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.displayable;
+package com.gamefactory.scripts;
 
+import com.gamefactory.displayable.AbstractScript;
 import com.gamefactory.game.Displayable;
 
 /**

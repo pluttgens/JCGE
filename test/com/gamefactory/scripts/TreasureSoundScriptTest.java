@@ -6,7 +6,6 @@
 package com.gamefactory.scripts;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

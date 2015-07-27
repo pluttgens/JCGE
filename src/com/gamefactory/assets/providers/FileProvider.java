@@ -3,12 +3,13 @@ package com.gamefactory.assets.providers;
 import com.gamefactory.assets.assetmanager.AssetInputStreamProvider;
 import com.gamefactory.assets.assetmanager.AssetKey;
 import com.gamefactory.services.ServiceLocator;
+import org.json.JSONException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.json.JSONException;
 
 /**
  * Permet de charger un InputStreamWithMime à partir d'un asset stocké sous la

@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
+package com.gamefactory.scripts.updatescripts;
 
-import com.gamefactory.displayable.UpdateScript;
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.ScriptManager;
+import com.gamefactory.scripts.UpdateScript;
 import com.gamefactory.services.ServiceLocator;
-import java.awt.Canvas;
-import java.awt.Component;
-import java.awt.Point;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.SwingUtilities;
 
 /**
  *

@@ -6,9 +6,8 @@ import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.GameObject;
 import com.gamefactory.displayable.Scene;
-import com.gamefactory.scripts.AnimatorFourDirections;
-import com.gamefactory.scripts.GameObjectCameraScript;
-import com.gamefactory.scripts.PlayerInputHandler;
+import com.gamefactory.scripts.updatescripts.AnimatorFourDirections;
+import com.gamefactory.scripts.updatescripts.PlayerInputHandler;
 
 public class Hero extends GameObject {
 

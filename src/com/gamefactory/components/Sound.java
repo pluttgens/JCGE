@@ -2,7 +2,6 @@ package com.gamefactory.components;
 
 import com.gamefactory.audioengine.AudioEngine;
 import com.gamefactory.displayable.Component;
-import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.services.ServiceLocator;
 import com.gamefactory.utils.events.Event;
 import com.gamefactory.utils.events.Observer;

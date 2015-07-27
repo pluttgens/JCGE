@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
+package com.gamefactory.scripts.loadingscripts;
 
-import com.gamefactory.displayable.LoadingScript;
 import com.gamefactory.assets.assetmanager.TypeLoader;
 import com.gamefactory.assets.types.TileMapAsset;
 import com.gamefactory.displayable.Landscape;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.displayable.ScriptManager;
+import com.gamefactory.scripts.LoadingScript;
 import com.gamefactory.services.ServiceLocator;
 
 /**

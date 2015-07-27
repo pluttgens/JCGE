@@ -1,8 +1,9 @@
 package com.gamefactory.game;
 
 import com.gamefactory.services.ServiceLocator;
-import java.awt.Dimension;
-import javax.swing.JFrame;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Fenetre du jeu.

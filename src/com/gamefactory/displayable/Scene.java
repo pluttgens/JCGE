@@ -1,13 +1,13 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
+import javafx.util.Pair;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
-import javafx.util.Pair;
 
 /**
  * @author Pascal Luttgens
@@ -16,25 +16,22 @@ import javafx.util.Pair;
  *
  * @since 1.0
  */
-public abstract class Scene implements Displayable<DisplayableManager> {
+public abstract class Scene implements Displayable<SceneManager> {
 
-    private DisplayableManager owner;
+    private SceneManager owner;
     private List<Pair<String, GameObject>> gameObjects;
     private Landscape Landscape;
     private Camera camera;
-    private ScriptManager<Scene> scriptManager;
 
     public Scene() {
         this.camera = new Camera();
         this.Landscape = new Landscape();
-        this.scriptManager = new ScriptManager<>();
         this.gameObjects = new ArrayList<>();
     }
 
     @Override
-    public void init(DisplayableManager owner) {
+    public void init(SceneManager owner) {
         this.owner = owner;
-        this.scriptManager.init(this);
         this.Landscape.init(this);
         this.camera.init(this);
         this.init();
@@ -47,7 +44,6 @@ public abstract class Scene implements Displayable<DisplayableManager> {
     public void load() {
         this.Landscape.load();
         this.camera.load();
-        this.scriptManager.load();
         this.getGameObjects().stream().forEach(go -> go.load());
     }
 
@@ -94,7 +90,4 @@ public abstract class Scene implements Displayable<DisplayableManager> {
         return camera;
     }
 
-    public void addScript(Script... scripts) {
-        this.scriptManager.add(scripts);
-    }
 }

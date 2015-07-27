@@ -5,10 +5,13 @@
  */
 package com.gamefactory.game;
 
+
 /**
  *
  * @author scalpa
  */
-public interface Container {
-    
+public interface Manager<T extends Displayable, U> extends Displayable<T> {
+
+    void add(U... u);
+
 }

@@ -9,10 +9,11 @@ import com.gamefactory.assets.assetmanager.Asset;
 import com.gamefactory.assets.assetmanager.AssetInputStreamProvider;
 import com.gamefactory.assets.assetmanager.TypeLoader;
 import com.gamefactory.services.ServiceLocator;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import org.json.JSONObject;
 
 /**
  *

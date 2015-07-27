@@ -10,7 +10,7 @@ import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.GameObject;
 import com.gamefactory.displayable.Scene;
-import com.gamefactory.scripts.ObstacleScript;
+import com.gamefactory.scripts.loadingscripts.ObstacleScript;
 
 
 /**

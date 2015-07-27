@@ -6,7 +6,6 @@
 package com.gamefactory.assets.providers;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

@@ -1,7 +1,6 @@
 package com.gamefactory.graphicengine;
 
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Tile {

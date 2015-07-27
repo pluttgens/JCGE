@@ -1,14 +1,19 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.game.Displayable;
+import com.gamefactory.game.Manager;
+import com.gamefactory.scripts.ListenerScript;
+import com.gamefactory.scripts.LoadingScript;
+import com.gamefactory.scripts.UpdateScript;
 import com.gamefactory.utils.events.Event;
-import java.awt.Graphics;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ScriptManager<T extends Displayable> implements Manager<T, Script> {
+public final class ScriptManager implements Manager<ComponentManager, Script> {
 
-    private T owner;
+    private ComponentManager owner;
 
     private List<UpdateScript> scriptsUpdat;
 
@@ -17,7 +22,7 @@ public final class ScriptManager<T extends Displayable> implements Manager<T, Sc
     private List<ListenerScript> scriptsList;
 
     @Override
-    public void init(T owner) {
+    public void init(ComponentManager owner) {
         this.owner = owner;
         this.scriptsUpdat = new ArrayList<>();
         this.scriptsLoad = new ArrayList<>();
@@ -43,7 +48,7 @@ public final class ScriptManager<T extends Displayable> implements Manager<T, Sc
         this.scriptsUpdat.stream().forEach(s -> s.execute());
     }
 
-    public T getOwner() {
+    public Displayable getOwner() {
         return owner;
     }
 

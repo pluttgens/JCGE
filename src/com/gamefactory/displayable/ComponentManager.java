@@ -1,8 +1,9 @@
 package com.gamefactory.displayable;
 
 import com.gamefactory.components.Renderer;
-import java.awt.Graphics;
+import com.gamefactory.game.Manager;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -22,13 +23,13 @@ public final class ComponentManager implements Manager<GameObject, Component> {
 
     private GameObject owner;
     private List<Component> components;
-    private ScriptManager<ComponentManager> scriptManager;
+    private ScriptManager scriptManager;
 
     @Override
     public void init(GameObject owner) {
         this.owner = owner;
         this.components = new ArrayList<>();
-        this.scriptManager = new ScriptManager<>();
+        this.scriptManager = new ScriptManager();
         this.scriptManager.init(this);
     }
 
@@ -68,7 +69,7 @@ public final class ComponentManager implements Manager<GameObject, Component> {
         );
     }
 
-    public ScriptManager<ComponentManager> getScriptManager() {
+    public ScriptManager getScriptManager() {
         return this.scriptManager;
     }
 

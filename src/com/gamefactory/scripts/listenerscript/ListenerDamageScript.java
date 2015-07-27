@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
+package com.gamefactory.scripts.listenerscript;
 
-import com.gamefactory.displayable.ListenerScript;
+import com.gamefactory.scripts.ListenerScript;
 import com.gamefactory.utils.events.Event;
 
 /**

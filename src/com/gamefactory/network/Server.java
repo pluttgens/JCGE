@@ -5,42 +5,28 @@
  */
 package com.gamefactory.network;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.net.BindException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
+import java.io.*;
+import java.net.*;
 
 /**
  *
  * @author ngo
  */
 public class Server implements Runnable {
-    
+
+    public Thread thread;
     private DatagramSocket datagramSocket;
     private InetAddress IPAddress;
-    
     // output
     private ObjectOutput out = null;
     private ByteArrayOutputStream baos = null;
-
     //input
     private ObjectInputStream ois = null;
     private ByteArrayInputStream bais = null;
-	
     private ServerSocket server = null;
     private Socket socket = null;
     private ObjectOutputStream outputStream = null;
     private ObjectInputStream inputStream = null;
-	
-    public Thread thread;
     private boolean running = false;
     private int port;
 

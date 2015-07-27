@@ -11,7 +11,8 @@ import com.gamefactory.assets.assetmanager.TypeLoader;
 import com.gamefactory.graphicengine.Tile;
 import com.gamefactory.graphicengine.TileEngine;
 import com.gamefactory.graphicengine.TileSheet;
-import java.awt.Point;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

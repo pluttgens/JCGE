@@ -3,8 +3,8 @@ package com.gamefactory.components;
 import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.GameObject;
 import com.gamefactory.game.Game;
-import java.awt.Point;
-import java.awt.Rectangle;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

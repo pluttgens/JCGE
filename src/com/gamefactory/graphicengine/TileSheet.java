@@ -3,12 +3,13 @@ package com.gamefactory.graphicengine;
 import com.gamefactory.assets.assetmanager.TypeLoader;
 import com.gamefactory.assets.types.ImageAsset;
 import com.gamefactory.services.ServiceLocator;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import javax.imageio.ImageIO;
 
 /**
  * La classe TileSheet représente une grille de tile.

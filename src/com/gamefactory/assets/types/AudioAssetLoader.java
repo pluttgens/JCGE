@@ -8,16 +8,12 @@ package com.gamefactory.assets.types;
 import com.gamefactory.assets.assetmanager.Asset;
 import com.gamefactory.assets.assetmanager.AssetInputStreamProvider;
 import com.gamefactory.assets.assetmanager.TypeLoader;
+
+import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * La classe AudioAssetLoader permet de créer un AudioAsset optimisé pour son

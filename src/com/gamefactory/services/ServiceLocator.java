@@ -2,16 +2,16 @@ package com.gamefactory.services;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
 import com.gamefactory.utils.events.Notifier;
-import com.gamefactory.utils.events.Subject;
-import java.awt.Canvas;
+import org.json.JSONObject;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import org.json.JSONObject;
 
 /**
  * Le locateur de service sert d'interface entre le code et les services afin de
@@ -33,26 +33,6 @@ public class ServiceLocator {
     private final static HashMap<String, Service> services = new HashMap<>();
     private static AssetManager assetManager;
     private static GameWindow gameWindow;
-
-    public static class GameWindow {
-
-        private final Canvas canvas;
-        private final JFrame frame;
-
-        public GameWindow(Canvas canvas, JFrame frame) {
-            this.canvas = canvas;
-            this.frame = frame;
-        }
-
-        public Canvas getCanvas() {
-            return canvas;
-        }
-
-        public JFrame getFrame() {
-            return frame;
-        }
-
-    }
 
     public static void provideService(String serviceName, Service service) {
         ServiceLocator.services.put(serviceName.toUpperCase(), service);
@@ -109,5 +89,25 @@ public class ServiceLocator {
 
     public static Notifier getNotifier() {
         return ServiceLocator.notifier;
+    }
+
+    public static class GameWindow {
+
+        private final Canvas canvas;
+        private final JFrame frame;
+
+        public GameWindow(Canvas canvas, JFrame frame) {
+            this.canvas = canvas;
+            this.frame = frame;
+        }
+
+        public Canvas getCanvas() {
+            return canvas;
+        }
+
+        public JFrame getFrame() {
+            return frame;
+        }
+
     }
 }

@@ -8,12 +8,13 @@ package com.gamefactory.assets.types;
 import com.gamefactory.assets.assetmanager.Asset;
 import com.gamefactory.assets.assetmanager.AssetInputStreamProvider;
 import com.gamefactory.assets.assetmanager.TypeLoader;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
  * La classe ImageAssetLoader permet de créer un ImageAsset optimisé pour son

@@ -7,6 +7,7 @@ package com.gamefactory.assets.types;
 
 import com.gamefactory.assets.assetmanager.Asset;
 import com.gamefactory.graphicengine.Tile;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;

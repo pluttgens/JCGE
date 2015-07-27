@@ -1,16 +1,13 @@
 package com.gamefactory.audioengine;
 
 import com.gamefactory.assets.types.AudioAsset;
-import java.util.HashMap;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineUnavailableException;
 import com.gamefactory.services.Service;
+import com.gamefactory.services.ServiceLocator;
+
+import javax.sound.sampled.*;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.gamefactory.services.ServiceLocator;
-import javax.sound.sampled.FloatControl;
 
 /**
  * AudioEngine est le moteur audio par défaut de la librairie, il permet de

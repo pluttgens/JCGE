@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
+package com.gamefactory.scripts.updatescripts;
 
-import com.gamefactory.displayable.UpdateScript;
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.Camera;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.game.Game;
+import com.gamefactory.scripts.UpdateScript;
 
 /**
  *

@@ -5,8 +5,6 @@
  */
 package com.gamefactory.utils.events;
 
-import java.util.EventObject;
-
 /**
  * L'interface observer représente tous les observers, c'est a dire les classes
  * qui attendent des events de la part de code qui leur est inconnu.

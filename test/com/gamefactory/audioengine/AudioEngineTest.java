@@ -3,7 +3,6 @@ package com.gamefactory.audioengine;
 import com.gamefactory.assets.assetmanager.AssetManager;
 import com.gamefactory.services.ServiceLocator;
 import org.junit.Test;
-import com.gamefactory.utils.events.Notifier;
 
 /**
  *

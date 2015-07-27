@@ -2,7 +2,8 @@ package com.gamefactory.components;
 
 import com.gamefactory.assets.types.ObjectPropertiesAsset;
 import com.gamefactory.displayable.Component;
-import java.awt.Point;
+
+import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,41 +27,23 @@ import java.util.logging.Logger;
  */
 public class Position extends Component {
 
-    public enum Orientation {
-
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-
-    }
-
     private boolean hasCollisionHappened;
-
     private int defaultVelocity;
-
     private int x;
     private int y;
-
     private int xMainVelocity;
     private int yMainVelocity;
-
     private HashMap<String, Integer> xVelocityModifiers;
     private HashMap<String, Integer> yVelocityModifiers;
-
     private ScheduledExecutorService ses = Executors.newScheduledThreadPool(10);
-
     private Orientation orientation;
-
     private int offsetX;
     private int offsetY;
     private int height;
     private int width;
-
     private Point destination;
     private Point nextPosition;
     private Point collisionPoint;
-
     public Position() {
         this.x = 0;
         this.y = 520;
@@ -292,7 +275,7 @@ public class Position extends Component {
         return (float) Math.hypot(this.x - position.x, this.y - position.y);
     }
 
-    @Override     
+    @Override
     public void update() {
 
         if (collisionPoint != null) {
@@ -437,6 +420,15 @@ public class Position extends Component {
                 }
             }
         }
+    }
+
+    public enum Orientation {
+
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+
     }
 
 }

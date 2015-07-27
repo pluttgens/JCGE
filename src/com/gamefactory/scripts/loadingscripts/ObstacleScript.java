@@ -4,21 +4,22 @@
  * and open the template in the editor.
  */
 
-package com.gamefactory.scripts;
+package com.gamefactory.scripts.loadingscripts;
 
-import com.gamefactory.displayable.LoadingScript;
 import com.gamefactory.assets.types.ImageAsset;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
 import com.gamefactory.displayable.ComponentManager;
+import com.gamefactory.scripts.LoadingScript;
 import com.gamefactory.services.ServiceLocator;
+
 import java.awt.image.BufferedImage;
 
 /**
  *
  * @author Adrien
  */
-public class ObstacleScript extends LoadingScript<ComponentManager>{
+public class ObstacleScript extends LoadingScript<ComponentManager> {
 
     private Renderer ren;
     

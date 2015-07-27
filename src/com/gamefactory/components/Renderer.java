@@ -1,8 +1,8 @@
 package com.gamefactory.components;
 
 import com.gamefactory.displayable.Component;
-import com.gamefactory.displayable.ComponentManager;
-import java.awt.Graphics;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Renderer extends Component {
@@ -48,14 +48,6 @@ public class Renderer extends Component {
         return image;
     }
 
-    public void enable() {
-        this.isActived = true;
-    }
-
-    public void disable() {
-        this.isActived = false;
-    }
-
     /**
      * Permet de changer l'image actuellement affichée par le component
      *
@@ -69,6 +61,14 @@ public class Renderer extends Component {
         if (position.getWidth() == 0) {
             this.position.setWidth(this.image.getWidth());
         }
+    }
+
+    public void enable() {
+        this.isActived = true;
+    }
+
+    public void disable() {
+        this.isActived = false;
     }
 
     /**

@@ -1,11 +1,11 @@
-package com.gamefactory.scripts;
+package com.gamefactory.scripts.loadingscripts;
 
-import com.gamefactory.displayable.LoadingScript;
 import com.gamefactory.assets.assetmanager.TypeLoader;
 import com.gamefactory.assets.types.ObjectPropertiesAsset;
 import com.gamefactory.components.Position;
 import com.gamefactory.displayable.Scene;
 import com.gamefactory.game.Game;
+import com.gamefactory.scripts.LoadingScript;
 import com.gamefactory.services.ServiceLocator;
 
 /**

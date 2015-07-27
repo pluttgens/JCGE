@@ -1,14 +1,12 @@
 package com.gamefactory.displayable;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.gamefactory.game.Displayable;
-import com.gamefactory.game.Game;
 import com.gamefactory.graphicengine.Tile;
-import java.awt.Rectangle;
+
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Un landscape représente le décor d'une scène.
@@ -48,18 +46,6 @@ public class Landscape implements Displayable<Scene> {
     public void update() {
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setRenderedArea(Rectangle rectangle) {
-        this.renderedArea.setBounds(rectangle);
-    }
-
     @Override
     public void render(Graphics g) {
         for (Tile tile : tiles) {
@@ -77,12 +63,24 @@ public class Landscape implements Displayable<Scene> {
         return width;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
     public int getHeight() {
         return height;
     }
 
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public Rectangle getRenderedArea() {
         return renderedArea;
+    }
+
+    public void setRenderedArea(Rectangle rectangle) {
+        this.renderedArea.setBounds(rectangle);
     }
 
     public void addTiles(Tile... tiles) {

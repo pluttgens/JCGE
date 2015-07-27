@@ -4,8 +4,7 @@
  */
 package com.gamefactory.graphicengine;
 
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 
 /**
  * <p>
@@ -69,6 +68,34 @@ public class Coord2D {
     }
 
     /**
+     * <p>
+     * Convertit l'indice donné en paramètre en couple de coordonnées 2D en
+     * fonction de la largeur du plan. ( Sur une grille de 3x3, en parcourant la
+     * grille de ligne en ligne du haut vers le bas, la coordonnée de la
+     * première case (0,0) = 0, (1,0) = 1, (2,0) = 2 ; on passe à la deuxième
+     * ligne, (0,1) = 3, (1,1) = 4, (2,1) = 5 ... ).</p>
+     *
+     *
+     * @param ratio largeur du plan qui doit être supérieur à 1.
+     * @param pos   indice de la position dans le tableau 1D
+     *
+     * @return coordonnée en 2D
+     *
+     * @throws IllegalArgumentException Si ratio &lt;= 1
+     *
+     * @see #x
+     * @see #y
+     *
+     * @since 1.1
+     */
+    public static Coord2D convCoord(int ratio, int pos) {
+        if (ratio <= 1) {
+            throw new IllegalArgumentException("Width must be strictly superior to 1");
+        }
+        return new Coord2D(pos % ratio, pos / ratio);
+    }
+
+    /**
      * Retourne la coordonnée en abscisse
      *
      * @return coordonnée de l'objet en abscisse
@@ -79,19 +106,6 @@ public class Coord2D {
      */
     public int getX() {
         return this.x;
-    }
-
-    /**
-     * Retourne la coordonnée en ordonnée
-     *
-     * @return coordonnée de l'objet en ordonnée
-     *
-     * @see #y
-     *
-     * @since 1.0
-     */
-    public int getY() {
-        return this.y;
     }
 
     /**
@@ -110,6 +124,19 @@ public class Coord2D {
             throw new IllegalArgumentException("Coordinate must be postive");
         }
         this.x = x;
+    }
+
+    /**
+     * Retourne la coordonnée en ordonnée
+     *
+     * @return coordonnée de l'objet en ordonnée
+     *
+     * @see #y
+     *
+     * @since 1.0
+     */
+    public int getY() {
+        return this.y;
     }
 
     /**
@@ -155,34 +182,6 @@ public class Coord2D {
             throw new IllegalArgumentException("Width must be strictly superior to 1");
         }
         return this.y * ratio + this.x;
-    }
-
-    /**
-     * <p>
-     * Convertit l'indice donné en paramètre en couple de coordonnées 2D en
-     * fonction de la largeur du plan. ( Sur une grille de 3x3, en parcourant la
-     * grille de ligne en ligne du haut vers le bas, la coordonnée de la
-     * première case (0,0) = 0, (1,0) = 1, (2,0) = 2 ; on passe à la deuxième
-     * ligne, (0,1) = 3, (1,1) = 4, (2,1) = 5 ... ).</p>
-     *
-     *
-     * @param ratio largeur du plan qui doit être supérieur à 1.
-     * @param pos   indice de la position dans le tableau 1D
-     *
-     * @return coordonnée en 2D
-     *
-     * @throws IllegalArgumentException Si ratio &lt;= 1
-     *
-     * @see #x
-     * @see #y
-     *
-     * @since 1.1
-     */
-    public static Coord2D convCoord(int ratio, int pos) {
-        if (ratio <= 1) {
-            throw new IllegalArgumentException("Width must be strictly superior to 1");
-        }
-        return new Coord2D(pos % ratio, pos / ratio);
     }
     
     public boolean isBetween(Coord2D c1, Coord2D c2) {
