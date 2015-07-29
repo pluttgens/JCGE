@@ -1,10 +1,9 @@
 package com.gamefactory.displayable;
 
-import com.gamefactory.game.Displayable;
+import com.gamefactory.displayable.scripts.ListenerScript;
+import com.gamefactory.displayable.scripts.LoadingScript;
+import com.gamefactory.displayable.scripts.UpdateScript;
 import com.gamefactory.game.Manager;
-import com.gamefactory.scripts.ListenerScript;
-import com.gamefactory.scripts.LoadingScript;
-import com.gamefactory.scripts.UpdateScript;
 import com.gamefactory.utils.events.Event;
 
 import java.awt.*;
@@ -13,7 +12,7 @@ import java.util.List;
 
 public final class ScriptManager implements Manager<ComponentManager, Script> {
 
-    private ComponentManager owner;
+    private ComponentManager componentManager;
 
     private List<UpdateScript> scriptsUpdat;
 
@@ -23,7 +22,7 @@ public final class ScriptManager implements Manager<ComponentManager, Script> {
 
     @Override
     public void init(ComponentManager owner) {
-        this.owner = owner;
+        this.componentManager = owner;
         this.scriptsUpdat = new ArrayList<>();
         this.scriptsLoad = new ArrayList<>();
         this.scriptsList = new ArrayList<>();
@@ -32,24 +31,24 @@ public final class ScriptManager implements Manager<ComponentManager, Script> {
 
     @Override
     public void load() {
-        this.scriptsUpdat.stream().forEach(s -> s.load());
-        this.scriptsList.stream().forEach(s -> s.load());
+        this.scriptsUpdat.stream().forEach(Script::load);
+        this.scriptsList.stream().forEach(Script::load);
 
         this.scriptsLoad.stream().map(s -> {
             s.load();
             return s;
-        }).forEach(s -> s.executeOnce());
+        }).forEach(LoadingScript::executeOnce);
 
         this.scriptsLoad.stream().close();
     }
 
     @Override
     public void update() {
-        this.scriptsUpdat.stream().forEach(s -> s.execute());
+        this.scriptsUpdat.stream().forEach(UpdateScript::execute);
     }
 
-    public Displayable getOwner() {
-        return owner;
+    public ComponentManager getComponentManager() {
+        return componentManager;
     }
 
     @Override

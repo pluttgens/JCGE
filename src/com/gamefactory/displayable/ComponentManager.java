@@ -21,13 +21,13 @@ import java.util.List;
  */
 public final class ComponentManager implements Manager<GameObject, Component> {
 
-    private GameObject owner;
+    private GameObject gameObject;
     private List<Component> components;
     private ScriptManager scriptManager;
 
     @Override
-    public void init(GameObject owner) {
-        this.owner = owner;
+    public void init(GameObject gameObject) {
+        this.gameObject = gameObject;
         this.components = new ArrayList<>();
         this.scriptManager = new ScriptManager();
         this.scriptManager.init(this);
@@ -57,16 +57,14 @@ public final class ComponentManager implements Manager<GameObject, Component> {
      */
     @Override
     public void load() {
-        this.components.stream().forEach(c -> c.load());
+        this.components.stream().forEach(Component::load);
         this.scriptManager.load();
     }
 
     @Override
     public void update() {
         this.scriptManager.update();
-        this.components.stream().forEach(c
-                -> c.update()
-        );
+        this.components.stream().forEach(Component::update);
     }
 
     public ScriptManager getScriptManager() {
@@ -91,18 +89,11 @@ public final class ComponentManager implements Manager<GameObject, Component> {
                 return component;
             }
         }
-        throw new IllegalStateException("Component manquant : " + componentName);
+        return null;
     }
 
     public Component getComponent(Class<? extends Component> componentClass) {
-        Iterator<Component> it = components.iterator();
-        while (it.hasNext()) {
-            Component component = it.next();
-            if (component.getClass().equals(componentClass)) {
-                return component;
-            }
-        }
-        throw new IllegalStateException("Component manquant : " + componentClass.getSimpleName());
+        return components.stream().filter(c -> c.getClass().isInstance(componentClass)).findFirst().orElse(null);
     }
 
     /**
@@ -140,18 +131,11 @@ public final class ComponentManager implements Manager<GameObject, Component> {
      * @since 1.0
      */
     public boolean checkForComponent(Class<? extends Component> componentClass) {
-        Iterator<Component> it = components.iterator();
-        while (it.hasNext()) {
-            Component component = it.next();
-            if (component.getClass().equals(componentClass)) {
-                return true;
-            }
-        }
-        return false;
+        return components.stream().filter(c -> c.getClass().isInstance(componentClass)).findFirst().orElse(null) != null;
     }
 
     public Component getComponentFromGO(String id, Class<? extends Component> componentClass) {
-        return this.owner.getOwner().getGameObject(id).getComponentManager().getComponent(componentClass);
+        return this.gameObject.getScene().getGameObject(id).getComponentManager().getComponent(componentClass);
     }
 
     /**
@@ -159,17 +143,19 @@ public final class ComponentManager implements Manager<GameObject, Component> {
      *
      */
     public Scene getScene() {
-        return this.owner.getOwner();
+        return this.gameObject.getScene();
     }
 
-    public GameObject getOwner() {
-        return owner;
+    public GameObject getgameObject() {
+        return gameObject;
     }
 
     @Override
     public void render(Graphics g) {
-        Renderer renderer = (Renderer) getComponent("Renderer");
-        renderer.render(g);
+        Renderer renderer = (Renderer) getComponent(Component.RenderComponent.class);
+        if (renderer != null) {
+            renderer.render(g);
+        }
     }
 
 }

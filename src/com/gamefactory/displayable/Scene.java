@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  */
 public abstract class Scene implements Displayable<SceneManager> {
 
-    private SceneManager owner;
+    private SceneManager sceneManager;
     private List<Pair<String, GameObject>> gameObjects;
     private Landscape Landscape;
     private Camera camera;
@@ -31,7 +31,7 @@ public abstract class Scene implements Displayable<SceneManager> {
 
     @Override
     public void init(SceneManager owner) {
-        this.owner = owner;
+        this.sceneManager = owner;
         this.Landscape.init(this);
         this.camera.init(this);
         this.init();
@@ -44,13 +44,13 @@ public abstract class Scene implements Displayable<SceneManager> {
     public void load() {
         this.Landscape.load();
         this.camera.load();
-        this.getGameObjects().stream().forEach(go -> go.load());
+        this.getGameObjects().stream().forEach(GameObject::load);
     }
 
     @Override
     public void update() {
         this.camera.update();
-        this.getGameObjects().stream().forEach(go -> go.update());
+        this.getGameObjects().stream().forEach(GameObject::update);
     }
 
     @Override
@@ -71,11 +71,11 @@ public abstract class Scene implements Displayable<SceneManager> {
     }
 
     public void addGameObject(String id, GameObject go) {
-        this.gameObjects.add(new Pair<String, GameObject>(id, go));
+        this.gameObjects.add(new Pair<>(id, go));
     }
 
     public List<GameObject> getGameObjects() {
-        return gameObjects.stream().map(p -> p.getValue()).collect(Collectors.toList());
+        return gameObjects.stream().map(Pair::getValue).collect(Collectors.toList());
     }
 
     public Iterator<GameObject> iterateOverGO() {

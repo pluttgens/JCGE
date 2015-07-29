@@ -21,7 +21,7 @@ public interface AssetCache {
      * @param assetKey
      * @param asset
      */
-    public void addToCache(AssetKey assetKey, Asset asset);
+    void addToCache(AssetKey assetKey, Asset asset);
 
     /**
      * Récupère un asset du cache à partir de la clé permettant de l'identifier.
@@ -32,7 +32,7 @@ public interface AssetCache {
      *
      * @return
      */
-    public Asset getFromCache(AssetKey assetKey);
+    Asset getFromCache(AssetKey assetKey);
 
     /**
      * Essaie de récupérer une copie de l'asset à partir de la clé permettant de
@@ -44,7 +44,7 @@ public interface AssetCache {
      *
      * @return
      */
-    public Asset getCopyFromCache(AssetKey assetKey);
+    Asset getCopyFromCache(AssetKey assetKey);
 
     /**
      * Retire un asset du cache à partir de la clé permettant de l'identifier.
@@ -55,13 +55,13 @@ public interface AssetCache {
      *
      * @return
      */
-    public boolean removeFromCache(AssetKey assetKey);
+    boolean removeFromCache(AssetKey assetKey);
 
     /**
      * Vide le cache.
      *
      * - Pascal Luttgens.
      */
-    public void clearCache();
+    void clearCache();
 
 }

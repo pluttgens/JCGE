@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts.loadingscripts;
+package com.gamefactory.displayable.scripts.loadingscripts;
 
 import com.gamefactory.displayable.Landscape;
-import com.gamefactory.displayable.Scene;
-import com.gamefactory.scripts.LoadingScript;
+import com.gamefactory.displayable.scripts.LoadingScript;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -17,7 +16,7 @@ import java.io.File;
  *
  * @author ngo
  */
-public class LandscapeHorizontalScript extends LoadingScript<Scene> {
+public class LandscapeHorizontalScript extends LoadingScript {
     
     private Landscape landscapeHorizontal;
     private BufferedImage image;
@@ -33,7 +32,7 @@ public class LandscapeHorizontalScript extends LoadingScript<Scene> {
     
     @Override
     public void load() {
-        this.landscapeHorizontal = this.owner.getOwner().getLandscape();
+        //this.landscapeHorizontal = this.scene.getComponentManager().getLandscape();
     }
     
 }

@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts;
+package com.gamefactory.displayable.scripts;
 
-import com.gamefactory.displayable.AbstractScript;
-import com.gamefactory.game.Displayable;
+import com.gamefactory.displayable.Script;
 
-public abstract class LoadingScript<T extends Displayable> extends AbstractScript<T> {
+public abstract class LoadingScript extends Script {
 
     private boolean isConsumed = false;
 

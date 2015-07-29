@@ -5,7 +5,6 @@
  */
 package com.gamefactory.displayable;
 
-import com.gamefactory.game.Displayable;
 import com.gamefactory.utils.events.Notifier;
 
 import java.awt.*;
@@ -20,32 +19,24 @@ import java.util.Comparator;
  *
  * @since 1.0
  */
-public abstract class Component implements Displayable<ComponentManager>
+public abstract class Component
 {
 
     private final Notifier notifier;
-    protected ComponentManager owner;
-
+    protected ComponentManager componentManager;
     public Component() {
         this.notifier = new Notifier(this);
     }
 
-    @Override
     public final void init(ComponentManager cm) {
-        this.owner = cm;
+        this.componentManager = cm;
     }
 
-    @Override
     public void load() {
 
     }
 
     public void update() {
-
-    }
-
-    @Override
-    public void render(Graphics g) {
 
     }
 
@@ -68,7 +59,7 @@ public abstract class Component implements Displayable<ComponentManager>
     }
 
     public ComponentManager getComponentManager() {
-        return this.owner;
+        return this.componentManager;
     }
 
     /**
@@ -92,6 +83,12 @@ public abstract class Component implements Displayable<ComponentManager>
                 return 1;
             }
         }
+    }
+
+    public abstract class RenderComponent extends Component {
+        public void render(Graphics g) {
+
+            }
     }
 
 }

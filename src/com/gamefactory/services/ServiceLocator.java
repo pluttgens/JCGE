@@ -2,6 +2,7 @@ package com.gamefactory.services;
 
 import com.gamefactory.assets.assetmanager.AssetManager;
 import com.gamefactory.utils.events.Notifier;
+import org.apache.logging.log4j.io.IoBuilder;
 import org.json.JSONObject;
 
 import javax.swing.*;
@@ -10,8 +11,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Le locateur de service sert d'interface entre le code et les services afin de
@@ -31,6 +30,7 @@ public class ServiceLocator {
     private final static Notifier notifier = new Notifier(new Object());
     private final static JSONObject config = getJSONObject(new File("config/config.cfg"));
     private final static HashMap<String, Service> services = new HashMap<>();
+    private final static IoBuilder engineLogger = IoBuilder.forLogger("ENGINE");
     private static AssetManager assetManager;
     private static GameWindow gameWindow;
 
@@ -67,7 +67,7 @@ public class ServiceLocator {
 
     public static JSONObject getJSONObject(File file) {
         try (FileReader fr = new FileReader(file)) {
-            String json = new String();
+            String json = "";
             while (fr.ready()) {
                 json += (char) fr.read();
             }
@@ -75,7 +75,6 @@ public class ServiceLocator {
             json = json.substring(index);
             return new JSONObject(json);
         } catch (IOException ex) {
-            Logger.getLogger(ServiceLocator.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException(ex);
         }
     }
@@ -110,4 +109,6 @@ public class ServiceLocator {
         }
 
     }
+
+
 }

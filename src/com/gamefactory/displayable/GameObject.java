@@ -26,7 +26,7 @@ public abstract class GameObject implements Displayable<Scene> {
     protected final ComponentManager componentManager;
 
     protected String id;
-    protected Scene owner;
+    protected Scene scene;
     /**
      * Flag indiquant si le Game Object doit call update et render. Utile pour
      * le pattern object pool qui consiste a avoir une liste d'objets
@@ -73,8 +73,8 @@ public abstract class GameObject implements Displayable<Scene> {
      *
      * @return
      */
-    public Scene getOwner() {
-        return this.owner;
+    public Scene getScene() {
+        return this.scene;
     }
 
     /**
@@ -82,8 +82,8 @@ public abstract class GameObject implements Displayable<Scene> {
      *
      * @param scene
      */
-    public void setOwner(Scene scene) {
-        this.owner = scene;
+    public void setScene(Scene scene) {
+        this.scene = scene;
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class GameObject implements Displayable<Scene> {
 
     @Override
     public void init(Scene owner) {
-        this.owner = owner;
+        this.scene = owner;
         this.componentManager.init(this);
     }
 

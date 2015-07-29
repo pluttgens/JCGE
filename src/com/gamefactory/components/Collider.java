@@ -23,7 +23,7 @@ public class Collider extends Component {
 
     @Override
     public void load() {
-        this.position = (Position) this.owner.getComponent(Position.class);
+        this.position = (Position) this.componentManager.getComponent(Position.class);
     }
 
     @Override
@@ -39,10 +39,10 @@ public class Collider extends Component {
 
         if (position.getNextPosition() != null) {
             List<Point> points = line(position.getX(), position.getY(), (int) position.getNextPosition().getX(), (int) position.getNextPosition().getY());
-            Point collisionPoint = points.stream().filter(p -> owner.getScene().getGameObjects().stream().filter(go -> !go.getId().equals(owner.getOwner().getId())).
+            Point collisionPoint = points.stream().filter(p -> componentManager.getScene().getGameObjects().stream().filter(go -> !go.getId().equals(componentManager.getgameObject().getId())).
                     filter(go -> {
-                        if ((p.getX() < 0 || p.getX() + getWidth() >= owner.getScene().getLandscape().getWidth())
-                        || (p.getY() < 0 || p.getY() + getHeight() >= owner.getScene().getLandscape().getHeight() - Game.WINDOW_BORDER_SIZE)) {
+                        if ((p.getX() < 0 || p.getX() + getWidth() >= componentManager.getScene().getLandscape().getWidth())
+                                || (p.getY() < 0 || p.getY() + getHeight() >= componentManager.getScene().getLandscape().getHeight() - Game.WINDOW_BORDER_SIZE)) {
                             return true;
                         }
                         if (go.getComponentManager().checkForComponent(Collider.class)) {
@@ -69,12 +69,12 @@ public class Collider extends Component {
             }
         } else {
 
-            Iterator<GameObject> it = this.owner.getScene().iterateOverGO();
+            Iterator<GameObject> it = this.componentManager.getScene().iterateOverGO();
 
             while (it.hasNext()) {
                 GameObject go = it.next();
                 String s1 = go.getId();
-                String s2 = this.owner.getOwner().getId();
+                String s2 = this.componentManager.getgameObject().getId();
                 if (s2.equals(s1)) {
                     continue;
                 }
@@ -97,11 +97,11 @@ public class Collider extends Component {
     }
 
     public int getX() {
-        return (int) position.getX();
+        return position.getX();
     }
 
     public int getY() {
-        return (int) position.getY();
+        return position.getY();
     }
 
     public void onEnterCollision(Collider c) {

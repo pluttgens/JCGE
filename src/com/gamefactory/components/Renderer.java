@@ -26,9 +26,9 @@ public class Renderer extends Component {
 
     @Override
     public void load() {
-        position = (Position) owner.getComponent(Position.class);
+        position = (Position) componentManager.getComponent(Position.class);
         try {
-            collider = (Collider) owner.getComponent(Collider.class);
+            collider = (Collider) componentManager.getComponent(Collider.class);
         } catch (java.lang.IllegalStateException e) {
             //rien
         }
@@ -36,7 +36,7 @@ public class Renderer extends Component {
 
     public void render(Graphics g) {
         if (isActived) {
-            g.drawImage(image, (int) position.getX() - this.owner.getScene().getCamera().getX(), (int) position.getY() - this.owner.getScene().getCamera().getY(), null);
+            g.drawImage(image, position.getX() - this.componentManager.getScene().getCamera().getX(), position.getY() - this.componentManager.getScene().getCamera().getY(), null);
         }
     }
 

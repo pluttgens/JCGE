@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts.updatescripts;
+package com.gamefactory.displayable.scripts.updatescripts;
 
 import com.gamefactory.components.Position;
-import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.ScriptManager;
-import com.gamefactory.scripts.UpdateScript;
+import com.gamefactory.displayable.scripts.UpdateScript;
 import com.gamefactory.services.ServiceLocator;
 
 import javax.swing.*;
@@ -20,7 +19,7 @@ import java.awt.event.MouseListener;
  *
  * @author Adrien
  */
-public class PlayerClikScript extends UpdateScript<ComponentManager> implements MouseListener {
+public class PlayerClikScript extends UpdateScript implements MouseListener {
 
     private Position position;
 
@@ -33,7 +32,7 @@ public class PlayerClikScript extends UpdateScript<ComponentManager> implements 
 
     @Override
     public void load() {
-        this.position = (Position) owner.getOwner().getComponent(Position.class);
+        this.position = (Position) scriptManager.getComponentManager().getComponent(Position.class);
     }
 
     @Override
@@ -50,11 +49,11 @@ public class PlayerClikScript extends UpdateScript<ComponentManager> implements 
     public void mousePressed(MouseEvent e) {
         Point p1 = e.getPoint();
         e = SwingUtilities.convertMouseEvent((Component) e.getSource(), e, ((Canvas) e.getSource()).getParent());
-        int x = (int) p1.getX() + this.owner.getOwner().getScene().getCamera().getX();
-        int y = (int) p1.getY() + this.owner.getOwner().getScene().getCamera().getY();
+        int x = (int) p1.getX() + this.scriptManager.getComponentManager().getScene().getCamera().getX();
+        int y = (int) p1.getY() + this.scriptManager.getComponentManager().getScene().getCamera().getY();
 
-        p1.setLocation(new Point(p1.x + this.owner.getOwner().getScene().getCamera().getX() - position.getWidth() / 2,
-                p1.y + this.owner.getOwner().getScene().getCamera().getY() - position.getHeight()));
+        p1.setLocation(new Point(p1.x + this.scriptManager.getComponentManager().getScene().getCamera().getX() - position.getWidth() / 2,
+                p1.y + this.scriptManager.getComponentManager().getScene().getCamera().getY() - position.getHeight()));
         int buttonDown = e.getButton();
         if (buttonDown == MouseEvent.BUTTON3) {
 

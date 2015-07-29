@@ -5,10 +5,25 @@
  */
 package com.gamefactory.displayable;
 
-import com.gamefactory.callbacks.game.Callbacks;
+/**
+ *
+ * @author rakotoar
+ */
+public abstract class Script {
 
-public interface Script extends Callbacks<ScriptManager> {
+    protected ScriptManager scriptManager;
+
+    public void init(ScriptManager scriptManager) {
+        this.scriptManager = scriptManager;
+    }
+
+    public void load() {
+
+    }
+
+    ;
+
+    public abstract boolean isConsumed();
     
     
-    boolean isConsumed();
 }

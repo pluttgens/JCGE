@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @autimport java.io.InputStream; hor Pascal Luttgens
+ * @author Pascal Luttgens
  */
 public class Game extends Canvas implements Runnable {
 
@@ -71,6 +71,7 @@ public class Game extends Canvas implements Runnable {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         ServiceLocator.provideAssetManager(new AssetManager());
         Game game = new Game();
 
@@ -100,7 +101,7 @@ public class Game extends Canvas implements Runnable {
      * @see Window
      */
     private void window() {
-        new Window(this.WIDTH, this.HEIGHT, this.NAME, this);
+        new Window(WIDTH, HEIGHT, NAME, this);
     }
 
     public void setDisplayable(Displayable displayable) {
@@ -132,7 +133,7 @@ public class Game extends Canvas implements Runnable {
      * Démarre le processus du jeu.
      */
     public synchronized void start() {
-        if (running == false) {
+        if (!running) {
             thread = new Thread(this);
             thread.start();
             running = true;

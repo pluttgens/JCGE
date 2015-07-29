@@ -1,4 +1,4 @@
-package com.gamefactory.scripts;
+package com.gamefactory.displayable.scripts;
 
 import org.junit.Test;
 

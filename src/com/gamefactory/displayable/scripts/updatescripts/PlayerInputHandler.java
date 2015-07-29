@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.scripts.updatescripts;
+package com.gamefactory.displayable.scripts.updatescripts;
 
 import com.gamefactory.components.Position;
-import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.ScriptManager;
-import com.gamefactory.scripts.UpdateScript;
+import com.gamefactory.displayable.scripts.UpdateScript;
 import com.gamefactory.services.ServiceLocator;
 
 import java.awt.*;
@@ -19,7 +18,7 @@ import java.awt.event.KeyListener;
  *
  * @author scalpa
  */
-public class PlayerInputHandler extends UpdateScript<ComponentManager> implements KeyListener {
+public class PlayerInputHandler extends UpdateScript implements KeyListener {
 
     private final static int NB_KEYS = Short.MAX_VALUE;
     private final static String VELOCITY_KEY = PlayerInputHandler.class.getSimpleName();
@@ -41,7 +40,7 @@ public class PlayerInputHandler extends UpdateScript<ComponentManager> implement
 
     @Override
     public void load() {
-        this.position = (Position) owner.getOwner().getComponent(Position.class);
+        this.position = (Position) scriptManager.getComponentManager().getComponent(Position.class);
     }
 
     private void resetDirectionalArrow() {
