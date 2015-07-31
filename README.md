@@ -5,7 +5,7 @@ JCGE (JAVA COLLABORATIVE GAME ENGINE)
 
 JCGE is an open source project which, as the name indicates, is a game engine using java 8.
 
-Everybody who feels like he can bring somethings to the project is free to make a pull request and eventually see his code pushed to the dev branch. In order to be able to do this, I will describe you briefly the engine structure, its lifecycle as which is for now decided and is not going to change (the implementation can still be changed at this early stage of refactoring), as well as the modules used and how to use them (which can still be discussed).
+Everybody who feels like he can bring something to the project is free to make a pull request and eventually see his code pushed to the dev branch. In order to be able to do this, I will describe you briefly the engine structure, its lifecycle as which is for now decided and is not going to change (the implementation can still be changed at this early stage of refactoring), as well as the modules used and how to use them (which can still be discussed).
 
 Then I will talk about what are the objectives and the priorities for now and will explain the workflow of the contributors.
 
@@ -14,19 +14,19 @@ Then I will talk about what are the objectives and the priorities for now and wi
 JCGE objectives
 -------------
 
-#### Personnal objectives
+#### Personal objectives
 
 The main objective for the people working on this project is too deepen their knowledge and improve their programming skills.
 
-You should not considere this more seriously than something which makes you able to get experience on a subject you are interested into.
+You should not consider this more seriously than something which makes you able to get experience on a subject you are interested into.
 
 
 #### Project objectives
-About the engine itself, the original goal was to make an engine which allowed users to easilly set up their game by just having to focus on the logic of their own game and the grapchis. This would be accomplished by giving them all the other tools they need to be able to make the game they want, regardless its complexity.
+About the engine itself, the original goal was to make an engine which allowed users to easily set up their game by just having to focus on the logic of their own game and the graphics. This would be accomplished by giving them all the other tools they need to be able to make the game they want, regardless its complexity.
 
 To be able to do this, we need to decouple or code to be able to easily give several implementations of the engine depending on the user's needs. This means a clean, well documented and tested code which respects the design patterns we chose.
 
-Regarding the feature we want to offer, it's really up to contributors imagination. I myself got some ideas which already should give us enough work for the next monthes but you are free to suggest/pull request new features as long as you respect the project architecture and patterns.
+Regarding the feature we want to offer, it's really up to contributors imagination. I myself got some ideas which already should give us enough work for the next months but you are free to suggest/pull request new features as long as you respect the project architecture and patterns.
 
 ----------
 
@@ -34,7 +34,7 @@ Regarding the feature we want to offer, it's really up to contributors imaginati
 JCGE architecture
 -------------
 
-I do not have the time to represent it with graphs and diagrams for now but basially, the architecture of the core of the project could be represented with a tree.
+I do not have the time to represent it with graphs and diagrams for now but basically, the architecture of the core of the project could be represented with a tree.
 
 Each level of the tree contains the level below itself and a reference to the level above if it exists.
 So it would look like this  (I'm omitting the managers which are containers for several objects and encapsulate the logic associated to those objects. ie: ```SceneManager```, which contains several scenes, is the class that will be exposed to ```Game``` instead of just having a list of ```Scene``` objects ) :
@@ -60,14 +60,14 @@ GameObjects differ with the components and the scripts that they hold.
 
 #### Component
 
-This class is a reusable set of properties for GameObjects. If you want to define your GameObject's structure, such as its position, its physical caracteristics, etc... You do this by creating components which hold those values and give them to the object you want. As to how to define the logic which initialize and changes those values, we're going to leave them to the scripts.
+This class is a reusable set of properties for GameObjects. If you want to define your GameObject's structure, such as its position, its physical characteristics, etc... You do this by creating components which hold those values and give them to the object you want. As to how to define the logic which initialize and changes those values, we're going to leave them to the scripts.
 
 #### Script
 
 This class defines the logic behind the GameObject and more accurately, behind the value of the component fields. One could wonder why script are not below components in the architecture. This is because one script can actually have an impact on several components and then we would have a hard time to decide on which component we would like to attach such a script.
 
 During the first stage of the development, we decided to have 3 different types of script for our needs.
->- ```LoadingScript``` - Called once when the GameObject is loaded (usefull to initialize components)
+>- ```LoadingScript``` - Called once when the GameObject is loaded (useful to initialize components)
 >- ```ListenerScript``` - Called upon an event
 >- ```UpdateScript``` - Called everytime the game Update its state (see lifecycle)
 
@@ -108,7 +108,7 @@ JCGE modules
 
 Up until now, we've talked about the core of the engine. The engines hopefully contains more feature (sound, graphics, network...) and we will see here how those are supposed to be plugged to the core.
 
-I have been through a lot of reading when I was working on the project a few monthes ago and I came across [this awesome website](http://gameprogrammingpatterns.com/) which I recommend you want to go deeper or if you are just curious, and there is a chapter about the [service locator pattern](http://gameprogrammingpatterns.com/service-locator.html) which is the one I chose to use for the project.
+I have been through a lot of reading when I was working on the project a few months ago and I came across [this awesome website](http://gameprogrammingpatterns.com/) which I recommend you want to go deeper or if you are just curious, and there is a chapter about the [service locator pattern](http://gameprogrammingpatterns.com/service-locator.html) which is the one I chose to use for the project.
 
 Even though it is not really implemented this way yet, the idea is to create public APIs for each kind of modules we got and to make them available from one place which is our singleton service locator.
 
@@ -122,8 +122,8 @@ JCGE dependencies
 -------------
 
 > - JUnit - For the unit tests, discussion is opened if you know better frameworks as we will probably need some complex tests that I doubt JUnit supports natively such as asynchronous tests.
-> - json - A Json Parsing library which allows to easilly retrive java Objects from Json files.
-> - log4j2 - This is the librarywe will be using to log the engine but I did not manage to make it work yet.
+> - json - A Json Parsing library which allows to easily retrieve java Objects from Json files.
+> - log4j2 - This is the library we will be using to log the engine but I did not manage to make it work yet.
 
 
 ----------
@@ -138,13 +138,13 @@ When contributing to the project, one should always ask himself what is the best
 
 Before contributing, one should check the [public scrumboard](https://trello.com/b/abL2lFNZ/scrumboard) to know what needs to be done, what's already being worked on by the main team and what's done.
 
-*Be aware that the main team is suceptible to start a story on which you were working on. If it happens, pull request the dev branch as soon as possible with an explicit pull request name so we can take your work in consideration.*
+*Be aware that the main team is susceptible to start a story on which you were working on. If it happens, pull request the dev branch as soon as possible with an explicit pull request name so we can take your work in consideration.*
 
 #### How to use the scrumboard
 
 ![](http://puu.sh/jjhts/18461a80ea.png)
 
-As we are using a scrumb board, we are also going to use the same terminologies.
+As we are using a scrumboard, we are also going to use the same terminologies.
 
 As the product owner, I will be defining features which will be represented wih labels. Features will be most of the time a part of the project that we want to deliver which is big enough for us to split it into several stories. Stories are represented by trello cards so we can sort them by label/feature. Stories are then split again in something close to atomic operatons which are called tasks. Tasks are represtend through the checklist of a trello card. 
 
@@ -182,8 +182,8 @@ This part concerns the main team
 
 You will need a [github](https://github.com/join) and [trello](https://trello.com/signup) account.
 
-For the IDE, I suggest you use the [Intellij community edition](https://www.jetbrains.com/idea/download/). Its code analasys tools are really helpful to improve and optimize our code.
-If you have [git](https://git-scm.com/download/win) installed, you can easilly set up your version control to bind your github account into Intellij.
+For the IDE, I suggest you use the [Intellij community edition](https://www.jetbrains.com/idea/download/). Its code analysis tools are really helpful to improve and optimize our code.
+If you have [git](https://git-scm.com/download/win) installed, you can easily set up your version control to bind your github account into Intellij.
 
 ----------
 
