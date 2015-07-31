@@ -23,14 +23,11 @@ public final class ComponentManager implements Manager<GameObject, Component> {
 
     private GameObject gameObject;
     private List<Component> components;
-    private ScriptManager scriptManager;
 
     @Override
     public void init(GameObject gameObject) {
         this.gameObject = gameObject;
         this.components = new ArrayList<>();
-        this.scriptManager = new ScriptManager();
-        this.scriptManager.init(this);
     }
 
     /**
@@ -58,17 +55,11 @@ public final class ComponentManager implements Manager<GameObject, Component> {
     @Override
     public void load() {
         this.components.stream().forEach(Component::load);
-        this.scriptManager.load();
     }
 
     @Override
     public void update() {
-        this.scriptManager.update();
         this.components.stream().forEach(Component::update);
-    }
-
-    public ScriptManager getScriptManager() {
-        return this.scriptManager;
     }
 
 // A modifier.
@@ -131,7 +122,7 @@ public final class ComponentManager implements Manager<GameObject, Component> {
      * @since 1.0
      */
     public boolean checkForComponent(Class<? extends Component> componentClass) {
-        return components.stream().filter(c -> c.getClass().isInstance(componentClass)).findFirst().orElse(null) != null;
+        return getComponent(componentClass) != null;
     }
 
     public Component getComponentFromGO(String id, Class<? extends Component> componentClass) {

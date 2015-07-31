@@ -24,6 +24,7 @@ public abstract class GameObject implements Displayable<Scene> {
      * - Pascal Luttgens.
      */
     protected final ComponentManager componentManager;
+    protected final ScriptManager scriptManager;
 
     protected String id;
     protected Scene scene;
@@ -38,6 +39,7 @@ public abstract class GameObject implements Displayable<Scene> {
 
     public GameObject() {
         this.componentManager = new ComponentManager();
+        this.scriptManager = new ScriptManager();
         this.isActive = true;
         this.id = this.getClass().getSimpleName().toUpperCase();
         this.notifier = new Notifier(this);
@@ -45,6 +47,7 @@ public abstract class GameObject implements Displayable<Scene> {
 
     public GameObject(String id) {
         this.componentManager = new ComponentManager();
+        this.scriptManager = new ScriptManager();
         this.isActive = true;
         this.id = id.toUpperCase();
         this.notifier = new Notifier(this);
@@ -97,14 +100,16 @@ public abstract class GameObject implements Displayable<Scene> {
     }
 
     @Override
-    public void init(Scene owner) {
-        this.scene = owner;
+    public void init(Scene scene) {
+        this.scene = scene;
         this.componentManager.init(this);
+        this.scriptManager.init(this);
     }
 
     @Override
     public void load() {
         this.componentManager.load();
+        this.scriptManager.load();
     }
 
     /**
@@ -126,7 +131,8 @@ public abstract class GameObject implements Displayable<Scene> {
      * - Pascal Luttgens.
      */
     protected void updateObject() {
-        componentManager.update();
+        this.componentManager.update();
+        this.scriptManager.update();
     }
 
     /**
@@ -177,8 +183,9 @@ public abstract class GameObject implements Displayable<Scene> {
         return true;
     }
 
+
     public ScriptManager getScriptManager() {
-        return this.componentManager.getScriptManager();
+        return this.scriptManager;
     }
 
 }

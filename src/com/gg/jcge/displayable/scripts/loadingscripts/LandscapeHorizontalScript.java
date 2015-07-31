@@ -32,7 +32,7 @@ public class LandscapeHorizontalScript extends LoadingScript {
     
     @Override
     public void load() {
-        //this.landscapeHorizontal = this.scene.getComponentManager().getLandscape();
+        //this.landscapeHorizontal = this.scene.getGameObject().getLandscape();
     }
     
 }

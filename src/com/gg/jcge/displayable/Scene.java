@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  *
  * @since 1.0
  */
-public abstract class Scene implements Displayable<SceneManager> {
+public abstract class Scene implements Displayable<SceneManager> { //FIXME : change class name for something more abstract
 
     private SceneManager sceneManager;
     private List<Pair<String, GameObject>> gameObjects;

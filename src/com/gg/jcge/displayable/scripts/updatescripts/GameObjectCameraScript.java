@@ -22,8 +22,8 @@ public class GameObjectCameraScript extends UpdateScript {
 
     @Override
     public void load() {
-        this.c = this.scriptManager.getComponentManager().getScene().getCamera();
-        this.focus = (Position) this.scriptManager.getComponentManager().getComponent(Position.class);
+        this.c = this.scriptManager.getGameObject().getScene().getCamera();
+        this.focus = (Position) this.scriptManager.getComponent(Position.class);
     }
 
     @Override

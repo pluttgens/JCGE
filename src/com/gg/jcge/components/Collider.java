@@ -105,7 +105,7 @@ public class Collider extends Component {
     }
 
     public void onEnterCollision(Collider c) {
-        // this.getComponentManager().getScriptManager().fireEvent(new Event(this, COLLISION_EVENT, c));
+        // this.getGameObject().getScriptManager().fireEvent(new Event(this, COLLISION_EVENT, c));
     }
 
     public Rectangle getHitbox() {

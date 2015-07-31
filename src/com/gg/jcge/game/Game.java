@@ -2,6 +2,7 @@ package com.gg.jcge.game;
 
 import com.gg.jcge.assets.assetmanager.AssetManager;
 import com.gg.jcge.audioengine.AudioEngine;
+import com.gg.jcge.components.Sound;
 import com.gg.jcge.displayable.Scene;
 import com.gg.jcge.displayable.SceneManager;
 import com.gg.jcge.displayable.gameobjects.EmptyGameObject;
@@ -11,8 +12,6 @@ import org.json.JSONObject;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -66,11 +65,8 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void main(String[] args) throws IOException {
-        try {
-            Class.forName("com.gamefactory.components.Sound");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        Sound.init();
 
         ServiceLocator.provideAssetManager(new AssetManager());
         Game game = new Game();
