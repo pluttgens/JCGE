@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Le Component Manager encapsule le comportement des components au sein d'un
@@ -85,11 +84,7 @@ public final class ComponentManager implements Manager<GameObject, Component> {
     }
 
     public Component getComponent(Class<? extends Component> componentClass) {
-        components.stream().filter(component -> component.getClass().isInstance(componentClass)).findFirst().orElse(null);
-
-        return components.stream().filter(c -> {
-            return c.getClass().isInstance(componentClass);
-        }).findFirst().orElse(null);
+        return components.stream().filter(c -> c.getClass().isInstance(componentClass)).findFirst().orElse(null);
     }
 
     /**
