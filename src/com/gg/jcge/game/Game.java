@@ -15,7 +15,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Pascal Luttgens
+ * @author Pascal Luttgens test
  */
 public class Game extends Canvas implements Runnable {
 
