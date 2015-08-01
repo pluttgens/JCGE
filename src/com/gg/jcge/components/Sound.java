@@ -11,7 +11,7 @@ public class Sound extends Component {
     private static AudioEngine ae;
 
     private final static Observer o = (Event event) -> {
-            if (((Event) event).getEvent().equals("AUDIO_SERVICE_PROVIDED")) {
+        if (event.getEvent().equals("AUDIO_SERVICE_PROVIDED")) {
                 ae = (AudioEngine) ServiceLocator.getService("AUDIO");
                 //o est conservé en mémoire car il est toujours référencé alors qu'il est inutile :/
             }
@@ -21,8 +21,10 @@ public class Sound extends Component {
         ServiceLocator.getNotifier().registerObserver(o);
     }
 
+    public static void init() {
+    }
+
     public AudioEngine getAudioEngine() {
         return ae;
     }
-
 }

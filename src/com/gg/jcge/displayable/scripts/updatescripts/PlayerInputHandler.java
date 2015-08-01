@@ -40,7 +40,7 @@ public class PlayerInputHandler extends UpdateScript implements KeyListener {
 
     @Override
     public void load() {
-        this.position = (Position) scriptManager.getComponentManager().getComponent(Position.class);
+        this.position = (Position) scriptManager.getComponent(Position.class);
     }
 
     private void resetDirectionalArrow() {

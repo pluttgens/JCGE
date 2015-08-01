@@ -32,7 +32,7 @@ public class PlayerClikScript extends UpdateScript implements MouseListener {
 
     @Override
     public void load() {
-        this.position = (Position) scriptManager.getComponentManager().getComponent(Position.class);
+        this.position = (Position) scriptManager.getComponent(Position.class);
     }
 
     @Override
@@ -49,11 +49,11 @@ public class PlayerClikScript extends UpdateScript implements MouseListener {
     public void mousePressed(MouseEvent e) {
         Point p1 = e.getPoint();
         e = SwingUtilities.convertMouseEvent((Component) e.getSource(), e, ((Canvas) e.getSource()).getParent());
-        int x = (int) p1.getX() + this.scriptManager.getComponentManager().getScene().getCamera().getX();
-        int y = (int) p1.getY() + this.scriptManager.getComponentManager().getScene().getCamera().getY();
+        int x = (int) p1.getX() + this.scriptManager.getGameObject().getScene().getCamera().getX();
+        int y = (int) p1.getY() + this.scriptManager.getGameObject().getScene().getCamera().getY();
 
-        p1.setLocation(new Point(p1.x + this.scriptManager.getComponentManager().getScene().getCamera().getX() - position.getWidth() / 2,
-                p1.y + this.scriptManager.getComponentManager().getScene().getCamera().getY() - position.getHeight()));
+        p1.setLocation(new Point(p1.x + this.scriptManager.getGameObject().getScene().getCamera().getX() - position.getWidth() / 2,
+                p1.y + this.scriptManager.getGameObject().getScene().getCamera().getY() - position.getHeight()));
         int buttonDown = e.getButton();
         if (buttonDown == MouseEvent.BUTTON3) {
 

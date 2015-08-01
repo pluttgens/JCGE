@@ -2,7 +2,6 @@ package com.gg.jcge.services;
 
 import com.gg.jcge.assets.assetmanager.AssetManager;
 import com.gg.jcge.utils.events.Notifier;
-import org.apache.logging.log4j.io.IoBuilder;
 import org.json.JSONObject;
 
 import javax.swing.*;
@@ -30,7 +29,6 @@ public class ServiceLocator {
     private final static Notifier notifier = new Notifier(new Object());
     private final static JSONObject config = getJSONObject(new File("config/config.cfg"));
     private final static HashMap<String, Service> services = new HashMap<>();
-    private final static IoBuilder engineLogger = IoBuilder.forLogger("ENGINE");
     private static AssetManager assetManager;
     private static GameWindow gameWindow;
 

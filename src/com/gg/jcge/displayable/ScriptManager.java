@@ -10,9 +10,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ScriptManager implements Manager<ComponentManager, Script> {
+public final class ScriptManager implements Manager<GameObject, Script> {
 
-    private ComponentManager componentManager;
+    private GameObject gameObject;
 
     private List<UpdateScript> scriptsUpdat;
 
@@ -21,8 +21,8 @@ public final class ScriptManager implements Manager<ComponentManager, Script> {
     private List<ListenerScript> scriptsList;
 
     @Override
-    public void init(ComponentManager owner) {
-        this.componentManager = owner;
+    public void init(GameObject gameObject) {
+        this.gameObject = gameObject;
         this.scriptsUpdat = new ArrayList<>();
         this.scriptsLoad = new ArrayList<>();
         this.scriptsList = new ArrayList<>();
@@ -47,8 +47,8 @@ public final class ScriptManager implements Manager<ComponentManager, Script> {
         this.scriptsUpdat.stream().forEach(UpdateScript::execute);
     }
 
-    public ComponentManager getComponentManager() {
-        return componentManager;
+    public GameObject getGameObject() {
+        return gameObject;
     }
 
     @Override
@@ -77,5 +77,9 @@ public final class ScriptManager implements Manager<ComponentManager, Script> {
                 s.onEvent(e);
             }
         });
+    }
+
+    public Component getComponent(Class<? extends Component> componentClass) {
+        return this.gameObject.getComponentManager().getComponent(componentClass);
     }
 }

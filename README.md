@@ -22,9 +22,9 @@ You should not considere this more seriously than something which makes you able
 
 
 #### Project objectives
-About the engine itself, the original goal was to make an engine which allowed users to easily set up their game by just having to focus on the logic of their own game and the grapchis. This would be accomplished by giving them all the other tools they need to be able to make the game they want, regardless its complexity.
+About the engine itself, the original goal was to make an engine which allowed users to easilly set up their game by just having to focus on the logic of their own game and the grapchis. This would be accomplished by giving them all the other tools they need to be able to make the game they want, regardless its complexity.
 
-To be able to do this, we need to decouple our code to be able to easily give several implementations of the engine depending on the user's needs. This means a clean, well documented and tested code which respects the design patterns we chose.
+To be able to do this, we need to decouple or code to be able to easily give several implementations of the engine depending on the user's needs. This means a clean, well documented and tested code which respects the design patterns we chose.
 
 Regarding the feature we want to offer, it's really up to contributors imagination. I myself got some ideas which already should give us enough work for the next monthes but you are free to suggest/pull request new features as long as you respect the project architecture and patterns.
 

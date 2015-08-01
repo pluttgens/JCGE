@@ -43,8 +43,8 @@ public class AnimatorHorizontalDirection extends UpdateScript {
 
     @Override
     public void load() {
-        this.currentPosition = (Position) this.scriptManager.getComponentManager().getComponent(Position.class);
-        this.renderer = (Renderer) this.scriptManager.getComponentManager().getComponent(Renderer.class);
+        this.currentPosition = (Position) this.scriptManager.getComponent(Position.class);
+        this.renderer = (Renderer) this.scriptManager.getComponent(Renderer.class);
         this.previousPosition = this.currentPosition.deepClone();
         BufferedImage image = this.animationsRight.get(1);
         this.currentPosition.setHeight(image.getHeight());

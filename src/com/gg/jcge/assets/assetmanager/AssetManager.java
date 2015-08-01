@@ -57,7 +57,7 @@ public class AssetManager {
         while (it.hasNext()) {
             String key = it.next();
             try {
-                registerType(key, (TypeLoader) Class.forName("com.gamefactory.assets.types." + loadersConfig.getString(key)).newInstance());
+                registerType(key, (TypeLoader) Class.forName("com.gg.jcge.assets.types." + loadersConfig.getString(key)).newInstance());
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                 Logger.getLogger(AssetManager.class.getName()).log(Level.SEVERE, null, ex);
             }
