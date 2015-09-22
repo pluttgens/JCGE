@@ -5,11 +5,13 @@
  */
 package com.gamefactory.scripts;
 
+import com.gamefactory.displayable.UpdateScript;
 import com.gamefactory.components.Position;
-import com.gamefactory.displayable.Script;
 import com.gamefactory.displayable.ComponentManager;
+import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.game.Game;
 import com.gamefactory.services.ServiceLocator;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -17,30 +19,29 @@ import java.awt.event.KeyListener;
  *
  * @author scalpa
  */
-public class PlayerInputHandler extends Script implements KeyListener {
+public class PlayerInputHandler extends UpdateScript<ComponentManager> implements KeyListener {
 
     private final static int NB_KEYS = Short.MAX_VALUE;
+    private final static String VELOCITY_KEY = PlayerInputHandler.class.getSimpleName();
 
     private Position position;
     private boolean[] keys;
 
-    public PlayerInputHandler() {
-        super();
-        this.keys = new boolean[NB_KEYS];
-    }
-
     @Override
-    public void init(ComponentManager owner) {
-        this.owner = owner;
-        this.position = (Position) owner.getComponent(Position.class);
-        this.position.setX(Game.WIDTH / 2 - 20);
-        this.position.setY(Game.HEIGHT / 2 - 20);
+    public void init(ScriptManager script) {
+        super.init(script);
+        this.keys = new boolean[NB_KEYS];
         ServiceLocator.getGameWindow().getFrame().addKeyListener(this);
         ServiceLocator.getGameWindow().getCanvas().addKeyListener(this);
     }
 
     private boolean isDirectionalArrow(int key) {
         return (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_DOWN || key == KeyEvent.VK_UP);
+    }
+
+    @Override
+    public void load() {
+        this.position = (Position) owner.getOwner().getComponent(Position.class);
     }
 
     private void resetDirectionalArrow() {
@@ -70,37 +71,54 @@ public class PlayerInputHandler extends Script implements KeyListener {
     }
 
     @Override
-    public void update() {
+    public void execute() {
         if (this.keys[KeyEvent.VK_LEFT]) {
             position.setOrientation(Position.Orientation.LEFT);
-            position.setxVelocity(-1f);
+            position.setDestination(position.getDestination() == null
+                    ? new Point(position.getX() - position.getDefaultVelocity(), position.getY())
+                    : new Point(position.getDestination().x - position.getDefaultVelocity(), position.getDestination().y));
         } else {
             if (position.getxVelocity() < 0) {
-                position.setxVelocity(0);
+                position.setDestination(position.getDestination() == null
+                        ? new Point(position.getX(), position.getY())
+                        : new Point(position.getDestination().x, position.getDestination().y));
             }
         }
         if (this.keys[KeyEvent.VK_RIGHT]) {
             position.setOrientation(Position.Orientation.RIGHT);
-            position.setxVelocity(1f);
+            position.setDestination(position.getDestination() == null
+                    ? new Point(position.getX() + position.getDefaultVelocity(), position.getY())
+                    : new Point(position.getDestination().x + position.getDefaultVelocity(), position.getDestination().y));
         } else {
             if (position.getxVelocity() > 0) {
-                position.setxVelocity(0);
+                position.setDestination(position.getDestination() == null
+                        ? new Point(position.getX(), position.getY())
+                        : new Point(position.getDestination().x, position.getDestination().y));
             }
         }
         if (this.keys[KeyEvent.VK_UP]) {
             position.setOrientation(Position.Orientation.UP);
-            position.setyVelocity(-1f);
+            position.setDestination(position.getDestination() == null
+                    ? new Point(position.getX(), position.getY() - position.getDefaultVelocity())
+                    : new Point(position.getDestination().x, position.getDestination().y - position.getDefaultVelocity()));
         } else {
             if (position.getyVelocity() < 0) {
-                position.setyVelocity(0);
+                position.setDestination(position.getDestination() == null
+                        ? new Point(position.getX(), position.getY())
+                        : new Point(position.getDestination().x, position.getDestination().y));
             }
         }
         if (this.keys[KeyEvent.VK_DOWN]) {
             position.setOrientation(Position.Orientation.DOWN);
-            position.setyVelocity(1f);
+            position.setDestination(position.getDestination() == null
+                    ? new Point(position.getX(), position.getY() + position.getDefaultVelocity())
+                    : new Point(position.getDestination().x, position.getDestination().y + position.getDefaultVelocity()));
+
         } else {
             if (position.getyVelocity() > 0) {
-                position.setyVelocity(0);
+                position.setDestination(position.getDestination() == null
+                        ? new Point(position.getX(), position.getY())
+                        : new Point(position.getDestination().x, position.getDestination().y));
             }
         }
     }

@@ -5,48 +5,60 @@
  */
 package com.gamefactory.scripts;
 
+import com.gamefactory.displayable.UpdateScript;
 import com.gamefactory.assets.types.ImageAsset;
 import com.gamefactory.components.Position;
 import com.gamefactory.components.Renderer;
+import com.gamefactory.displayable.Component;
 import com.gamefactory.displayable.ComponentManager;
 import com.gamefactory.displayable.Script;
+import com.gamefactory.displayable.ScriptManager;
 import com.gamefactory.services.ServiceLocator;
+
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 
 /**
  *
  * @author scalpa
  */
-public class AnimatorFourDirections extends Script {
+public class AnimatorFourDirections extends UpdateScript<ComponentManager> {
 
     private ArrayList<BufferedImage> animationsLeft;
     private ArrayList<BufferedImage> animationsRight;
     private ArrayList<BufferedImage> animationsUp;
     private ArrayList<BufferedImage> animationsDown;
 
-    private Position position;
+    private Position currentPosition;
     private Position previousPosition;
     private Renderer renderer;
 
     @Override
-    public void init(ComponentManager owner) {
+    public void init(ScriptManager owner) {
+        super.init(owner);
+        this.animationsDown = new ArrayList<>();
         this.animationsLeft = new ArrayList<>();
         this.animationsRight = new ArrayList<>();
         this.animationsUp = new ArrayList<>();
-        this.animationsDown = new ArrayList<>();
-        this.owner = owner;
-        this.position = (Position) this.owner.getComponent(Position.class);
-        this.previousPosition = (Position) position.deepClone();
-        this.renderer = (Renderer) this.owner.getComponent(Renderer.class);
-        this.loadAnimations();
-        this.renderer.setImage(this.animationsDown.get(1));
-
+        
+        loadAnimations();
     }
+    
+    @Override
+    public void load() {
+        this.currentPosition = (Position) this.owner.getOwner().getComponent(Position.class);
+        this.renderer = (Renderer) this.owner.getOwner().getComponent(Renderer.class);
+        this.previousPosition = this.currentPosition.deepClone();
+        BufferedImage image = this.animationsDown.get(1);
+        this.renderer.setImage(image);
+    }
+    
+    
 
     public void loadAnimations() {
         try {
@@ -95,9 +107,10 @@ public class AnimatorFourDirections extends Script {
     }
 
     @Override
-    public void update() {
-        if (this.previousPosition.distanceWith(position) > 5) {
-            Position.Orientation orientation = position.getOrientation();
+    public void execute() {
+        //a changer
+        if (this.previousPosition.distanceWith(this.currentPosition) > 3) {
+            Position.Orientation orientation = this.currentPosition.getOrientation();
             BufferedImage current = this.renderer.getImage();
             switch (orientation) {
                 case DOWN:
@@ -113,7 +126,7 @@ public class AnimatorFourDirections extends Script {
                     this.renderer.setImage(getNextImage(current, this.animationsRight));
                     break;
             }
-            this.previousPosition = position.deepClone();
+            this.previousPosition = this.currentPosition.deepClone();
         }
     }
 
@@ -128,4 +141,5 @@ public class AnimatorFourDirections extends Script {
         }
         return images.get(1);
     }
+    
 }

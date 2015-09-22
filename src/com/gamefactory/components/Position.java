@@ -1,12 +1,18 @@
 package com.gamefactory.components;
 
+import com.gamefactory.assets.types.ObjectPropertiesAsset;
 import com.gamefactory.displayable.Component;
-import com.gamefactory.displayable.ComponentManager;
-import com.gamefactory.game.Game;
-import com.gamefactory.utils.events.Event;
-import com.gamefactory.utils.events.Notifier;
-import java.awt.event.AWTEventListener;
+import java.awt.Point;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Component permettant de g√©rer la position d'une unit√© et ses d√©placements
@@ -20,8 +26,6 @@ import java.util.Objects;
  */
 public class Position extends Component {
 
-    private final static int WINDOW_BORDER_SIZE = 20;
-
     public enum Orientation {
 
         UP,
@@ -31,110 +35,213 @@ public class Position extends Component {
 
     }
 
-    private float x;
-    private float y;
+    private boolean hasCollisionHappened;
 
-    private float xVelocity;
-    private float yVelocity;
+    private int defaultVelocity;
+
+    private int x;
+    private int y;
+
+    private int xMainVelocity;
+    private int yMainVelocity;
+
+    private HashMap<String, Integer> xVelocityModifiers;
+    private HashMap<String, Integer> yVelocityModifiers;
+
+    private ScheduledExecutorService ses = Executors.newScheduledThreadPool(10);
 
     private Orientation orientation;
 
+    private int offsetX;
+    private int offsetY;
     private int height;
     private int width;
+
+    private Point destination;
+    private Point nextPosition;
+    private Point collisionPoint;
 
     public Position() {
         this.x = 0;
         this.y = 520;
-        this.xVelocity = 0;
-        this.yVelocity = 0;
+        this.xVelocityModifiers = new HashMap<>();
+        this.yVelocityModifiers = new HashMap<>();
         this.height = 0;
         this.width = 0;
         this.orientation = Orientation.DOWN;
-    }
-
-    @Override
-    public void init(ComponentManager owner) {
-        super.init(owner);
+        this.hasCollisionHappened = false;
     }
 
     /**
      * Recupere la valeur en abscisse
+     *
      * @return
      */
-    public float getX() {
+    public int getX() {
         return x;
     }
 
     /**
      * Initialise les valeurs en abscisse
+     *
      * @param x
      */
-    public void setX(float x) {
+    public void setX(int x) {
         this.x = x;
     }
 
     /**
      * Recupere la valeur en ordonnee
+     *
      * @return
      */
-    public float getY() {
+    public int getY() {
         return y;
     }
 
     /**
      * Initialise les valeurs en ordonnee
+     *
      * @param y
      */
-    public void setY(float y) {
+    public void setY(int y) {
         this.y = y;
     }
 
-    /**
-     * Recupere la vitesse de deplacement du 
-     * personnage de haut en bas (abscisse x)
-     * @return
-     */
-    public float getxVelocity() {
-        return xVelocity;
+    public int getDefaultVelocity() {
+        return defaultVelocity;
+    }
+
+    public void setDefaultVelocity(int defaultVelocity) {
+        this.defaultVelocity = defaultVelocity;
+    }
+
+    public int getxMainVelocity() {
+        return xMainVelocity;
+    }
+
+    public void setxMainVelocity(int xMainVelocity) {
+        this.xMainVelocity = xMainVelocity;
+    }
+
+    public int getyMainVelocity() {
+        return yMainVelocity;
+    }
+
+    public void setyMainVelocity(int yMainVelocity) {
+        this.yMainVelocity = yMainVelocity;
+    }
+
+    public int getxVelocity() {
+        return getxMainVelocity() != 0
+                ? getxMainVelocity() + (getxMainVelocity() > 0
+                        ? getxVelocityModifiers() : -getxVelocityModifiers()) : 0;
+
+    }
+
+    public int getyVelocity() {
+        return getyMainVelocity() != 0
+                ? getyMainVelocity() + (getyMainVelocity() > 0
+                        ? getyVelocityModifiers() : -getyVelocityModifiers()) : 0;
+
     }
 
     /**
-     * Initialise la vitesse de deplacement du 
-     * personnage de haut en bas (abscisse x)
+     * Recupere la vitesse de deplacement du GameObject de haut en bas (abscisse
+     * x)
+     *
+     * @return
+     */
+    public Integer getxVelocityModifiers() {
+        return xVelocityModifiers.values().stream().reduce(Integer::sum).orElseGet(() -> 0);
+    }
+
+    /**
+     * Initialise la vitesse de deplacement du GameObject de haut en bas
+     * (abscisse x)
+     *
      * @param xVelocity
      */
-    public void setxVelocity(float xVelocity) {
-        this.xVelocity = xVelocity;
+    public void setxVelocityModifiers(HashMap<String, Integer> xVelocityModifiers) {
+        this.xVelocityModifiers = xVelocityModifiers;
+    }
+
+    public void setxVelocityModifiers(String key, Integer xVelocityModifiers) {
+        this.xVelocityModifiers.clear();
+        this.xVelocityModifiers.put(key, xVelocityModifiers);
+    }
+
+    public void addxVelocityModifiers(String key, Integer velocity, Integer time) {
+        xVelocityModifiers.put(key, velocity);
+        if (time != null) {
+            ses.schedule(() -> {
+                xVelocityModifiers.remove(key);
+            }, time, TimeUnit.SECONDS);
+        }
     }
 
     /**
-     * Recupere la vitesse de deplacement du 
-     * personnage de gauche ‡ droite (ordonnee y)
+     * Recupere la vitesse de deplacement du GameObject de gauche ÔøΩ droite
+     * (ordonnee y)
+     *
      * @return
      */
-    public float getyVelocity() {
-        return yVelocity;
+    public Integer getyVelocityModifiers() {
+        return yVelocityModifiers.values().stream().reduce(Integer::sum).orElseGet(() -> 0);
     }
 
     /**
-     * Initialise la vitesse de deplacement du 
-     * personnage de gauche ‡ droite (ordonnee y)
+     * Initialise la vitesse de deplacement du GameObject de gauche a droite
+     * (ordonnee y)
+     *
      * @param yVelocity
      */
-    public void setyVelocity(float yVelocity) {
-        this.yVelocity = yVelocity;
+    public void setyVelocityModifiers(HashMap<String, Integer> yVelocityModifiers) {
+        this.yVelocityModifiers = yVelocityModifiers;
+    }
+
+    public void setyVelocityModifiers(String key, Integer yVelocityModifiers) {
+        this.yVelocityModifiers.clear();
+        this.yVelocityModifiers.put(key, yVelocityModifiers);
+    }
+
+    public void addyVelocityModifiers(String key, Integer velocity, Integer time) {
+        yVelocityModifiers.put(key, velocity);
+        if (time != null) {
+            ses.schedule(() -> {
+                yVelocityModifiers.remove(key);
+            }, time, TimeUnit.SECONDS);
+        }
+    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public void setOffsetX(int offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
     }
 
     /**
-     * Recupere la hauteur du personnage
+     * Recupere la hauteur du GameObject
+     *
      * @return
      */
     public int getHeight() {
         return height;
     }
-    
+
     /**
-     * Initialise la taille du personnage
+     * Initialise la taille du GameObject
+     *
      * @param height
      */
     public void setHeight(int height) {
@@ -142,7 +249,8 @@ public class Position extends Component {
     }
 
     /**
-     * Recupere la largeur du personnage
+     * Recupere la largeur du GameObject
+     *
      * @return
      */
     public int getWidth() {
@@ -150,7 +258,8 @@ public class Position extends Component {
     }
 
     /**
-     * Initialise la largeur du personnage
+     * Initialise la largeur du GameObject
+     *
      * @param width
      */
     public void setWidth(int width) {
@@ -158,7 +267,8 @@ public class Position extends Component {
     }
 
     /**
-     * Recupere l'orientation du personnage
+     * Recupere l'orientation du GameObject
+     *
      * @return
      */
     public Orientation getOrientation() {
@@ -166,21 +276,73 @@ public class Position extends Component {
     }
 
     /**
-     * Initialise l'orientation du personnage
+     * Initialise l'orientation du GameObject
+     *
      * @param orientation
      */
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
 
+    public void setHasCollisionHappened(boolean hasCollisionHappened) {
+        this.hasCollisionHappened = hasCollisionHappened;
+    }
+
     public float distanceWith(Position position) {
         return (float) Math.hypot(this.x - position.x, this.y - position.y);
     }
 
-    @Override
+    @Override     
     public void update() {
-        this.x += (this.x + this.xVelocity > 0 && this.x + this.xVelocity < Game.WIDTH - this.width) ? this.xVelocity : 0;
-        this.y += (this.y + this.yVelocity > 0 && this.y + this.yVelocity < Game.HEIGHT - this.height - Position.WINDOW_BORDER_SIZE) ? this.yVelocity : 0;
+
+        if (collisionPoint != null) {
+            this.x = (int) this.collisionPoint.getX();
+            this.y = (int) this.collisionPoint.getY();
+            this.collisionPoint = null;
+        } else if (this.nextPosition != null) {
+            this.x = (int) this.nextPosition.getX();
+            this.y = (int) this.nextPosition.getY();
+
+        }
+    }
+
+    public Point getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Point destination) {
+        this.destination = destination;
+        if (this.destination.x > this.x) {
+            this.xMainVelocity = this.getDefaultVelocity();
+        } else if (this.destination.x < this.x) {
+            this.xMainVelocity = -this.getDefaultVelocity();
+        } else {
+            this.xMainVelocity = 0;
+        }
+
+        if (this.destination.y > this.y) {
+            this.yMainVelocity = this.getDefaultVelocity();
+        } else if (this.destination.y < this.y) {
+            this.yMainVelocity = -this.getDefaultVelocity();
+        } else {
+            this.yMainVelocity = 0;
+        }
+    }
+
+    public Point getNextPosition() {
+        return nextPosition;
+    }
+
+    public void setNextPosition(Point nextPosition) {
+        this.nextPosition = nextPosition;
+    }
+
+    public Point getCollisionPoint() {
+        return collisionPoint;
+    }
+
+    public void setCollisionPoint(Point collisionPoint) {
+        this.collisionPoint = collisionPoint;
     }
 
     @Override
@@ -193,8 +355,8 @@ public class Position extends Component {
         ret.setX(this.x);
         ret.setY(this.y);
         ret.setOrientation(this.getOrientation());
-        ret.setxVelocity(this.xVelocity);
-        ret.setyVelocity(this.yVelocity);
+        ret.setxVelocityModifiers(this.xVelocityModifiers);
+        ret.setyVelocityModifiers(this.yVelocityModifiers);
         ret.setHeight(this.height);
         ret.setWidth(this.width);
         return ret;
@@ -202,14 +364,17 @@ public class Position extends Component {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 43 * hash + Float.floatToIntBits(this.x);
-        hash = 43 * hash + Float.floatToIntBits(this.y);
-        hash = 43 * hash + Float.floatToIntBits(this.xVelocity);
-        hash = 43 * hash + Float.floatToIntBits(this.yVelocity);
-        hash = 43 * hash + Objects.hashCode(this.orientation);
-        hash = 43 * hash + this.height;
-        hash = 43 * hash + this.width;
+        int hash = 3;
+        hash = 79 * hash + this.x;
+        hash = 79 * hash + this.y;
+        hash = 79 * hash + this.xMainVelocity;
+        hash = 79 * hash + this.yMainVelocity;
+        hash = 79 * hash + Objects.hashCode(this.xVelocityModifiers);
+        hash = 79 * hash + Objects.hashCode(this.yVelocityModifiers);
+        hash = 79 * hash + Objects.hashCode(this.ses);
+        hash = 79 * hash + Objects.hashCode(this.orientation);
+        hash = 79 * hash + this.height;
+        hash = 79 * hash + this.width;
         return hash;
     }
 
@@ -222,16 +387,25 @@ public class Position extends Component {
             return false;
         }
         final Position other = (Position) obj;
-        if (Float.floatToIntBits(this.x) != Float.floatToIntBits(other.x)) {
+        if (this.x != other.x) {
             return false;
         }
-        if (Float.floatToIntBits(this.y) != Float.floatToIntBits(other.y)) {
+        if (this.y != other.y) {
             return false;
         }
-        if (Float.floatToIntBits(this.xVelocity) != Float.floatToIntBits(other.xVelocity)) {
+        if (this.xMainVelocity != other.xMainVelocity) {
             return false;
         }
-        if (Float.floatToIntBits(this.yVelocity) != Float.floatToIntBits(other.yVelocity)) {
+        if (this.yMainVelocity != other.yMainVelocity) {
+            return false;
+        }
+        if (!Objects.equals(this.xVelocityModifiers, other.xVelocityModifiers)) {
+            return false;
+        }
+        if (!Objects.equals(this.yVelocityModifiers, other.yVelocityModifiers)) {
+            return false;
+        }
+        if (!Objects.equals(this.ses, other.ses)) {
             return false;
         }
         if (this.orientation != other.orientation) {
@@ -246,6 +420,23 @@ public class Position extends Component {
         return true;
     }
 
-    
-    
+    public void initFromObjectProperties(ObjectPropertiesAsset propertiesAsset) {
+        Map<String, String> properties = propertiesAsset.retrieve(this.getClass().getSimpleName().toLowerCase());
+        System.out.println(Arrays.toString(this.getClass().getFields()));
+        for (Map.Entry<String, String> entrySet : properties.entrySet()) {
+            String key = entrySet.getKey();
+            String value = entrySet.getValue();
+
+            for (Field f : this.getClass().getDeclaredFields()) {
+                if (f.getName().equals(key)) {
+                    try {
+                        f.set(this, Integer.parseInt(value));
+                    } catch (IllegalArgumentException | IllegalAccessException ex) {
+                        Logger.getLogger(Position.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+    }
+
 }

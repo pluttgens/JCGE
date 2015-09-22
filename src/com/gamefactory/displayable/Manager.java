@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.services;
+package com.gamefactory.displayable;
+
+import com.gamefactory.game.Displayable;
 
 /**
  *
- * @author Pascal Luttgens
- *
- * @version 1.0
- *
- * @since 1.0
+ * @author scalpa
  */
-public interface Resource {
-    
+public interface Manager<T extends Displayable, U> extends Displayable<T> {
+
+    void add(U... u);
+
 }

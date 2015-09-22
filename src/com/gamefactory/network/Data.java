@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamefactory.displayable;
+package com.gamefactory.network;
+
+import java.io.Serializable;
 
 /**
  *
- * @author scalpa
+ * @author ngo
  */
-public class GameObjectManager {
+public class Data implements Serializable {
+    
+    private static final long serialVersionUID = -5185336099759943530L;
     
 }
